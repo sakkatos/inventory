@@ -35,7 +35,7 @@ public class Customer implements Serializable {
     private String mobilePhoneNumber;
     
     @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    private List<PurchaseOrder> orders;
 
     @Override
     public int hashCode() {
@@ -123,11 +123,11 @@ public class Customer implements Serializable {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
 
-    public List<Order> getOrders() {
+    public List<PurchaseOrder> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<PurchaseOrder> orders) {
         this.orders = orders;
     }
 

@@ -22,7 +22,7 @@ import javax.persistence.Temporal;
  * @author Nook
  */
 @Entity
-public class Order implements Serializable {
+public class PurchaseOrder implements Serializable {
     @Id
     private Integer id;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -51,7 +51,7 @@ public class Order implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Order other = (Order) obj;
+        final PurchaseOrder other = (PurchaseOrder) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

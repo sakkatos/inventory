@@ -4,9 +4,9 @@
     <jta-data-source>jdbc/genius-inventory</jta-data-source>
     <class>th.co.geniustree.inventory.model.OrderItem</class>
     <class>th.co.geniustree.inventory.model.Customer</class>
-    <class>th.co.geniustree.inventory.model.Order</class>
     <class>th.co.geniustree.inventory.model.Staff</class>
     <class>th.co.geniustree.inventory.model.Product</class>
+    <class>th.co.geniustree.inventory.model.PurchaseOrder</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

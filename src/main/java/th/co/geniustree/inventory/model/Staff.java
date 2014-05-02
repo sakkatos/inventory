@@ -31,7 +31,7 @@ public class Staff implements Serializable {
     private String address;
     
     @OneToMany(mappedBy = "staff")
-    private List<Order> orders;
+    private List<PurchaseOrder> orders;
 
     @Override
     public int hashCode() {
@@ -95,11 +95,11 @@ public class Staff implements Serializable {
         this.address = address;
     }
 
-    public List<Order> getOrders() {
+    public List<PurchaseOrder> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<PurchaseOrder> orders) {
         this.orders = orders;
     }
     
