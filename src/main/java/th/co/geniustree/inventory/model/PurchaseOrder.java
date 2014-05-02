@@ -29,7 +29,7 @@ public class PurchaseOrder implements Serializable {
     @Column(name = "sale_date")
     private Date saleDate;
     
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "purchaseOrder")
     private List<OrderItem> orderItems;
     @ManyToOne
     private Customer customer;
