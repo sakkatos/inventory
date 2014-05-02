@@ -8,9 +8,7 @@ package th.co.geniustree.inventory.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import javax.annotation.Generated;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +35,7 @@ public class OrderItem implements Serializable {
     @ManyToOne
     private Product product;
     @ManyToOne
-    private Order order;
+    private PurchaseOrder purchaseOrder;
 
     @Override
     public int hashCode() {
@@ -95,12 +93,12 @@ public class OrderItem implements Serializable {
         this.product = product;
     }
 
-    public Order getOrder() {
-        return order;
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
     
     
