@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition template="/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="mainContent">
+        Product Page<br/>
+        <h:link outcome="index" value="Home"/><br/>
+        <h:form id="productTable">
+            <p:inputText value="#{productControl.pack.barcode}">
+            <p:commandButton value="Barcode" actionListener="#{productControl.findByBarcode()}" />
+            <h:outputText value="#{productControl.product.id}"/>
+            <h:outputText value="#{productControl.product.name}"/>
+            <h:outputText value="#{productControl.product.amount}"/>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>

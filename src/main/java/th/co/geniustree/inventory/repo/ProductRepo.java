@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package th.co.geniustree.iventory.repo;
+package th.co.geniustree.inventory.repo;
 
-import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import th.co.geniustree.inventory.model.Product;
 

@@ -8,11 +8,14 @@ package th.co.geniustree.inventory.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -24,15 +27,20 @@ public class Product implements Serializable {
     @Id
     private String id;
     private String name;
-    private int amount;
+    private Integer amount;
     @Column(name = "expect_price")
     private BigDecimal expectPrice;
     @Column(name = "base_price")
     private BigDecimal basePrice;
     private BigDecimal cost;
+    private String image;
     
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
+    @ManyToOne(targetEntity = Category.class)
+    private Category category;
+    @OneToMany
+    private List<ProductPackage> packages;
 
     @Override
     public int hashCode() {
@@ -56,6 +64,23 @@ public class Product implements Serializable {
         return true;
     }
 
+    
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getId() {
         return id;
     }
@@ -72,11 +97,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -105,11 +130,25 @@ public class Product implements Serializable {
     }
 
     public List<OrderItem> getOrderItems() {
+        if (orderItems == null){
+            orderItems = new ArrayList<>();
+        }
         return orderItems;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public List<ProductPackage> getPackages() {
+        if (packages==null){
+            packages = new ArrayList<>();
+        }
+        return packages;
+    }
+
+    public void setPackages(List<ProductPackage> packages) {
+        this.packages = packages;
     }
     
     

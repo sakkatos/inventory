@@ -25,5 +25,5 @@
            http://www.springframework.org/schema/task/spring-task.xsd">
     
     <context:annotation-config />
-    <context:component-scan base-package="th.co.geniustree" />
+    <context:component-scan base-package="th.co.geniustree.inventory" />
 </beans>

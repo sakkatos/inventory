@@ -24,7 +24,7 @@
            http://www.springframework.org/schema/task 
            http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <jpa:repositories base-package="th.co.geniustree.iventory.repo"/>
+    <jpa:repositories base-package="th.co.geniustree.inventory.repo"/>
     
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/genius-inventory" />
     
