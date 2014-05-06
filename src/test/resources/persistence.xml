@@ -13,6 +13,7 @@
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.weaving" value="static"/>
+      <property name="eclipselink.target-server" value="SunAS9"/>
     </properties>
   </persistence-unit>
 </persistence>

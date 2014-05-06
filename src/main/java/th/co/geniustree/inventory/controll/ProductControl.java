@@ -6,19 +6,18 @@
 package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
-import org.springframework.data.repository.Repository;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.jsf.FacesContextUtils;
-import sun.nio.cs.ext.PCK;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.ProductService;
 
 /**
@@ -32,30 +31,50 @@ public class ProductControl implements Serializable {
     private Product product;
     private List<Product> products;
     private ProductPackage pack;
+    private Category category;
 
     private final ProductService productService = getProductManagedBean();
+    private final CategoryService categoryService = getCategoryManagedBean();
+
+    @PostConstruct
+    public void postConstruct() {
+
+//        LOG.debug("start logger on {}", new Date());
+    }
 
 //business logic----------------------------------------------------------------
     public Product findByBarcode() {
-        
+
         List<Product> productList = findAllProduct();
-        for (Product p : productList){
-            for (ProductPackage pk : p.getPackages()){
-                if (pk.getBarcode().equals(pack.getBarcode())){
-                    product=p;
+        for (Product p : productList) {
+            for (ProductPackage pk : p.getPackages()) {
+                if (pk.getBarcode().equals(pack.getBarcode())) {
+                    product = p;
                 }
             }
         }
         return product;
     }
 
-    public void saveProduct() {
-        productService.saveProduct(product);
+    public void onCreate() {
+        product = new Product();
+        pack = new ProductPackage();
+    }
+
+    public void onSaveProduct() {
+        product.getPackages().add(pack);
+        product.setCategory(getRootCategory());
+        productService.save(product);
         getProducts().add(product);
     }
 
     public List<Product> findAllProduct() {
-        return productService.findAllProduct();
+        return productService.findAll();
+    }
+
+    public Category getRootCategory() {
+        category = categoryService.findRoot();
+        return category;
     }
 
     private String requestParam(String paramName) {
@@ -66,6 +85,14 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public ProductPackage getPack() {
         return pack;
     }
@@ -84,7 +111,7 @@ public class ProductControl implements Serializable {
 
     public List<Product> getProducts() {
         if (products == null) {
-            products = new ArrayList<>();
+            products = findAllProduct();
         }
         return products;
     }
@@ -96,6 +123,10 @@ public class ProductControl implements Serializable {
     public ProductService getProductManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
         return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(ProductService.class);
+    }
 
+    public CategoryService getCategoryManagedBean() {
+        ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
+        return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CategoryService.class);
     }
 }

@@ -24,11 +24,11 @@ public class ProductService {
     @Autowired
     public ProductRepo productRepo;
 
-    public List<Product> findAllProduct() {
+    public List<Product> findAll() {
         return productRepo.findAll();
     }
 
-    public void saveProduct(Product product) {
+    public void save(Product product) {
         productRepo.save(product);
     }
 

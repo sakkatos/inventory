@@ -10,22 +10,46 @@
         HOME(page1)<br/>
         <h:link outcome="product" value="product"/>
         <h:form id="productTableForm">
-            <p:commandButton value="Add product"/>
+            <p:commandButton value="Add product"
+                             actionListener="#{productControl.onCreate()}"
+                             update=":addProductForm"
+                             onsuccess="addProductWidget.show()"/>
             <p:commandButton value="Find all" 
                              actionListener="#{productControl.findAllProduct()}"
                              update=":productTableForm"/>
             <p:dataTable value="#{productControl.products}" var="item">
-                <p:column>#{item.id}</p:column>
-                <p:column>#{item.name}</p:column>
-                <p:column>#{item.category.name}</p:column>
+                <p:column headerText="Product Id">#{item.id}</p:column>
+                <p:column headerText="Name">#{item.name}</p:column>
+                <p:column headerText="Category">#{item.category.name}</p:column>
             </p:dataTable>
         </h:form>
-        
+
         <p:dialog widgetVar="addProductWidget">
-            <h:form>
+            <h:form id="addProductForm">
+
                 <p:panelGrid columns="4">
-                    
+                    <h:outputText value="Product Id"/>
+                    <p:inputText value="#{productControl.product.id}"/>
+
+                    <h:outputText value="Product name"/>
+                    <p:inputText value="#{productControl.product.name}"/>
+
+                    <h:outputText value="Product amount"/>
+                    <p:inputText value="#{productControl.product.amount}"/>
+
+                    <h:outputText value="Product cost"/>
+                    <p:inputText value="#{productControl.product.cost}"/>
+
+                    <h:outputText value="Package barcode"/>
+                    <p:inputText value="#{productControl.pack.barcode}"/>
+
+                    <h:outputText value="Amount per package"/>
+                    <p:inputText value="#{productControl.pack.amountPerPack}"/>
                 </p:panelGrid>
+                <p:commandButton value="Save" 
+                                 actionListener="#{productControl.onSaveProduct()}"
+                                 update=":productTableForm"
+                                 onsuccess="addProductWidget.hide()"/>
             </h:form>
         </p:dialog>
     </ui:define>

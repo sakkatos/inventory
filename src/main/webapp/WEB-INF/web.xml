@@ -5,15 +5,17 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext*.xml</param-value>
     </context-param>
-
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>th.co.geniustree.inventory.servlet.StartUpApp</listener-class>
+    </listener>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
