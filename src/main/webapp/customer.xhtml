@@ -82,17 +82,17 @@
         <p:dialog widgetVar="removeCustomerWidget">
             <h:form id="removeProductForm">
                 <h:outputText value="Remove this customer?"/>
-                    <p:panelGrid columns="4">
-                        <h:outputText value="customer Id"/>
-                        <p:inputText value="#{customerControl.customer.id}"/>
+                <p:panelGrid columns="2">
+                    <h:outputText value="customer Id"/>
+                    <p:inputText value="#{customerControl.customer.id}"/>
 
-                        <h:outputText value="customer name"/>
-                        <p:inputText value="#{customerControl.customer.firstName}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="Remove" 
-                                     actionListener="#{customerControl.onDeleteCustomer()}"
-                                     update=":customerTableForm"
-                                     onsuccess="removeCustomerWidget.hide()"/>
+                    <h:outputText value="customer name"/>
+                    <p:inputText value="#{customerControl.customer.firstName}"/>
+                </p:panelGrid>
+                <p:commandButton value="Remove" 
+                                 actionListener="#{customerControl.onDeleteCustomer()}"
+                                 update=":customerTableForm"
+                                 onsuccess="removeCustomerWidget.hide()"/>
             </h:form>
         </p:dialog>
 
