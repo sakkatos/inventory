@@ -36,11 +36,6 @@ public class CustomerControl implements Serializable {
 
     @PostConstruct
     public void CustomerControl() {
-        reset();
-    }
-
-    public void reset() {
-        customers = custerService.findAll();
     }
 
     public void onCreateCustomer() {
@@ -57,7 +52,35 @@ public class CustomerControl implements Serializable {
         }
     }
 
+    public void onDeleteCustomer() {
+        custerService.remove(customer);
+        customers = findAllCustomer();
+    }
+
+    public void onSelectProduct() {
+        Customer c = new Customer();
+        c.setId(requestParam("productId"));
+        customer = getCustomers().get(getCustomers().indexOf(c));
+    }
+
+    public List<Customer> findAllCustomer() {
+        return custerService.findAll();
+    }
+
+    public void onSelectCustomer() {
+        Customer c = new Customer();
+        c.setId(requestParam("customerId"));
+        customer = getCustomers().get(getCustomers().indexOf(c));
+    }
+
+    private String requestParam(String paramName) {
+        return FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get(paramName);
+    }
     //----------------------------------------------------------------------------
+
     public Customer getCustomer() {
         return customer;
     }
@@ -85,13 +108,6 @@ public class CustomerControl implements Serializable {
     public CustomerService getCustomerManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
         return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CustomerService.class);
-    }
-
-    private String requestParam(String paramName) {
-        return FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap()
-                .get(paramName);
     }
 
     private void showMessage(FacesMessage.Severity severity, String title, String body) {

@@ -19,6 +19,9 @@ public class CustomerService {
     @Autowired
     public CustomerRepo customerRepo; 
     
+    public void remove(Customer customer){
+        customerRepo.delete(customer);
+    }
     public Customer save(Customer customer) {
         return customerRepo.save(customer);
     }
