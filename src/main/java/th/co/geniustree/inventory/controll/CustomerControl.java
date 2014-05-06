@@ -7,7 +7,10 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,13 +31,33 @@ public class CustomerControl implements Serializable {
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
-
+    private static final Logger LOG = Logger.getLogger(CustomerControl.class.getName());
     private final CustomerService custerService = getCustomerManagedBean();
-    
+
     @PostConstruct
     public void CustomerControl() {
-
+        reset();
     }
+
+    public void reset() {
+        customers = custerService.findAll();
+    }
+
+    public void onCreateCustomer() {
+        customer = new Customer();
+    }
+
+    public void onSave() {
+        try {
+            customer = custerService.save(customer);
+            showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
+        } catch (Exception ex) {
+            LOG.log(Level.INFO, ex.getMessage(), ex);
+            showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
+        }
+    }
+
+    //----------------------------------------------------------------------------
     public Customer getCustomer() {
         return customer;
     }
@@ -58,8 +81,22 @@ public class CustomerControl implements Serializable {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
     public CustomerService getCustomerManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
         return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CustomerService.class);
     }
+
+    private String requestParam(String paramName) {
+        return FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get(paramName);
+    }
+
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, title, body));
+    }
+
 }

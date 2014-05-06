@@ -6,6 +6,7 @@
 
 package th.co.geniustree.inventory.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.repo.CustomerRepo;
@@ -18,8 +19,11 @@ public class CustomerService {
     @Autowired
     public CustomerRepo customerRepo; 
     
-    public void save(Customer customer) {
-        customerRepo.save(customer);
+    public Customer save(Customer customer) {
+        return customerRepo.save(customer);
+    }
+    public List<Customer> findAll() {
+        return customerRepo.findAll();
     }
     
 }

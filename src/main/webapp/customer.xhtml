@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <style type="text/css">
+            body{
+                font-size: 10pt;
+            }
+        </style>
+        <script type="text/javascript" src="PrimefacesDialog.js">
+        </script>
+        <script type="text/javascript">
+            PrimefacesDialog.on('show', function() {
+            });
+        </script>
+    </h:head>
+    <h:body>
+            <p:layoutUnit position="center">
+                <h:form id="userForm">
+                    #{customerControl.reset()}
+                    <p:commandButton value="add User"
+                                     update=":addUserDialogForm"
+                                     actionListener="#{customerControl.onCreateCustomer()}"
+                                     onsuccess="addWidgetDialog.show();"/>
+                    <br/>
+                    <br/>
+                    <p:dataTable value="#{customerControl.customers}"
+                                 var="item">
+                        <p:column headerText="No." style="width : 5%">
+                            #{item.id}
+                        </p:column>
+                        <p:column headerText="name">
+                            #{item.firstName}
+                        </p:column>
+                        <p:column headerText="lastname">
+                            #{item.lastName}
+                        </p:column>
+                        <p:column headerText="phone">
+                            #{item.phoneNumber}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:dialog id="addUserDialog"
+                      header="add user"
+                      width="500"
+                      modal="true"
+                      draggable="false"
+                      resizable="false"
+                      widgetVar="addWidgetDialog"> 
+                <h:form id="addUserDialogForm">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="name"/>
+                        <p:inputText value="#{customerControl.customer.firstName}"/>
+
+                        <h:outputText value="lastname"/>
+                        <p:inputText value="#{customerControl.customer.lastName}"/>
+
+                        <h:outputText value="phone"/>
+                        <p:inputText value="#{customerControl.customer.phoneNumber}"/>
+                    </h:panelGrid>
+                    <br/>
+                    <br/>
+                    <p:commandButton value="save"
+                                     update=":userForm, :notification"
+                                     actionListener="#{customerControl.onSave()}"
+                                     oncomplete="addWidgetDialog.hide();"/>
+                    <p:spacer width="10"/>
+                    <p:commandButton value="cancel"
+                                     type="button"
+                                     onclick="addWidgetDialog.hide();"/>
+                </h:form>
+            </p:dialog>
+    </h:body>
+</html>
+
