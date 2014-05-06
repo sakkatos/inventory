@@ -21,10 +21,7 @@
         </encoder>
     </appender>
    
-     
-    <logger name="com.blogspot.na5cent" level="TRACE"/>
-    <root level="debug">
+    <root level="TRACE">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 </configuration>

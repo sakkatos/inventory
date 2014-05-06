@@ -32,6 +32,7 @@ public class ProductControl implements Serializable {
     private List<Product> products;
     private ProductPackage pack;
     private Category category;
+    private Integer amountOfPack;
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -61,12 +62,30 @@ public class ProductControl implements Serializable {
         pack = new ProductPackage();
     }
 
+    public void onEditProduct() {
+        productService.save(product);
+    }
+
     public void onSaveProduct() {
         product.getPackages().add(pack);
         product.setCategory(getRootCategory());
+        product.setAmount(product.getAmount() + (amountOfPack * pack.getAmountPerPack()));
         productService.save(product);
         getProducts().add(product);
     }
+    
+    public void onDeleteProduct(){
+        productService.remove(product);
+        products = findAllProduct();
+    }
+
+    public void onSelectProduct() {
+        Product p = new Product();
+        p.setId(requestParam("productId"));
+        product=getProducts().get(getProducts().indexOf(p));
+    }
+    
+    
 
     public List<Product> findAllProduct() {
         return productService.findAll();
@@ -85,6 +104,14 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    public Integer getAmountOfPack() {
+        return amountOfPack;
+    }
+
+    public void setAmountOfPack(Integer amountOfPack) {
+        this.amountOfPack = amountOfPack;
+    }
+
     public Category getCategory() {
         return category;
     }

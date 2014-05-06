@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="mainContent">
         HOME(page1)<br/>
@@ -18,24 +19,35 @@
                              actionListener="#{productControl.findAllProduct()}"
                              update=":productTableForm"/>
             <p:dataTable value="#{productControl.products}" var="item">
-                <p:column headerText="Product Id">#{item.id}</p:column>
+                <p:column headerText="action" >
+                    <p:commandButton value="edit"
+                                     update=":editProductForm"
+                                     actionListener="#{productControl.onSelectProduct()}"
+                                     onsuccess="editProductWidget.show()">
+                        <f:param name="productId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="remove"
+                                     update=":removeProductForm"
+                                     actionListener="#{productControl.onSelectProduct()}"
+                                     onsuccess="removeProductFWidget.show()"> 
+                        <f:param name="productId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ProductId">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.name}</p:column>
+                <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Category">#{item.category.name}</p:column>
             </p:dataTable>
         </h:form>
 
         <p:dialog widgetVar="addProductWidget">
             <h:form id="addProductForm">
-
                 <p:panelGrid columns="4">
                     <h:outputText value="Product Id"/>
                     <p:inputText value="#{productControl.product.id}"/>
 
                     <h:outputText value="Product name"/>
                     <p:inputText value="#{productControl.product.name}"/>
-
-                    <h:outputText value="Product amount"/>
-                    <p:inputText value="#{productControl.product.amount}"/>
 
                     <h:outputText value="Product cost"/>
                     <p:inputText value="#{productControl.product.cost}"/>
@@ -45,6 +57,9 @@
 
                     <h:outputText value="Amount per package"/>
                     <p:inputText value="#{productControl.pack.amountPerPack}"/>
+
+                    <h:outputText value="Amount package"/>
+                    <p:inputText value="#{productControl.amountOfPack}"/>
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onSaveProduct()}"
@@ -52,6 +67,46 @@
                                  onsuccess="addProductWidget.hide()"/>
             </h:form>
         </p:dialog>
+
+        <p:dialog widgetVar="editProductWidget">
+            <h:form id="editProductForm">
+                <p:panelGrid columns="4">
+                    <h:outputText value="Product Id"/>
+                    <p:inputText value="#{productControl.product.id}"/>
+
+                    <h:outputText value="Product name"/>
+                    <p:inputText value="#{productControl.product.name}"/>
+
+                    <h:outputText value="Product cost"/>
+                    <p:inputText value="#{productControl.product.cost}"/>
+
+                    <h:outputText value="Amount package"/>
+                    <p:inputText value="#{productControl.amountOfPack}"/>
+                </p:panelGrid>
+                <p:commandButton value="Save" 
+                                 actionListener="#{productControl.onEditProduct()}"
+                                 update=":productTableForm"
+                                 onsuccess="editProductWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="removeProductWidget">
+            <h:form id="removeProductForm">
+                <h:outputText value="Remove this product?"/>
+                    <p:panelGrid columns="4">
+                        <h:outputText value="Product Id"/>
+                        <p:inputText value="#{productControl.product.id}"/>
+
+                        <h:outputText value="Product name"/>
+                        <p:inputText value="#{productControl.product.name}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Remove" 
+                                     actionListener="#{productControl.onDeleteProduct()}"
+                                     update=":productTableForm"
+                                     onsuccess="removeProductWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
 

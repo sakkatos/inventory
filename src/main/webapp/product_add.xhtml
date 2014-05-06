@@ -4,27 +4,13 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
-<ui:composition template="/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="mainContent">
-        Product Page<br/>
-        <h:link outcome="index" value="Home"/><br/>
-        <h:form id="productTableForm">
-            <p:inputText value="#{productControl.pack.barcode}"/>
-            <p:commandButton value="Barcode" actionListener="#{productControl.findByBarcode()}" />
-            <p:panelGrid>
-            <h:outputText value="#{productControl.product.id}"/>
-            <h:outputText value="#{productControl.product.name}"/>
-            <h:outputText value="#{productControl.product.amount}"/>
-            <h:outputText value="#{productControl.product.category}"/>
-            </p:panelGrid>
-        </h:form>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
         <p:dialog widgetVar="addProductWidget">
             <h:form id="addProductForm">
                 <p:panelGrid columns="4">
@@ -34,6 +20,9 @@ and open the template in the editor.
                     <h:outputText value="Product name"/>
                     <p:inputText value="#{productControl.product.name}"/>
 
+                    <h:outputText value="Product amount"/>
+                    <p:inputText value="#{productControl.product.amount}"/>
+
                     <h:outputText value="Product cost"/>
                     <p:inputText value="#{productControl.product.cost}"/>
 
@@ -42,9 +31,6 @@ and open the template in the editor.
 
                     <h:outputText value="Amount per package"/>
                     <p:inputText value="#{productControl.pack.amountPerPack}"/>
-
-                    <h:outputText value="Amount package"/>
-                    <p:inputText value="#{productControl.amountOfPack}"/>
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onSaveProduct()}"
@@ -52,5 +38,5 @@ and open the template in the editor.
                                  onsuccess="addProductWidget.hide()"/>
             </h:form>
         </p:dialog>
-    </ui:define>
-</ui:composition>
+    </body>
+</html>

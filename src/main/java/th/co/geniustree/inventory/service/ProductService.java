@@ -23,6 +23,10 @@ public class ProductService {
 
     @Autowired
     public ProductRepo productRepo;
+    
+    public void remove(Product product){
+        productRepo.delete(product);
+    }
 
     public List<Product> findAll() {
         return productRepo.findAll();
