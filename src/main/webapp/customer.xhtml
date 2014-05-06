@@ -14,29 +14,29 @@
                              update=":addCustomerForm"
                              onsuccess="addCustomerWidget.show()"/>
             <p:dataTable value="#{customerControl.customers}" var="item">
-<!--                <p:column headerText="action" >
+                <p:column headerText="action" >
                     <p:commandButton value="edit"
-                                     update=":editProductForm"
-                                     actionListener="#{productControl.onSelectProduct()}"
-                                     onsuccess="editProductWidget.show()">
-                        <f:param name="productId" value="#{item.id}"/>
+                                     update=":editCustomerForm"
+                                     actionListener="#{customerControl.onEditCustomer()}"
+                                     onsuccess="editCustomerWidget.show()">
+                        <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
                     <p:commandButton value="remove"
-                                     update=":removeProductForm"
-                                     actionListener="#{productControl.onSelectProduct()}"
-                                     onsuccess="removeProductFWidget.show()"> 
-                        <f:param name="productId" value="#{item.id}"/>
+                                     update=":removeCustomerForm"
+                                     actionListener="#{customerControl.onDeleteCustomer()}"
+                                     onsuccess="removeCustomerWidget.show()"> 
+                        <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
-                </p:column>-->
-                <p:column headerText="ProductId">#{item.id}</p:column>
+                </p:column>
+                <p:column headerText="CustomerId">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.firstName}</p:column>
-                <p:column headerText="Amount">#{item.lastName}</p:column>
+                <p:column headerText="Lastname">#{item.lastName}</p:column>
             </p:dataTable>
         </h:form>
 
         <p:dialog widgetVar="addCustomerWidget">
             <h:form id="addCustomerForm">
-                <p:panelGrid columns="4">
+                <p:panelGrid columns="3">
                     <h:outputText value="Customer Id"/>
                     <p:inputText value="#{customerControl.customer.id}"/>
 
@@ -51,50 +51,50 @@
 
                 </p:panelGrid>
                 <p:commandButton value="Save" 
-                                 actionListener="#{productControl.onSaveProduct()}"
-                                 update="customerTableForm"
+                                 actionListener="#{customerControl.onSaveCustomer()}"
+                                 update=":customerTableForm"
                                  onsuccess="addCustomerWidget.hide()"/>
             </h:form>
         </p:dialog>
 
-        <p:dialog widgetVar="addCustomerWidget">
+        <p:dialog widgetVar="editCustomerWidget">
             <h:form id="editProductForm">
                 <p:panelGrid columns="4">
-                    <h:outputText value="Product Id"/>
-                    <p:inputText value="#{productControl.product.id}"/>
+                    <h:outputText value="Customer Id"/>
+                    <p:inputText value="#{customerControl.customer.id}"/>
 
-                    <h:outputText value="Product name"/>
-                    <p:inputText value="#{productControl.product.name}"/>
+                    <h:outputText value="Customer name"/>
+                    <p:inputText value="#{customerControl.customer.firstName}"/>
 
-                    <h:outputText value="Product cost"/>
-                    <p:inputText value="#{productControl.product.cost}"/>
+                    <h:outputText value="Customer lastname"/>
+                    <p:inputText value="#{customerControl.customer.lastName}"/>
 
-                    <h:outputText value="product amount"/>
-                    <p:inputText value="#{productControl.product.amount}"/>
+                    <h:outputText value="Customer phone"/>
+                    <p:inputText value="#{customerControl.customer.phoneNumber}"/>
                 </p:panelGrid>
                 <p:commandButton value="Save" 
-                                 actionListener="#{productControl.onEditProduct()}"
-                                 update=":productTableForm"
-                                 onsuccess="editProductWidget.hide()"/>
+                                 actionListener="#{customerControl.onEditCustomer()}"
+                                 update=":customerTableForm"
+                                 onsuccess="editCustomerWidget.hide()"/>
             </h:form>
         </p:dialog>
 
-<!--        <p:dialog widgetVar="removeProductWidget">
+        <p:dialog widgetVar="removeCustomerWidget">
             <h:form id="removeProductForm">
-                <h:outputText value="Remove this product?"/>
+                <h:outputText value="Remove this customer?"/>
                     <p:panelGrid columns="4">
-                        <h:outputText value="Product Id"/>
-                        <p:inputText value="#{productControl.product.id}"/>
+                        <h:outputText value="customer Id"/>
+                        <p:inputText value="#{customerControl.customer.id}"/>
 
-                        <h:outputText value="Product name"/>
-                        <p:inputText value="#{productControl.product.name}"/>
+                        <h:outputText value="customer name"/>
+                        <p:inputText value="#{customerControl.customer.firstName}"/>
                     </p:panelGrid>
                     <p:commandButton value="Remove" 
-                                     actionListener="#{productControl.onDeleteProduct()}"
-                                     update=":productTableForm"
-                                     onsuccess="removeProductWidget.hide()"/>
+                                     actionListener="#{customerControl.onDeleteCustomer()}"
+                                     update=":customerTableForm"
+                                     onsuccess="removeCustomerWidget.hide()"/>
             </h:form>
-        </p:dialog>-->
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

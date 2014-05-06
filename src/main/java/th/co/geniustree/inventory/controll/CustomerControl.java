@@ -32,7 +32,7 @@ public class CustomerControl implements Serializable {
     private List<Customer> customers;
     private String keyword;
     private static final Logger LOG = Logger.getLogger(CustomerControl.class.getName());
-    private final CustomerService custerService = getCustomerManagedBean();
+    private final CustomerService customerService = getCustomerManagedBean();
 
     @PostConstruct
     public void CustomerControl() {
@@ -42,9 +42,13 @@ public class CustomerControl implements Serializable {
         customer = new Customer();
     }
 
-    public void onSave() {
+    public void onEditCustomer() {
+        customerService.save(customer);
+    }
+
+    public void onSaveCustomer() {
         try {
-            customer = custerService.save(customer);
+            customer = customerService.save(customer);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
             LOG.log(Level.INFO, ex.getMessage(), ex);
@@ -53,24 +57,18 @@ public class CustomerControl implements Serializable {
     }
 
     public void onDeleteCustomer() {
-        custerService.remove(customer);
+        customerService.remove(customer);
         customers = findAllCustomer();
-    }
-
-    public void onSelectProduct() {
-        Customer c = new Customer();
-        c.setId(requestParam("productId"));
-        customer = getCustomers().get(getCustomers().indexOf(c));
-    }
-
-    public List<Customer> findAllCustomer() {
-        return custerService.findAll();
     }
 
     public void onSelectCustomer() {
         Customer c = new Customer();
         c.setId(requestParam("customerId"));
         customer = getCustomers().get(getCustomers().indexOf(c));
+    }
+
+    public List<Customer> findAllCustomer() {
+        return customerService.findAll();
     }
 
     private String requestParam(String paramName) {
