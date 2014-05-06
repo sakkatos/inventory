@@ -16,7 +16,7 @@ import javax.persistence.Id;
  * @author Nook
  */
 @Entity
-public class ProductPackage implements Serializable{
+public class Package implements Serializable{
     @Id
     private String barcode;
     private String name;
@@ -37,7 +37,7 @@ public class ProductPackage implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ProductPackage other = (ProductPackage) obj;
+        final Package other = (Package) obj;
         if (!Objects.equals(this.barcode, other.barcode)) {
             return false;
         }

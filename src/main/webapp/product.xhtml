@@ -15,13 +15,22 @@ and open the template in the editor.
         Product Page<br/>
         <h:link outcome="index" value="Home"/><br/>
         <h:form id="productTableForm">
-            <p:inputText value="#{productControl.pack.barcode}"/>
-            <p:commandButton value="Barcode" actionListener="#{productControl.findByBarcode()}" />
-            <p:panelGrid>
-            <h:outputText value="#{productControl.product.id}"/>
-            <h:outputText value="#{productControl.product.name}"/>
-            <h:outputText value="#{productControl.product.amount}"/>
-            <h:outputText value="#{productControl.product.category}"/>
+            <p:commandButton value="Barcode" 
+                             actionListener="#{productControl.onIncreaseProduct()}"
+                             update=":productTableForm"/>
+            <p:inputText value="#{productControl.barcode}"/>
+            <p:panelGrid columns="4">
+                <h:outputText value="Product Id"/>
+                <h:outputText value="#{productControl.product.id}" />
+                
+                <h:outputText value="Product Name"/>
+                <h:outputText value="#{productControl.product.name}"/>
+                
+                <h:outputText value="Product Category"/>
+                <h:outputText value="#{productControl.product.category}"/>
+                
+                <h:outputText value="Amount"/>
+                <h:outputText value="#{productControl.product.amount}"/>
             </p:panelGrid>
         </h:form>
 
@@ -36,9 +45,6 @@ and open the template in the editor.
 
                     <h:outputText value="Product cost"/>
                     <p:inputText value="#{productControl.product.cost}"/>
-
-                    <h:outputText value="Package barcode"/>
-                    <p:inputText value="#{productControl.pack.barcode}"/>
 
                     <h:outputText value="Amount per package"/>
                     <p:inputText value="#{productControl.pack.amountPerPack}"/>

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
-import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.model.Package;
 import th.co.geniustree.inventory.repo.ProductRepo;
 
 /**
@@ -66,12 +66,12 @@ public class ProductIT {
         category.setId("001");
         category.setName("Accesory");
 
-        ProductPackage productPackage = new ProductPackage();
+        Package productPackage = new Package();
         productPackage.setBarcode("10230");
         productPackage.setName("ลัง");
         productPackage.setAmountPerPack(12);
         
-        List<ProductPackage> packages = new ArrayList<>();
+        List<Package> packages = new ArrayList<>();
         packages.add(productPackage);
         
         Product product = new Product();

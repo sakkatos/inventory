@@ -24,6 +24,10 @@ public class ProductService {
     @Autowired
     public ProductRepo productRepo;
     
+    public Product findByBarcode(String barcode){
+        return productRepo.findProductByBarcode(barcode);
+    }
+    
     public void remove(Product product){
         productRepo.delete(product);
     }

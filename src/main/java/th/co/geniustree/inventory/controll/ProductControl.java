@@ -16,7 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.jsf.FacesContextUtils;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
-import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.model.Package;
 import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.ProductService;
 
@@ -30,9 +30,10 @@ public class ProductControl implements Serializable {
 
     private Product product;
     private List<Product> products;
-    private ProductPackage pack;
+    private Package pack;
     private Category category;
     private Integer amountOfPack;
+    private String barcode;
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -44,22 +45,14 @@ public class ProductControl implements Serializable {
     }
 
 //business logic----------------------------------------------------------------
-    public Product findByBarcode() {
-
-        List<Product> productList = findAllProduct();
-        for (Product p : productList) {
-            for (ProductPackage pk : p.getPackages()) {
-                if (pk.getBarcode().equals(pack.getBarcode())) {
-                    product = p;
-                }
-            }
-        }
-        return product;
+  
+    public void onIncreaseProduct(){
+        Product hasBarcode = productService.findByBarcode(barcode);
     }
 
     public void onCreate() {
         product = new Product();
-        pack = new ProductPackage();
+        pack = new Package();
     }
 
     public void onEditProduct() {
@@ -69,12 +62,12 @@ public class ProductControl implements Serializable {
     public void onSaveProduct() {
         product.getPackages().add(pack);
         product.setCategory(getRootCategory());
-        product.setAmount(product.getAmount() + (amountOfPack * pack.getAmountPerPack()));
+        product.setAmount(amountOfPack * pack.getAmountPerPack());
         productService.save(product);
         getProducts().add(product);
     }
-    
-    public void onDeleteProduct(){
+
+    public void onDeleteProduct() {
         productService.remove(product);
         products = findAllProduct();
     }
@@ -82,10 +75,8 @@ public class ProductControl implements Serializable {
     public void onSelectProduct() {
         Product p = new Product();
         p.setId(requestParam("productId"));
-        product=getProducts().get(getProducts().indexOf(p));
+        product = getProducts().get(getProducts().indexOf(p));
     }
-    
-    
 
     public List<Product> findAllProduct() {
         return productService.findAll();
@@ -104,6 +95,14 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
     public Integer getAmountOfPack() {
         return amountOfPack;
     }
@@ -120,11 +119,11 @@ public class ProductControl implements Serializable {
         this.category = category;
     }
 
-    public ProductPackage getPack() {
+    public Package getPack() {
         return pack;
     }
 
-    public void setPack(ProductPackage pack) {
+    public void setPack(Package pack) {
         this.pack = pack;
     }
 

@@ -14,7 +14,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -40,7 +39,7 @@ public class Product implements Serializable {
     @ManyToOne(targetEntity = Category.class)
     private Category category;
     @OneToMany
-    private List<ProductPackage> packages;
+    private List<Package> packages;
 
     @Override
     public int hashCode() {
@@ -98,6 +97,9 @@ public class Product implements Serializable {
     }
 
     public Integer getAmount() {
+        if (amount==null){
+            amount =0;
+        }
         return amount;
     }
 
@@ -140,14 +142,14 @@ public class Product implements Serializable {
         this.orderItems = orderItems;
     }
 
-    public List<ProductPackage> getPackages() {
+    public List<Package> getPackages() {
         if (packages==null){
             packages = new ArrayList<>();
         }
         return packages;
     }
 
-    public void setPackages(List<ProductPackage> packages) {
+    public void setPackages(List<Package> packages) {
         this.packages = packages;
     }
     
