@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Genius-Inventory</title>
+        <style type="text/css">
+            body{
+                font-size: 10pt;
+            }
+        </style>
+        <script type="text/javascript" src="PrimefacesDialog.js">
+        </script>
+        <script type="text/javascript">
+            PrimefacesDialog.on('show', function() {
+            });
+        </script>
+    </h:head>
+    <h:body >
+        <p:growl id="notification" showDetail="true" showSummary="true"/> 
+        <ui:insert name="custemplate"/>  
+    </h:body>
+</html>
