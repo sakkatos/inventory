@@ -23,17 +23,14 @@
         <p:growl id="notification" showDetail="true" showSummary="true"/>  
         <p:layout fullPage="true">
             <p:layoutUnit position="north"
-                          style="background : red;"
                           size="100">
                 <h:outputText value="header template"/>
             </p:layoutUnit>
             <p:layoutUnit position="west"
-                          style="background : yellow;"
                           size="220">
                 <h:outputText value="left menu template"/>
             </p:layoutUnit>
-            <p:layoutUnit position="center"
-                          style="background : green;">
+            <p:layoutUnit position="center">
                <!-- template replace *************** -->
                 <ui:insert name="centerReplace"/>
             </p:layoutUnit>
