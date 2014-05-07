@@ -32,6 +32,7 @@ public class CustomerController implements Serializable {
     private String keyword;
     private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
     private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
+    private String customerId;
 
     @PostConstruct
     public void CustomerControl() {
@@ -62,19 +63,17 @@ public class CustomerController implements Serializable {
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
-//    public void onSelectCustomer() {
-//        String customerId = requestParam("customerId");
-//
-//        String id = String.valueOf(customerId);
-//        int indexOf = this.getCustomers().indexOf(new Customer(id));
-//        customer = this.getCustomers().get(indexOf);
-//    }
-
     public void onSelectCustomer() {
-        Customer c = new Customer();
-        c.setId(requestParam("customerId"));
-        customer=getCustomers().get(getCustomers().indexOf(c));
+        String c = requestParam("customerId");
+        int indexOf = this.getCustomers().indexOf(new Customer(c));
+        customer = this.getCustomers().get(indexOf);
     }
+
+//    public void onSelectCustomer() {
+//        Customer c = new Customer();
+//        c.setId(customerId);
+//        customer=getCustomers().get(getCustomers().indexOf(c));
+//    }
     
     public List<Customer> findAllCustomer() {
         return customerService.findAll();
@@ -109,6 +108,15 @@ public class CustomerController implements Serializable {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+    
 
     private String requestParam(String paramName) {
         return FacesContext.getCurrentInstance()

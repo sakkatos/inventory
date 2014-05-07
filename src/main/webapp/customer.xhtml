@@ -7,26 +7,31 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="custemplate">
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
+        </f:metadata>
         <h:form id="customerForm">
             #{customerController.reset()}
             <p:commandButton value="Add customer"
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
-                             onsuccess="addCustomerDialog.show()"/>
+                             onsuccess="addWidgetDialog.show()"/>
+            <br/>
+            <br/>
             <p:dataTable value="#{customerController.customers}" var="item">
                 <p:column headerText="CustomerId" width="20">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.firstName}</p:column>
                 <p:column headerText="Lastname">#{item.lastName}</p:column>
                 <p:column headerText="action" >
                     <p:commandButton value="edit"
-                                     oncomplete="editWidgetDialog.show();"
+                                     onsuccess="editWidgetDialog.show();"
                                      update=":editCustomerDialogForm"
                                      actionListener="#{customerController.onSelectCustomer()}">
                         <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
                     <p:commandButton value="delete"
-                                     oncomplete="deleteWidgetDialog.show();"
+                                     onsuccess="deleteWidgetDialog.show();"
                                      update=":deleteCustomerDialogForm"
                                      actionListener="#{customerController.onSelectCustomer()}">
                         <f:param name="customerId" value="#{item.id}"/>
@@ -35,7 +40,10 @@
             </p:dataTable>
         </h:form>
 
-        <p:dialog widgetVar="addCustomerDialog">
+        <p:dialog id="addCustomerDialog"
+                  appendToBody="true"
+                  modal="true"
+                  widgetVar="addWidgetDialog">
             <h:form id="addCustomerDialogForm">
                 <p:panelGrid columns="2">
                     <h:outputText value="ID"/>
@@ -54,15 +62,16 @@
                 <p:commandButton value="Save" 
                                  actionListener="#{customerController.onSave()}"
                                  update=":customerForm, :notification"
-                                 onsuccess="addCustomerDialog.hide()"/>
+                                 onsuccess="addWidgetDialog.hide()"/>
                 <p:commandButton value="Cancel" 
-                                 onsuccess="addCustomerDialog.hide()"/>
+                                 onsuccess="addWidgetDialog.hide()"/>
             </h:form>
         </p:dialog>
 
         <p:dialog id="editCustomerDialog"
                   header="edit user"
                   width="500"
+                  appendToBody="true"
                   modal="true"
                   draggable="false"
                   resizable="false"
@@ -88,6 +97,7 @@
         <p:dialog id="deleteCustomerDialog"
                   header="delete user"
                   width="500"
+                  appendToBody="true"
                   modal="true"
                   draggable="false"
                   resizable="false"

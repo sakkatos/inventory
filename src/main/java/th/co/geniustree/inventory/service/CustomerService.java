@@ -22,6 +22,8 @@ public interface CustomerService {
     public void deleteByName(Customer customer);
 
     public List<Customer> findAll();
+    
+    public List<Customer> findByNameLike(String customer);
 
     public Page findAll(PageRequest pageRequest);
     public Page findAllPage(PageRequest pageRequest);

@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Genius-Inventory</title>
         <style type="text/css">
@@ -24,8 +19,24 @@ and open the template in the editor.
             });
         </script>
     </h:head>
-    <h:body >
-        <p:growl id="notification" showDetail="true" showSummary="true"/> 
-        <ui:insert name="custemplate"/>  
+    <h:body>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>  
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north"
+                          style="background : red;"
+                          size="100">
+                <h:outputText value="header template"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="west"
+                          style="background : yellow;"
+                          size="220">
+                <h:outputText value="left menu template"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="center"
+                          style="background : green;">
+               <!-- template replace *************** -->
+                <ui:insert name="centerReplace"/>
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
