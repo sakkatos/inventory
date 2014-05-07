@@ -6,17 +6,18 @@
 
 package th.co.geniustree.inventory.repo;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.model.ProductItem;
 
 /**
  *
  * @author Nook
  */
-public interface PackageRepo extends JpaRepository<ProductPackage, String> {
+public interface ProductItemRepo extends JpaRepository<ProductItem, Integer>{
     
-    @Query("SELECT b FROM ProductPackage b WHERE b.barcode = ?1")
-    public ProductPackage findBarcode(String barcode);
-       
+    @Query("SELECT pi FROM ProductItem pi JOIN pi.product p WHERE p.id = ?1 ORDER BY pi.dateIn,pi.timeIn DESC ")
+    public List<ProductItem> itemOrderByDateDescend(String productId); 
+    
 }

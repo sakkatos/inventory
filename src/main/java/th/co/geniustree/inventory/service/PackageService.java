@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import th.co.geniustree.inventory.model.Product;
-import th.co.geniustree.inventory.repo.ProductRepo;
+import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.repo.PackageRepo;
 
 /**
  *
@@ -19,29 +19,21 @@ import th.co.geniustree.inventory.repo.ProductRepo;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class ProductService {
+public class PackageService {
 
     @Autowired
-    public ProductRepo productRepo;
+    public PackageRepo packageRepo;
 
-    public Product findByBarcode(String barcode) {
-        return productRepo.findProductByBarcode(barcode);
+    public List<ProductPackage> findAll() {
+        return packageRepo.findAll();
     }
 
-    public void remove(Product product) {
-        productRepo.delete(product);
+    public ProductPackage findOne(String barcode) {
+        return packageRepo.findOne(barcode);
     }
-
-    public List<Product> findAll() {
-        return productRepo.findAll();
-    }
-
-    public List<Product> findAllProduct() {
-        return productRepo.findAllProduct();
-    }
-
-    public void save(Product product) {
-        productRepo.save(product);
+    
+    public ProductPackage findBarcode (String barcode){
+        return packageRepo.findBarcode(barcode);
     }
 
 }

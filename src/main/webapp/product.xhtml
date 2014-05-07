@@ -11,25 +11,33 @@ and open the template in the editor.
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:define name="mainContent">
         Product Page<br/>
+            
         <h:link outcome="index" value="Home"/><br/>
         <h:form id="productTableForm">
-            <p:commandButton value="Barcode" 
-                             actionListener="#{productControl.onIncreaseProduct()}"
+            <p:commandButton value="Test Function" 
+                             actionListener="#{productControl.isBarcodeExist()}"
                              update=":productTableForm"/>
+            <p:commandButton value="Barcode" 
+                             update=":productTableForm"
+                             onsuccess="productTableForm"/>
             <p:inputText value="#{productControl.barcode}"/>
             <p:panelGrid columns="4">
                 <h:outputText value="Product Id"/>
                 <h:outputText value="#{productControl.product.id}" />
-                
+
                 <h:outputText value="Product Name"/>
                 <h:outputText value="#{productControl.product.name}"/>
-                
+
                 <h:outputText value="Product Category"/>
-                <h:outputText value="#{productControl.product.category}"/>
-                
-                <h:outputText value="Amount"/>
+                <h:outputText value="#{productControl.product.category.name}"/>
+
+                <h:outputText value="Product Barcode"/>
+                <h:outputText value="#{productControl.pack.barcode}"/>
+
+                <h:outputText value="current amount"/>
                 <h:outputText value="#{productControl.product.amount}"/>
             </p:panelGrid>
         </h:form>

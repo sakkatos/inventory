@@ -6,10 +6,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+    <f:metadata>
+        <f:viewParam  name="productId" value="#{productControl.selectedProductId}" ></f:viewParam>
+    </f:metadata>
     <ui:define name="mainContent">
         HOME(page1)<br/>
-        <h:link outcome="product" value="product"/>
+        <h:link outcome="product" value="product"/><br/>
+        <h:link outcome="customer" value="customer"/>
         <h:form id="productTableForm">
             <p:commandButton value="Add product"
                              actionListener="#{productControl.onCreate()}"
@@ -29,13 +32,12 @@
                     <p:commandButton value="remove"
                                      update=":removeProductForm"
                                      actionListener="#{productControl.onSelectProduct()}"
-                                     onsuccess="removeProductFWidget.show()"> 
+                                     onsuccess="removeProductWidget.show()"> 
                         <f:param name="productId" value="#{item.id}"/>
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="ProductId">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.name}</p:column>
-                <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Category">#{item.category.name}</p:column>
             </p:dataTable>
         </h:form>
@@ -79,9 +81,6 @@
 
                     <h:outputText value="Product cost"/>
                     <p:inputText value="#{productControl.product.cost}"/>
-
-                    <h:outputText value="product amount"/>
-                    <p:inputText value="#{productControl.product.amount}"/>
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onEditProduct()}"
@@ -93,17 +92,17 @@
         <p:dialog widgetVar="removeProductWidget">
             <h:form id="removeProductForm">
                 <h:outputText value="Remove this product?"/>
-                    <p:panelGrid columns="4">
-                        <h:outputText value="Product Id"/>
-                        <p:inputText value="#{productControl.product.id}"/>
+                <p:panelGrid columns="4">
+                    <h:outputText value="Product Id"/>
+                    <p:inputText value="#{productControl.product.id}"/>
 
-                        <h:outputText value="Product name"/>
-                        <p:inputText value="#{productControl.product.name}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="Remove" 
-                                     actionListener="#{productControl.onDeleteProduct()}"
-                                     update=":productTableForm"
-                                     onsuccess="removeProductWidget.hide()"/>
+                    <h:outputText value="Product name"/>
+                    <p:inputText value="#{productControl.product.name}"/>
+                </p:panelGrid>
+                <p:commandButton value="Remove" 
+                                 actionListener="#{productControl.onDeleteProduct()}"
+                                 update=":productTableForm"
+                                 onsuccess="removeProductWidget.hide()"/>
             </h:form>
         </p:dialog>
 

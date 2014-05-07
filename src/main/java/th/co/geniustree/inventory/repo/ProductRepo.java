@@ -20,4 +20,7 @@ public interface ProductRepo extends JpaRepository<Product, String>{
     @Query("SELECT p From Product p JOIN p.packages pk WHERE pk.barcode = ?1")
     public Product findProductByBarcode(String barcode);
     
+    @Query("SELECT p FROM Product p")
+    public List<Product> findAllProduct();
+    
 }

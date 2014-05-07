@@ -21,7 +21,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
-import th.co.geniustree.inventory.model.Package;
+import th.co.geniustree.inventory.model.ProductPackage;
+import th.co.geniustree.inventory.repo.PackageRepo;
 import th.co.geniustree.inventory.repo.ProductRepo;
 
 /**
@@ -35,6 +36,9 @@ public class ProductIT {
 
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private PackageRepo packageRepo;
+    
 
     public ProductIT() {
     }
@@ -60,27 +64,8 @@ public class ProductIT {
     //
     @Test
     @Rollback(true)
-    public void saveProduct() {
+    public void tryQuery() {
 
-        Category category = new Category();
-        category.setId("001");
-        category.setName("Accesory");
-
-        Package productPackage = new Package();
-        productPackage.setBarcode("10230");
-        productPackage.setName("ลัง");
-        productPackage.setAmountPerPack(12);
-        
-        List<Package> packages = new ArrayList<>();
-        packages.add(productPackage);
-        
-        Product product = new Product();
-        product.setId("1234567890");
-        product.setName("watch");
-        product.setCategory(category);
-        product.setPackages(packages);
-        productRepo.save(product);
-        List<Product> products = productRepo.findAll();
-        assertNotNull(products);
+        assertNotNull(packageRepo.findOne("3213213"));
     }
 }

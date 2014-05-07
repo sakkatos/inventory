@@ -8,7 +8,8 @@
     <class>th.co.geniustree.inventory.model.PurchaseOrder</class>
     <class>th.co.geniustree.inventory.model.Staff</class>
     <class>th.co.geniustree.inventory.model.Category</class>
-    <class>th.co.geniustree.inventory.model.Package</class>
+    <class>th.co.geniustree.inventory.model.ProductPackage</class>
+    <class>th.co.geniustree.inventory.model.ProductItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
