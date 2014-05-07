@@ -33,9 +33,16 @@ public class Customer implements Serializable {
     private String address;
     private String phoneNumber;
     private String mobilePhoneNumber;
-    
+
     @OneToMany(mappedBy = "customer")
     private List<PurchaseOrder> purchaseOrder;
+
+    public Customer() {
+    }
+
+    public Customer(String id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {
@@ -131,5 +138,4 @@ public class Customer implements Serializable {
         this.purchaseOrder = purchaseOrder;
     }
 
-    
 }

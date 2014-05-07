@@ -6,6 +6,7 @@
 package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +15,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.jsf.FacesContextUtils;
 import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.service.CustomerService;
+import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
  *
@@ -26,27 +25,28 @@ import th.co.geniustree.inventory.service.CustomerService;
  */
 @ManagedBean
 @SessionScoped
-public class CustomerControl implements Serializable {
+public class CustomerController implements Serializable {
 
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
-    private static final Logger LOG = Logger.getLogger(CustomerControl.class.getName());
-    private final CustomerService customerService = getCustomerManagedBean();
+    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
+    private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
 
     @PostConstruct
     public void CustomerControl() {
+        reset();
     }
 
-    public void onCreateCustomer() {
+    
+    public void reset() {
+        customers = customerService.findAll();
+    }
+    public void onCreate() {
         customer = new Customer();
     }
 
-    public void onEditCustomer() {
-        customerService.save(customer);
-    }
-
-    public void onSaveCustomer() {
+    public void onSave() {
         try {
             customer = customerService.save(customer);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
@@ -56,29 +56,31 @@ public class CustomerControl implements Serializable {
         }
     }
 
-    public void onDeleteCustomer() {
-        customerService.remove(customer);
-        customers = findAllCustomer();
+    public void onDelete() {
+        customerService.deleteByName(customer);
+
+        showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
+
+//    public void onSelectCustomer() {
+//        String customerId = requestParam("customerId");
+//
+//        String id = String.valueOf(customerId);
+//        int indexOf = this.getCustomers().indexOf(new Customer(id));
+//        customer = this.getCustomers().get(indexOf);
+//    }
 
     public void onSelectCustomer() {
         Customer c = new Customer();
         c.setId(requestParam("customerId"));
-        customer = getCustomers().get(getCustomers().indexOf(c));
+        customer=getCustomers().get(getCustomers().indexOf(c));
     }
-
+    
     public List<Customer> findAllCustomer() {
         return customerService.findAll();
     }
 
-    private String requestParam(String paramName) {
-        return FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap()
-                .get(paramName);
-    }
     //----------------------------------------------------------------------------
-
     public Customer getCustomer() {
         return customer;
     }
@@ -88,6 +90,11 @@ public class CustomerControl implements Serializable {
     }
 
     public List<Customer> getCustomers() {
+
+        if (customers == null) {
+            customers = new ArrayList<>();
+        }
+
         return customers;
     }
 
@@ -103,9 +110,11 @@ public class CustomerControl implements Serializable {
         this.keyword = keyword;
     }
 
-    public CustomerService getCustomerManagedBean() {
-        ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
-        return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CustomerService.class);
+    private String requestParam(String paramName) {
+        return FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get(paramName);
     }
 
     private void showMessage(FacesMessage.Severity severity, String title, String body) {
