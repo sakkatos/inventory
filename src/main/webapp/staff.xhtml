@@ -1,0 +1,122 @@
+<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/custemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
+        </f:metadata>
+        <h:form id="customerForm">
+            #{customerController.reset()}
+            <p:commandButton value="Add customer"
+                             actionListener="#{customerController.onCreate()}"
+                             update=":addCustomerDialogForm"
+                             onsuccess="addWidgetDialog.show()"/>
+            <br/>
+            <br/>
+            <p:dataTable value="#{customerController.customers}" var="item">
+                <p:column headerText="CustomerId" width="20">#{item.id}</p:column>
+                <p:column headerText="Name">#{item.firstName}</p:column>
+                <p:column headerText="Lastname">#{item.lastName}</p:column>
+                <p:column headerText="action" >
+                    <p:commandButton value="edit"
+                                     onsuccess="editWidgetDialog.show();"
+                                     update=":editCustomerDialogForm"
+                                     actionListener="#{customerController.onSelectCustomer()}">
+                        <f:param name="customerId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="delete"
+                                     onsuccess="deleteWidgetDialog.show();"
+                                     update=":deleteCustomerDialogForm"
+                                     actionListener="#{customerController.onSelectCustomer()}">
+                        <f:param name="customerId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="addCustomerDialog"
+                  appendToBody="true"
+                  modal="true"
+                  widgetVar="addWidgetDialog">
+            <h:form id="addCustomerDialogForm">
+                <p:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{customerController.customer.id}"/>
+
+                    <h:outputText value="Fristname"/>
+                    <p:inputText value="#{customerController.customer.firstName}"/>
+
+                    <h:outputText value="Lastname"/>
+                    <p:inputText value="#{customerController.customer.lastName}"/>
+
+                    <h:outputText value="Phone"/>
+                    <p:inputText value="#{customerController.customer.phoneNumber}"/>
+
+                </p:panelGrid>
+                <p:commandButton value="Save" 
+                                 actionListener="#{customerController.onSave()}"
+                                 update=":customerForm, :notification"
+                                 onsuccess="addWidgetDialog.hide()"/>
+                <p:commandButton value="Cancel" 
+                                 onsuccess="addWidgetDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="editCustomerDialog"
+                  header="edit user"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="editWidgetDialog"> 
+            <h:form id="editCustomerDialogForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="name"/>
+                    <p:inputText value="#{customerController.customer.firstName}"/>
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <p:commandButton value="save"
+                                 update=":customerForm, :notification"
+                                 actionListener="#{customerController.onSave()}"
+                                 oncomplete="editWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="cancel"
+                                 type="button"
+                                 onclick="editWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="deleteCustomerDialog"
+                  header="delete user"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="deleteWidgetDialog"> 
+            <h:form id="deleteCustomerDialogForm">
+                <h:outputText value="#{customerController.customer.firstName}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="delete"
+                                 update=":customerForm, :notification"
+                                 actionListener="#{customerController.onDelete()}"
+                                 oncomplete="deleteWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="cancel"
+                                 type="button"
+                                 onclick="deleteWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>
+

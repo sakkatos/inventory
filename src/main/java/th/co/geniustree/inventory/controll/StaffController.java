@@ -16,7 +16,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import th.co.geniustree.inventory.model.Customer;
-import th.co.geniustree.inventory.service.CustomerService;
+import th.co.geniustree.inventory.model.Staff;
+import th.co.geniustree.inventory.service.StaffService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
@@ -25,48 +26,44 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
  */
 @ManagedBean
 @SessionScoped
-public class CustomerController implements Serializable {
+public class StaffController implements Serializable {
 
-    private Customer customer;
-    private List<Customer> customers;
+    private Staff staff;
+    private List<Staff> staffs;
     private String keyword;
-    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
-    private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
-    private String customerId;
+    private String staffId;
+    private static final Logger LOG = Logger.getLogger(StaffController.class.getName());
+    private final StaffService staffService = JSFSpringUtils.getBean(StaffService.class);
 
     @PostConstruct
-    public void CustomerControl() {
-        reset();
+    public void StaffController() {
     }
 
-    
-    public void reset() {
-        customers = customerService.findAll();
-    }
     public void onCreate() {
-        customer = new Customer();
+        staff = new Staff();
     }
 
     public void onSave() {
         try {
-            customer = customerService.save(customer);
+            staff = staffService.save(staff);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
             LOG.log(Level.INFO, ex.getMessage(), ex);
             showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
         }
+
     }
 
     public void onDelete() {
-        customerService.deleteByName(customer);
+        staffService.deleteByName(staff);
 
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
     public void onSelectCustomer() {
-        String c = requestParam("customerId");
-        int indexOf = this.getCustomers().indexOf(new Customer(c));
-        customer = this.getCustomers().get(indexOf);
+        String s = requestParam("staffId");
+        int indexOf = this.getStaffs().indexOf(new Customer(s));
+        staff = this.getStaffs().get(indexOf);
     }
 
 //    public void onSelectCustomer() {
@@ -74,31 +71,29 @@ public class CustomerController implements Serializable {
 //        c.setId(customerId);
 //        customer=getCustomers().get(getCustomers().indexOf(c));
 //    }
-    
-    public List<Customer> findAllCustomer() {
-        return customerService.findAll();
+    public List<Staff> findAllStaff() {
+        return staffService.findAll();
     }
 
-    //----------------------------------------------------------------------------
-    public Customer getCustomer() {
-        return customer;
+    //------------------------------------------------------------------------------------------
+
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 
-    public List<Customer> getCustomers() {
-
-        if (customers == null) {
-            customers = new ArrayList<>();
+    public List<Staff> getStaffs() {
+        if (staffs == null) {
+            staffs = new ArrayList<>();
         }
-
-        return customers;
+        return staffs;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
     }
 
     public String getKeyword() {
@@ -109,20 +104,12 @@ public class CustomerController implements Serializable {
         this.keyword = keyword;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getStaffId() {
+        return staffId;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-    
-
-    private String requestParam(String customerId) {
-        return FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap()
-                .get(customerId);
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
     }
 
     private void showMessage(FacesMessage.Severity severity, String title, String body) {
@@ -130,4 +117,10 @@ public class CustomerController implements Serializable {
                 .addMessage(null, new FacesMessage(severity, title, body));
     }
 
+    private String requestParam(String staffId) {
+        return FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get(staffId);
+    }
 }
