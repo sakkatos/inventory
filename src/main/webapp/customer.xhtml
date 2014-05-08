@@ -17,7 +17,7 @@
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
-            <p:inputText value="#{userController.keyword}"/>
+            <p:inputText value="#{customerController.keyword}"/>
             <p:commandButton value="search"
                              update=":searchCustomerDialogForm"
                              actionListener="#{customerController.onSearch()}"
@@ -126,6 +126,7 @@
                       header="result"
                       width="500"
                       modal="true"
+                      appendToBody="true"
                       draggable="false"
                       resizable="false"
                       widgetVar="searchWidgetDialog"> 

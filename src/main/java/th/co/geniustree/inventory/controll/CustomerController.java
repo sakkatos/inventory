@@ -79,6 +79,10 @@ public class CustomerController implements Serializable {
     }
 
     public List<Customer> onSearch() {
+        if(keyword==null){
+            System.out.println("Noooooooooooooooooooo");
+            
+        }
         customers = customerService.findByFirstNameLike(keyword);
         return customers;
     }
