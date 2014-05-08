@@ -7,6 +7,9 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -36,11 +39,12 @@ public class ProductControl implements Serializable {
     private List<Product> products;
     private ProductPackage pack;
     private Category category;
-    private Integer amountOfPack;
-    private String barcode;
-    private String selectedProductId;
     private ProductItem productItem;
     private List<ProductItem> productItems;
+    private Integer amountOfPack;
+    private String barcode;
+    private String massage = "";
+    private String selectedProductId;
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -49,14 +53,63 @@ public class ProductControl implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        products = productService.findAll();
+//        products = productService.findAll();
 //        LOG.debug("start logger on {}", new Date());
     }
 
 //business logic----------------------------------------------------------------
+    public void addItemByBarcode() {
+        String massage1 = "";
+        String massage2 = "";
+        if (!isBarcodeExist()) {
+            massage1 = "No Barcode info";
+        }
+        if (!isBarcodeBelongTo()) {
+            massage2 = "Barcode not belong to any product";
+        }
+        if (isBarcodeExist() && isBarcodeBelongTo()) {
+            pack = packageService.findBarcode(barcode);
+            product = pack.getProduct();
+            productItem = new ProductItem();
+            insertItemByBarcode();
+            updateItemLog();
+        }
+        massage = massage1 + ", " + massage2;
+    }
+
     public Boolean isBarcodeExist() {
         ProductPackage pkg = packageService.findBarcode(getBarcode());
         return pkg != null;
+    }
+
+    public Boolean isBarcodeBelongTo() {
+        Product prod = packageService.findProductBarcodeBelongTo(getBarcode());
+        return  prod!= null;
+    }
+
+    public void insertItemByBarcode() {
+        productItem.setAmount(pack.getAmountPerPack() * 1);
+        productItem.setProduct(product);
+        productItem.setDateIn(Calendar.getInstance().getTime());
+        productItem.setTimeIn(Calendar.getInstance().getTime());
+        itemService.saveItem(productItem);
+    }
+
+    public void insertItemByHand() {
+        productItem.setAmount(pack.getAmountPerPack() * amountOfPack);
+        productItem.setProduct(product);
+        productItem.setDateIn(Calendar.getInstance().getTime());
+        productItem.setTimeIn(Calendar.getInstance().getTime());
+        itemService.saveItem(productItem);
+    }
+
+    public void updateItemLog() {
+        product = productService.findByBarcode(barcode);
+        productItems = itemService.itemOrderByDateDescend(product);
+    }
+
+    public Integer sumItemByProduct() {
+        return itemService.sumAmountByProduct(product);
     }
 
     public void onCreate() {
@@ -72,14 +125,9 @@ public class ProductControl implements Serializable {
     public void onSaveProduct() {
         product.getPackages().add(pack);
         product.setCategory(getRootCategory());
-//        product.setAmount(amountOfPack * pack.getAmountPerPack());
         pack.setProduct(product);
         productService.save(product);
-        getProducts().add(product);
-    }
-
-    public void insertProductItem() {
-
+        packageService.savePackage(pack);
     }
 
     public void onDeleteProduct() {
@@ -93,8 +141,8 @@ public class ProductControl implements Serializable {
         product = getProducts().get(getProducts().indexOf(p));
     }
 
-    public List<Product> findAllProduct() {
-        return productService.findAll();
+    public void findAllProduct() {
+        products= productService.findAll();
     }
 
     public Category getRootCategory() {
@@ -103,6 +151,14 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    public String getMassage() {
+        return massage;
+    }
+
+    public void setMassage(String massage) {
+        this.massage = massage;
+    }
+
     public ProductItem getProductItem() {
         return productItem;
     }

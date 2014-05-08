@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductPackage;
 import th.co.geniustree.inventory.repo.PackageRepo;
 
@@ -31,9 +32,16 @@ public class PackageService {
     public ProductPackage findOne(String barcode) {
         return packageRepo.findOne(barcode);
     }
-    
-    public ProductPackage findBarcode (String barcode){
+
+    public ProductPackage findBarcode(String barcode) {
         return packageRepo.findBarcode(barcode);
     }
 
+    public void savePackage(ProductPackage package1) {
+        packageRepo.save(package1);
+    }
+
+    public Product findProductBarcodeBelongTo(String barcode) {
+        return packageRepo.findProductBarcodeBelongTo(barcode);
+    }
 }

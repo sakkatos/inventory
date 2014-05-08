@@ -11,6 +11,7 @@
     </f:metadata>
     <ui:define name="mainContent">
         HOME(page1)<br/>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>
         <h:link outcome="product" value="product"/><br/>
         <h:link outcome="customer" value="customer"/>
         <h:form id="productTableForm">
@@ -20,7 +21,7 @@
                              onsuccess="addProductWidget.show()"/>
             <p:commandButton value="Find all" 
                              actionListener="#{productControl.findAllProduct()}"
-                             update=":productTableForm"/>
+                             update=":productTableForm,:notification"/>
             <p:dataTable value="#{productControl.products}" var="item">
                 <p:column headerText="action" >
                     <p:commandButton value="edit"
@@ -65,7 +66,7 @@
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onSaveProduct()}"
-                                 update=":productTableForm"
+                                 update=":productTableForm,:notification"
                                  onsuccess="addProductWidget.hide()"/>
             </h:form>
         </p:dialog>
@@ -84,7 +85,7 @@
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onEditProduct()}"
-                                 update=":productTableForm"
+                                 update=":productTableForm,:notification"
                                  onsuccess="editProductWidget.hide()"/>
             </h:form>
         </p:dialog>
@@ -101,7 +102,7 @@
                 </p:panelGrid>
                 <p:commandButton value="Remove" 
                                  actionListener="#{productControl.onDeleteProduct()}"
-                                 update=":productTableForm"
+                                 update=":productTableForm,:notification"
                                  onsuccess="removeProductWidget.hide()"/>
             </h:form>
         </p:dialog>

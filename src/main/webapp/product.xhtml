@@ -1,45 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+                xmlns:f="http://java.sun.com/jsf/core">
+    <f:metadata>
+        <f:viewParam  name="productId" value="#{productControl.selectedProductId}" ></f:viewParam>
+    </f:metadata>
     <ui:define name="mainContent">
-        Product Page<br/>
-            
-        <h:link outcome="index" value="Home"/><br/>
+        HOME(page1)<br/>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>
+        <h:link outcome="product" value="product"/><br/>
+        <h:link outcome="customer" value="customer"/>
         <h:form id="productTableForm">
-            <p:commandButton value="Test Function" 
-                             actionListener="#{productControl.isBarcodeExist()}"
-                             update=":productTableForm"/>
-            <p:commandButton value="Barcode" 
-                             update=":productTableForm"
-                             onsuccess="productTableForm"/>
-            <p:inputText value="#{productControl.barcode}"/>
-            <p:panelGrid columns="4">
-                <h:outputText value="Product Id"/>
-                <h:outputText value="#{productControl.product.id}" />
-
-                <h:outputText value="Product Name"/>
-                <h:outputText value="#{productControl.product.name}"/>
-
-                <h:outputText value="Product Category"/>
-                <h:outputText value="#{productControl.product.category.name}"/>
-
-                <h:outputText value="Product Barcode"/>
-                <h:outputText value="#{productControl.pack.barcode}"/>
-
-                <h:outputText value="current amount"/>
-                <h:outputText value="#{productControl.product.amount}"/>
-            </p:panelGrid>
+            <p:commandButton value="Add product"
+                             actionListener="#{productControl.onCreate()}"
+                             update=":addProductForm"
+                             onsuccess="addProductWidget.show()"/>
+            <p:commandButton value="Find all" 
+                             actionListener="#{productControl.findAllProduct()}"
+                             update=":productTableForm,:notification"/>
+            <p:dataTable value="#{productControl.products}" var="item">
+                <p:column headerText="action" >
+                    <p:commandButton value="edit"
+                                     update=":editProductForm"
+                                     actionListener="#{productControl.onSelectProduct()}"
+                                     onsuccess="editProductWidget.show()">
+                        <f:param name="productId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="remove"
+                                     update=":removeProductForm"
+                                     actionListener="#{productControl.onSelectProduct()}"
+                                     onsuccess="removeProductWidget.show()"> 
+                        <f:param name="productId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ProductId">#{item.id}</p:column>
+                <p:column headerText="Name">#{item.name}</p:column>
+                <p:column headerText="Category">#{item.category.name}</p:column>
+            </p:dataTable>
         </h:form>
 
         <p:dialog widgetVar="addProductWidget">
@@ -54,6 +55,9 @@ and open the template in the editor.
                     <h:outputText value="Product cost"/>
                     <p:inputText value="#{productControl.product.cost}"/>
 
+                    <h:outputText value="Package barcode"/>
+                    <p:inputText value="#{productControl.pack.barcode}"/>
+
                     <h:outputText value="Amount per package"/>
                     <p:inputText value="#{productControl.pack.amountPerPack}"/>
 
@@ -62,9 +66,47 @@ and open the template in the editor.
                 </p:panelGrid>
                 <p:commandButton value="Save" 
                                  actionListener="#{productControl.onSaveProduct()}"
-                                 update=":productTableForm"
+                                 update=":productTableForm,:notification"
                                  onsuccess="addProductWidget.hide()"/>
             </h:form>
         </p:dialog>
+
+        <p:dialog widgetVar="editProductWidget">
+            <h:form id="editProductForm">
+                <p:panelGrid columns="4">
+                    <h:outputText value="Product Id"/>
+                    <p:inputText value="#{productControl.product.id}"/>
+
+                    <h:outputText value="Product name"/>
+                    <p:inputText value="#{productControl.product.name}"/>
+
+                    <h:outputText value="Product cost"/>
+                    <p:inputText value="#{productControl.product.cost}"/>
+                </p:panelGrid>
+                <p:commandButton value="Save" 
+                                 actionListener="#{productControl.onEditProduct()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="editProductWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="removeProductWidget">
+            <h:form id="removeProductForm">
+                <h:outputText value="Remove this product?"/>
+                <p:panelGrid columns="4">
+                    <h:outputText value="Product Id"/>
+                    <p:inputText value="#{productControl.product.id}"/>
+
+                    <h:outputText value="Product name"/>
+                    <p:inputText value="#{productControl.product.name}"/>
+                </p:panelGrid>
+                <p:commandButton value="Remove" 
+                                 actionListener="#{productControl.onDeleteProduct()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="removeProductWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
+

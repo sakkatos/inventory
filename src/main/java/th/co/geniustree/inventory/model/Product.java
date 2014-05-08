@@ -16,7 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.eclipse.persistence.jpa.config.Cascade;
 
 /**
  *
@@ -37,10 +36,13 @@ public class Product implements Serializable {
 
     @ManyToOne(targetEntity = Category.class)
     private Category category;
+    
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItems;
+    
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductPackage> packages;
+    
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<ProductItem> productItem;
 

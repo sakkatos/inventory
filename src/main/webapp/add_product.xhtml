@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition template="/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="mainContent">
+        Product Page<br/>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>
+        <h:link outcome="index" value="Home"/><br/>
+        <h:form id="productTableForm">
+            <table>
+                <tr>
+                    <td>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Test Function" 
+                                             actionListener="#{productControl.addItemByBarcode()}"
+                                             update=":productTableForm ,:notification"/>
+                            <p:inputText value="#{productControl.barcode}"/>
+                            <h:outputLabel value="Product"/> 
+                            <h:outputText value="#{productControl.product.name}"/>
+                            <h:outputLabel value="Amount"/> 
+                            <h:outputText value="#{productControl.sumItemByProduct()}"/>
+                        </p:panelGrid>
+                    </td>
+                    <h:outputText value="#{productControl.massage}"/>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

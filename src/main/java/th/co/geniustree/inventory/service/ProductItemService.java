@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductItem;
 import th.co.geniustree.inventory.repo.ProductItemRepo;
 
@@ -33,7 +34,12 @@ public class ProductItemService {
         productItemRepo.delete(productItem);
     }
     
-    public List<ProductItem> itemOrderByDateDescend(String productId){
-        return productItemRepo.itemOrderByDateDescend(productId);
+    public List<ProductItem> itemOrderByDateDescend(Product product){
+        return productItemRepo.itemOrderByDateDescend(product);
     }
+    
+    public Integer sumAmountByProduct (Product product){
+        return productItemRepo.sumAmountByProduct(product);
+    }
+
 }
