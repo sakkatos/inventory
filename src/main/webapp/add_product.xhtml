@@ -20,8 +20,8 @@ and open the template in the editor.
             <table>
                 <tr>
                     <td>
-                        <p:panelGrid columns="2">
-                            <p:commandButton value="Test Function" 
+                        <p:panelGrid columns="6">
+                            <p:commandButton value="Barcode" 
                                              actionListener="#{productControl.addItemByBarcode()}"
                                              update=":productTableForm ,:notification"/>
                             <p:inputText value="#{productControl.barcode}"/>
@@ -34,6 +34,9 @@ and open the template in the editor.
                     <h:outputText value="#{productControl.massage}"/>
                 </tr>
             </table>
+            <p:dataTable value="#{}">
+                
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>

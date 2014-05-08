@@ -38,6 +38,7 @@ public class ProductControl implements Serializable {
     private Product product;
     private List<Product> products;
     private ProductPackage pack;
+    private List<ProductPackage> packs;
     private Category category;
     private ProductItem productItem;
     private List<ProductItem> productItems;
@@ -62,10 +63,10 @@ public class ProductControl implements Serializable {
         String massage1 = "";
         String massage2 = "";
         if (!isBarcodeExist()) {
-            massage1 = "No Barcode info";
+            massage1 = "No barcode info.";
         }
         if (!isBarcodeBelongTo()) {
-            massage2 = "Barcode not belong to any product";
+            massage2 = "The barcode not belong to any product.";
         }
         if (isBarcodeExist() && isBarcodeBelongTo()) {
             pack = packageService.findBarcode(barcode);
@@ -151,6 +152,18 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    
+    public List<ProductPackage> getPacks() {
+        if (packs==null){
+            packs = new ArrayList<>();
+        }
+        return packs;
+    }
+
+    public void setPacks(List<ProductPackage> packs) {
+        this.packs = packs;
+    }
+
     public String getMassage() {
         return massage;
     }
