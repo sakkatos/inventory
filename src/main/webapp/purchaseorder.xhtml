@@ -9,109 +9,109 @@
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
+            <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
         </f:metadata>
-        <h:form id="customerForm">
-            #{customerController.reset()}
-            <p:commandButton value="Add customer"
-                             actionListener="#{customerController.onCreate()}"
-                             update=":addCustomerDialogForm"
+        <h:form id="staffForm">
+            #{staffController.reset()}
+            <p:commandButton value="Add Staff"
+                             actionListener="#{staffController.onCreate()}"
+                             update=":addStaffDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
             <br/>
             <br/>
-            <p:dataTable value="#{customerController.customers}" var="item">
-                <p:column headerText="CustomerId" width="20">#{item.id}</p:column>
+            <p:dataTable value="#{staffController.staffs}" var="item">
+                <p:column headerText="ID" width="20">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.firstName}</p:column>
                 <p:column headerText="Lastname">#{item.lastName}</p:column>
                 <p:column headerText="action" >
                     <p:commandButton value="edit"
                                      onsuccess="editWidgetDialog.show();"
-                                     update=":editCustomerDialogForm"
-                                     actionListener="#{customerController.onSelect()}">
-                        <f:param name="customerId" value="#{item.id}"/>
+                                     update=":editStaffDialogForm"
+                                     actionListener="#{staffController.onSelect()}">
+                        <f:param name="staffId" value="#{item.id}"/>
                     </p:commandButton>
                     <p:commandButton value="delete"
                                      onsuccess="deleteWidgetDialog.show();"
-                                     update=":deleteCustomerDialogForm"
-                                     actionListener="#{customerController.onSelect()}">
-                        <f:param name="customerId" value="#{item.id}"/>
+                                     update=":deleteStaffDialogForm"
+                                     actionListener="#{staffController.onSelect()}">
+                        <f:param name="staffId" value="#{item.id}"/>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
 
-        <p:dialog id="addCustomerDialog"
+        <p:dialog id="addStaffDialog"
+                  header="เพิ่ม staff"
+                  resizable="false"
                   appendToBody="true"
                   modal="true"
+                  draggable="false"
                   widgetVar="addWidgetDialog">
-            <h:form id="addCustomerDialogForm">
+            <h:form id="addStaffDialogForm">
                 <p:panelGrid columns="2">
                     <h:outputText value="ID"/>
-                    <p:inputText value="#{customerController.customer.id}"/>
+                    <p:inputText value="#{staffController.staff.id}"/>
 
                     <h:outputText value="Fristname"/>
-                    <p:inputText value="#{customerController.customer.firstName}"/>
+                    <p:inputText value="#{staffController.staff.firstName}"/>
 
                     <h:outputText value="Lastname"/>
-                    <p:inputText value="#{customerController.customer.lastName}"/>
-
-                    <h:outputText value="Phone"/>
-                    <p:inputText value="#{customerController.customer.phoneNumber}"/>
+                    <p:inputText value="#{staffController.staff.lastName}"/>
 
                 </p:panelGrid>
-                <p:commandButton value="Save" 
-                                 actionListener="#{customerController.onSave()}"
-                                 update=":customerForm, :notification"
+                <p:commandButton value="บันทึก" 
+                                 actionListener="#{staffController.onSave()}"
+                                 update=":staffForm, :notification"
                                  onsuccess="addWidgetDialog.hide()"/>
-                <p:commandButton value="Cancel" 
+                <p:commandButton value="ยกเลิก" 
                                  onsuccess="addWidgetDialog.hide()"/>
             </h:form>
         </p:dialog>
 
-        <p:dialog id="editCustomerDialog"
-                  header="edit user"
+        <p:dialog id="editStaffDialog"
+                  header="แก้ไข staff"
                   width="500"
                   appendToBody="true"
                   modal="true"
                   draggable="false"
                   resizable="false"
                   widgetVar="editWidgetDialog"> 
-            <h:form id="editCustomerDialogForm">
+            <h:form id="editStaffDialogForm">
                 <h:panelGrid columns="2">
                     <h:outputText value="name"/>
-                    <p:inputText value="#{customerController.customer.firstName}"/>
+                    <p:inputText value="#{staffController.staff.firstName}"/>
                 </h:panelGrid>
                 <br/>
                 <br/>
-                <p:commandButton value="save"
-                                 update=":customerForm, :notification"
-                                 actionListener="#{customerController.onSave()}"
+                <p:commandButton value="บันทึกการแก้ไข"
+                                 update=":staffForm, :notification"
+                                 actionListener="#{staffController.onSave()}"
                                  oncomplete="editWidgetDialog.hide();"/>
                 <p:spacer width="10"/>
-                <p:commandButton value="cancel"
+                <p:commandButton value="ยกเลิก"
                                  type="button"
                                  onclick="editWidgetDialog.hide();"/>
             </h:form>
         </p:dialog>
 
-        <p:dialog id="deleteCustomerDialog"
-                  header="delete user"
+        <p:dialog id="deleteStaffDialog"
+                  header="ลบ staff"
                   width="500"
                   appendToBody="true"
                   modal="true"
                   draggable="false"
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
-            <h:form id="deleteCustomerDialogForm">
-                <h:outputText value="#{customerController.customer.firstName}"/>
+            <h:form id="deleteStaffDialogForm">
+                <h:outputText value="#{staffController.staff.firstName}"/>
                 <br/>
                 <br/>
-                <p:commandButton value="delete"
-                                 update=":customerForm, :notification"
-                                 actionListener="#{customerController.onDelete()}"
+                <p:commandButton value="ลบข้อมูล"
+                                 update=":staffForm, :notification"
+                                 actionListener="#{staffController.onDelete()}"
                                  oncomplete="deleteWidgetDialog.hide();"/>
                 <p:spacer width="10"/>
-                <p:commandButton value="cancel"
+                <p:commandButton value="ยกเลิก"
                                  type="button"
                                  onclick="deleteWidgetDialog.hide();"/>
             </h:form>
@@ -119,4 +119,3 @@
 
     </ui:define>
 </ui:composition>
-

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package th.co.geniustree.inventory.service.impl;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import th.co.geniustree.inventory.model.Customer;
-import th.co.geniustree.inventory.repo.CustomerRepo;
-import th.co.geniustree.inventory.service.CustomerService;
+import th.co.geniustree.inventory.model.Staff;
+import th.co.geniustree.inventory.repo.StaffRepo;
+import th.co.geniustree.inventory.service.StaffService;
 
 /**
  *
@@ -22,38 +23,41 @@ import th.co.geniustree.inventory.service.CustomerService;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class CustomerServiceImpl implements CustomerService {
+public class StaffServiceImpl implements StaffService{
 
     @Autowired
-    private CustomerRepo customerRepo;
-
+    private StaffRepo staffRepo;
+    
     @Override
-    public Customer save(Customer customer) {
-        return customerRepo.save(customer);
+    public Staff save(Staff staff) {
+        return staffRepo.save(staff);
     }
 
     @Override
-    public void deleteByName(Customer customer) {
-        customerRepo.delete(customer);
+    public void deleteByName(Staff staff) {
+        staffRepo.delete(staff);
     }
 
     @Override
-    public List<Customer> findAll() {
-        return customerRepo.findAll();
+    public List<Staff> findAll() {
+        return staffRepo.findAll();
+    }
+
+    @Override
+    public List<Staff> findByFirstNameLike(String staff) {
+       return staffRepo.findByFirstNameLike(staff);
     }
 
     @Override
     public Page findAll(PageRequest pageRequest) {
-        return customerRepo.findAll(pageRequest);
+        return staffRepo.findAll(pageRequest);
+        
     }
 
     @Override
     public Page findAllPage(PageRequest pageRequest) {
         return null;
+        
     }
-
-    @Override
-    public List<Customer> findByFirstNameLike(String customer) {
-        return customerRepo.findByFirstNameLike(customer);
-    }
+    
 }

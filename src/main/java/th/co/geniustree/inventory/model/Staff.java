@@ -33,6 +33,13 @@ public class Staff implements Serializable {
     @OneToMany(mappedBy = "staff")
     private List<PurchaseOrder> purchaseOrder;
 
+    public Staff() {
+    }
+
+    public Staff(String id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

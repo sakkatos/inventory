@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Genius-Inventory</title>
+        <style type="text/css">
+            body{
+                font-size: 10pt;
+            }
+        </style>
+        <script type="text/javascript" src="PrimefacesDialog.js">
+        </script>
+        <script type="text/javascript">
+            PrimefacesDialog.on('show', function() {
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>  
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north"
+                          size="100"
+                          gutter="0"
+                          collapsible="true">
+                <h:outputText value="header template"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="west"
+                          size="220"
+                          gutter="0"
+                          collapsible="true">
+                <h:outputText value="left menu template"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="center"
+                          gutter="0"
+                          collapsible="true">
+               <!-- template replace *************** -->
+                <ui:insert name="centerReplace"/>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>

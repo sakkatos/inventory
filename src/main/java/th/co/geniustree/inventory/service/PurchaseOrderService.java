@@ -9,21 +9,20 @@ package th.co.geniustree.inventory.service;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import th.co.geniustree.inventory.model.Customer;
+import th.co.geniustree.inventory.model.PurchaseOrder;
 
 /**
  *
  * @author toy
  */
+public interface PurchaseOrderService {
+    public PurchaseOrder save(PurchaseOrder purchaseOrder);
 
-public interface CustomerService {
-    public Customer save(Customer customer);
+    public void deleteByName(PurchaseOrder purchaseOrder);
 
-    public void deleteByName(Customer customer);
-
-    public List<Customer> findAll();
+    public List<PurchaseOrder> findAll();
     
-    public List<Customer> findByFirstNameLike(String customer);
+//    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder);
 
     public Page findAll(PageRequest pageRequest);
     public Page findAllPage(PageRequest pageRequest);

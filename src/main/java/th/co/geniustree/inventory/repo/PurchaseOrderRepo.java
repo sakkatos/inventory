@@ -8,12 +8,13 @@ package th.co.geniustree.inventory.repo;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import th.co.geniustree.inventory.model.Customer;
+import th.co.geniustree.inventory.model.PurchaseOrder;
 
 /**
  *
  * @author toy
  */
-public interface CustomerRepo extends JpaRepository<Customer, String>{
-    public List<Customer> findByFirstNameLike(String customer);
+public interface PurchaseOrderRepo extends JpaRepository<PurchaseOrder, Integer> {
+//    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder);
+    
 }

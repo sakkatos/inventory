@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package th.co.geniustree.inventory.service.impl;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import th.co.geniustree.inventory.model.Customer;
-import th.co.geniustree.inventory.repo.CustomerRepo;
-import th.co.geniustree.inventory.service.CustomerService;
+import th.co.geniustree.inventory.model.PurchaseOrder;
+import th.co.geniustree.inventory.repo.PurchaseOrderRepo;
+import th.co.geniustree.inventory.service.PurchaseOrderService;
 
 /**
  *
@@ -22,29 +23,29 @@ import th.co.geniustree.inventory.service.CustomerService;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class CustomerServiceImpl implements CustomerService {
-
+public class PurchaseOrderServiceImpl implements PurchaseOrderService{
+    
     @Autowired
-    private CustomerRepo customerRepo;
+    private PurchaseOrderRepo purchaseOrderRepo;
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepo.save(customer);
+    public PurchaseOrder save(PurchaseOrder purchaseOrder) {
+        return purchaseOrderRepo.save(purchaseOrder);
     }
 
     @Override
-    public void deleteByName(Customer customer) {
-        customerRepo.delete(customer);
+    public void deleteByName(PurchaseOrder purchaseOrder) {
+        purchaseOrderRepo.delete(purchaseOrder);
     }
 
     @Override
-    public List<Customer> findAll() {
-        return customerRepo.findAll();
+    public List<PurchaseOrder> findAll() {
+        return purchaseOrderRepo.findAll();
     }
 
     @Override
     public Page findAll(PageRequest pageRequest) {
-        return customerRepo.findAll(pageRequest);
+        return purchaseOrderRepo.findAll(pageRequest);
     }
 
     @Override
@@ -52,8 +53,9 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
-    @Override
-    public List<Customer> findByFirstNameLike(String customer) {
-        return customerRepo.findByFirstNameLike(customer);
-    }
+//    @Override
+//    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder) {
+//        return purchaseOrderRepo.findByFirstNameLike(purchaseOrder);
+//    }
+    
 }
