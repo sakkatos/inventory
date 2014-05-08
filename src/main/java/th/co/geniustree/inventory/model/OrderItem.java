@@ -30,7 +30,7 @@ public class OrderItem implements Serializable {
     @Column(name = "sale_Price")
     private BigDecimal salePrice;
     private BigDecimal cost;
-    private Integer amonut;
+    private Integer amount;
 
     @ManyToOne
     private Product product;
@@ -77,12 +77,12 @@ public class OrderItem implements Serializable {
         this.cost = cost;
     }
 
-    public Integer getAmonut() {
-        return amonut;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setAmonut(Integer amonut) {
-        this.amonut = amonut;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public Product getProduct() {
