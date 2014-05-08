@@ -43,10 +43,10 @@ public class StaffServiceImpl implements StaffService{
         return staffRepo.findAll();
     }
 
-//    @Override
-//    public List<Staff> findByNameLike(String staff) {
-//       return staffRepo.findByNameLike(staff);
-//    }
+    @Override
+    public List<Staff> findByFirstNameLike(String staff) {
+       return staffRepo.findByFirstNameLike(staff);
+    }
 
     @Override
     public Page findAll(PageRequest pageRequest) {

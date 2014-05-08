@@ -52,8 +52,8 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
-//    @Override
-//    public List<Customer> findByNameLike(String customer) {
-//        return customerRepo.findByNameLike(customer);
-//    }
+    @Override
+    public List<Customer> findByFirstNameLike(String customer) {
+        return customerRepo.findByFirstNameLike(customer);
+    }
 }

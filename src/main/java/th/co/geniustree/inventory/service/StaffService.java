@@ -22,7 +22,7 @@ public interface StaffService {
 
     public List<Staff> findAll();
     
-//    public List<Staff> findByNameLike(String staff);
+    public List<Staff> findByFirstNameLike(String staff);
 
     public Page findAll(PageRequest pageRequest);
     public Page findAllPage(PageRequest pageRequest);

@@ -15,7 +15,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.model.Staff;
 import th.co.geniustree.inventory.service.StaffService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -37,6 +36,11 @@ public class StaffController implements Serializable {
 
     @PostConstruct
     public void StaffController() {
+        reset();
+    }
+    
+      public void reset() {
+        staffs = staffService.findAll();
     }
 
     public void onCreate() {
@@ -60,9 +64,9 @@ public class StaffController implements Serializable {
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
-    public void onSelectCustomer() {
+    public void onSelect() {
         String s = requestParam("staffId");
-        int indexOf = this.getStaffs().indexOf(new Customer(s));
+        int indexOf = this.getStaffs().indexOf(new Staff(s));
         staff = this.getStaffs().get(indexOf);
     }
 

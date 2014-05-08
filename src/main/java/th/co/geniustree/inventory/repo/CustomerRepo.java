@@ -15,5 +15,5 @@ import th.co.geniustree.inventory.model.Customer;
  * @author toy
  */
 public interface CustomerRepo extends JpaRepository<Customer, String>{
-//    public List<Customer> findByNameLike(String customer);
+    public List<Customer> findByFirstNameLike(String customer);
 }

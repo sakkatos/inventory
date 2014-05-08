@@ -35,7 +35,7 @@ public class CustomerController implements Serializable {
     private String customerId;
 
     @PostConstruct
-    public void CustomerControl() {
+    public void CustomerController() {
         reset();
     }
 
@@ -63,13 +63,13 @@ public class CustomerController implements Serializable {
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
-    public void onSelectCustomer() {
+    public void onSelect() {
         String c = requestParam("customerId");
         int indexOf = this.getCustomers().indexOf(new Customer(c));
         customer = this.getCustomers().get(indexOf);
     }
 
-//    public void onSelectCustomer() {
+//    public void onSelect() {
 //        Customer c = new Customer();
 //        c.setId(customerId);
 //        customer=getCustomers().get(getCustomers().indexOf(c));

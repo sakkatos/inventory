@@ -23,7 +23,7 @@ public interface CustomerService {
 
     public List<Customer> findAll();
     
-//    public List<Customer> findByNameLike(String customer);
+    public List<Customer> findByFirstNameLike(String customer);
 
     public Page findAll(PageRequest pageRequest);
     public Page findAllPage(PageRequest pageRequest);

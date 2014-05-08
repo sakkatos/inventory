@@ -15,6 +15,6 @@ import th.co.geniustree.inventory.model.Staff;
  * @author toy
  */
 public interface StaffRepo extends JpaRepository<Staff, String>{
-//    public List<Staff> findByNameLike(String staff);
+    public List<Staff> findByFirstNameLike(String staff);
     
 }

@@ -27,13 +27,13 @@
                     <p:commandButton value="edit"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editCustomerDialogForm"
-                                     actionListener="#{customerController.onSelectCustomer()}">
+                                     actionListener="#{customerController.onSelect()}">
                         <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
                     <p:commandButton value="delete"
                                      onsuccess="deleteWidgetDialog.show();"
                                      update=":deleteCustomerDialogForm"
-                                     actionListener="#{customerController.onSelectCustomer()}">
+                                     actionListener="#{customerController.onSelect()}">
                         <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
                 </p:column>
