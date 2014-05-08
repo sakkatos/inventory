@@ -35,8 +35,17 @@ and open the template in the editor.
                             <h:outputLabel value="Amount"/> 
                             <h:outputText value="#{productControl.sumItemByProduct()}"/>
                         </p:panelGrid>
+                        <h:outputText value="#{productControl.massage}"/>
                     </td>
-                    <h:outputText value="#{productControl.massage}"/>
+                    <td>
+                        <p:commandButton value="add product"/>
+                        <p:commandButton value="add barocde"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        
+                    </td>
                 </tr>
             </table>
             <p:dataTable value="#{productControl.items}" var="item">

@@ -75,7 +75,18 @@ public class ProductControl implements Serializable {
             insertItemByBarcode();
             updateItemLog();
         }
-        massage = setMassage(massage1, massage2);
+        if (massage1.isEmpty() && massage2.isEmpty()) {
+            massage = massage1 + ", " + massage2;
+        }
+        if (massage1.isEmpty()) {
+            massage = massage2;
+        }
+        if (massage2.isEmpty()) {
+            massage = massage1;
+        }
+        System.out.println("Hello :"+massage);
+//        massage = setMassage(massage1, massage2);
+        
     }
 
     public Boolean isBarcodeExist() {
