@@ -38,13 +38,14 @@ public class ProductControl implements Serializable {
     private Product product;
     private List<Product> products;
     private ProductPackage pack;
+    private List<ProductPackage> packs;
     private Category category;
-    private ProductItem productItem;
-    private List<ProductItem> productItems;
+    private ProductItem item;
+    private List<ProductItem> items;
     private Integer amountOfPack;
     private String barcode;
     private String massage = "";
-    private String selectedProductId;
+    private Integer selectedItemId;
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -62,19 +63,19 @@ public class ProductControl implements Serializable {
         String massage1 = "";
         String massage2 = "";
         if (!isBarcodeExist()) {
-            massage1 = "No Barcode info";
+            massage1 = "No barcode info";
         }
         if (!isBarcodeBelongTo()) {
-            massage2 = "Barcode not belong to any product";
+            massage2 = "The barcode not belong to any product";
         }
         if (isBarcodeExist() && isBarcodeBelongTo()) {
             pack = packageService.findBarcode(barcode);
             product = pack.getProduct();
-            productItem = new ProductItem();
+            item = new ProductItem();
             insertItemByBarcode();
             updateItemLog();
         }
-        massage = massage1 + ", " + massage2;
+        massage = setMassage(massage1, massage2);
     }
 
     public Boolean isBarcodeExist() {
@@ -84,28 +85,28 @@ public class ProductControl implements Serializable {
 
     public Boolean isBarcodeBelongTo() {
         Product prod = packageService.findProductBarcodeBelongTo(getBarcode());
-        return  prod!= null;
+        return prod != null;
     }
 
     public void insertItemByBarcode() {
-        productItem.setAmount(pack.getAmountPerPack() * 1);
-        productItem.setProduct(product);
-        productItem.setDateIn(Calendar.getInstance().getTime());
-        productItem.setTimeIn(Calendar.getInstance().getTime());
-        itemService.saveItem(productItem);
+        item.setAmount(pack.getAmountPerPack() * 1);
+        item.setProduct(product);
+        item.setDateIn(Calendar.getInstance().getTime());
+        item.setTimeIn(Calendar.getInstance().getTime());
+        itemService.saveItem(item);
     }
 
     public void insertItemByHand() {
-        productItem.setAmount(pack.getAmountPerPack() * amountOfPack);
-        productItem.setProduct(product);
-        productItem.setDateIn(Calendar.getInstance().getTime());
-        productItem.setTimeIn(Calendar.getInstance().getTime());
-        itemService.saveItem(productItem);
+        item.setAmount(pack.getAmountPerPack() * amountOfPack);
+        item.setProduct(product);
+        item.setDateIn(Calendar.getInstance().getTime());
+        item.setTimeIn(Calendar.getInstance().getTime());
+        itemService.saveItem(item);
     }
 
     public void updateItemLog() {
         product = productService.findByBarcode(barcode);
-        productItems = itemService.itemOrderByDateDescend(product);
+        items = itemService.itemOrderByDateDescend(product);
     }
 
     public Integer sumItemByProduct() {
@@ -118,31 +119,19 @@ public class ProductControl implements Serializable {
         amountOfPack = 0;
     }
 
-    public void onEditProduct() {
-        productService.save(product);
+    public void onDeleteItem() {
+        itemService.removeItem(item);
+        items = itemService.itemOrderByDateDescend(product);
     }
 
-    public void onSaveProduct() {
-        product.getPackages().add(pack);
-        product.setCategory(getRootCategory());
-        pack.setProduct(product);
-        productService.save(product);
-        packageService.savePackage(pack);
-    }
-
-    public void onDeleteProduct() {
-        productService.remove(product);
-        products.remove(product);
-    }
-
-    public void onSelectProduct() {
-        Product p = new Product();
-        p.setId(selectedProductId);
-        product = getProducts().get(getProducts().indexOf(p));
+    public void onSelectItem() {
+        ProductItem pi = new ProductItem();
+        pi.setId(selectedItemId);
+        item = getItems().get(getItems().indexOf(pi));
     }
 
     public void findAllProduct() {
-        products= productService.findAll();
+        products = productService.findAll();
     }
 
     public Category getRootCategory() {
@@ -151,6 +140,17 @@ public class ProductControl implements Serializable {
     }
 
 //getter and setter-------------------------------------------------------------
+    public List<ProductPackage> getPacks() {
+        if (packs == null) {
+            packs = new ArrayList<>();
+        }
+        return packs;
+    }
+
+    public void setPacks(List<ProductPackage> packs) {
+        this.packs = packs;
+    }
+
     public String getMassage() {
         return massage;
     }
@@ -159,20 +159,20 @@ public class ProductControl implements Serializable {
         this.massage = massage;
     }
 
-    public ProductItem getProductItem() {
-        return productItem;
+    public ProductItem getItem() {
+        return item;
     }
 
-    public void setProductItem(ProductItem productItem) {
-        this.productItem = productItem;
+    public void setItem(ProductItem item) {
+        this.item = item;
     }
 
-    public List<ProductItem> getProductItems() {
-        return productItems;
+    public List<ProductItem> getItems() {
+        return items;
     }
 
-    public void setProductItems(List<ProductItem> productItems) {
-        this.productItems = productItems;
+    public void setItems(List<ProductItem> items) {
+        this.items = items;
     }
 
     public String getBarcode() {
@@ -225,16 +225,30 @@ public class ProductControl implements Serializable {
         return products;
     }
 
-    public String getSelectedProductId() {
-        return selectedProductId;
+    public Integer getSelectedItemId() {
+        return selectedItemId;
     }
 
-    public void setSelectedProductId(String selectedProductId) {
-        this.selectedProductId = selectedProductId;
+    public void setSelectedItemId(Integer selectedItemId) {
+        this.selectedItemId = selectedItemId;
     }
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    private String setMassage(String massage1, String massage2) {
+        String totalMassage = "";
+        if (massage1.isEmpty() && massage2.isEmpty()) {
+            totalMassage = massage1 + ", " + massage2;
+        }
+        if (massage1.isEmpty()) {
+            totalMassage = massage2;
+        }
+        if (massage2.isEmpty()) {
+            totalMassage = massage1;
+        }
+        return totalMassage;
     }
 
     public ProductService getProductManagedBean() {
