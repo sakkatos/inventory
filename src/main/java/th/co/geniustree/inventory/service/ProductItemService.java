@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package th.co.geniustree.inventory.service;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import th.co.geniustree.inventory.model.Product;
-import th.co.geniustree.inventory.repo.ProductRepo;
+import th.co.geniustree.inventory.model.ProductItem;
+import th.co.geniustree.inventory.repo.ProductItemRepo;
 
 /**
  *
@@ -19,29 +21,25 @@ import th.co.geniustree.inventory.repo.ProductRepo;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class ProductService {
-
+public class ProductItemService {
+    
     @Autowired
-    public ProductRepo productRepo;
-
-    public Product findByBarcode(String barcode) {
-        return productRepo.findProductByBarcode(barcode);
+    public ProductItemRepo productItemRepo;
+    
+    public void saveItem(ProductItem productItem){
+        productItemRepo.save(productItem);
     }
-
-    public void remove(Product product) {
-        productRepo.delete(product);
+    
+    public void removeItem(ProductItem productItem){
+        productItemRepo.delete(productItem);
     }
-
-    public List<Product> findAll() {
-        return productRepo.findAll();
+    
+    public List<ProductItem> itemOrderByDateDescend(Product product){
+        return productItemRepo.itemOrderByDateDescend(product);
     }
-
-    public List<Product> findAllProduct() {
-        return productRepo.findAllProduct();
-    }
-
-    public void save(Product product) {
-        productRepo.save(product);
+    
+    public Integer sumAmountByProduct (Product product){
+        return productItemRepo.sumAmountByProduct(product);
     }
 
 }
