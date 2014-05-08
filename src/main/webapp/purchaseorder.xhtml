@@ -1,0 +1,121 @@
+<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/maintemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
+        </f:metadata>
+        <h:form id="staffForm">
+            #{staffController.reset()}
+            <p:commandButton value="Add Staff"
+                             actionListener="#{staffController.onCreate()}"
+                             update=":addStaffDialogForm"
+                             onsuccess="addWidgetDialog.show()"/>
+            <br/>
+            <br/>
+            <p:dataTable value="#{staffController.staffs}" var="item">
+                <p:column headerText="ID" width="20">#{item.id}</p:column>
+                <p:column headerText="Name">#{item.firstName}</p:column>
+                <p:column headerText="Lastname">#{item.lastName}</p:column>
+                <p:column headerText="action" >
+                    <p:commandButton value="edit"
+                                     onsuccess="editWidgetDialog.show();"
+                                     update=":editStaffDialogForm"
+                                     actionListener="#{staffController.onSelect()}">
+                        <f:param name="staffId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="delete"
+                                     onsuccess="deleteWidgetDialog.show();"
+                                     update=":deleteStaffDialogForm"
+                                     actionListener="#{staffController.onSelect()}">
+                        <f:param name="staffId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="addStaffDialog"
+                  header="เพิ่ม staff"
+                  resizable="false"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  widgetVar="addWidgetDialog">
+            <h:form id="addStaffDialogForm">
+                <p:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{staffController.staff.id}"/>
+
+                    <h:outputText value="Fristname"/>
+                    <p:inputText value="#{staffController.staff.firstName}"/>
+
+                    <h:outputText value="Lastname"/>
+                    <p:inputText value="#{staffController.staff.lastName}"/>
+
+                </p:panelGrid>
+                <p:commandButton value="บันทึก" 
+                                 actionListener="#{staffController.onSave()}"
+                                 update=":staffForm, :notification"
+                                 onsuccess="addWidgetDialog.hide()"/>
+                <p:commandButton value="ยกเลิก" 
+                                 onsuccess="addWidgetDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="editStaffDialog"
+                  header="แก้ไข staff"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="editWidgetDialog"> 
+            <h:form id="editStaffDialogForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="name"/>
+                    <p:inputText value="#{staffController.staff.firstName}"/>
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <p:commandButton value="บันทึกการแก้ไข"
+                                 update=":staffForm, :notification"
+                                 actionListener="#{staffController.onSave()}"
+                                 oncomplete="editWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="ยกเลิก"
+                                 type="button"
+                                 onclick="editWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="deleteStaffDialog"
+                  header="ลบ staff"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="deleteWidgetDialog"> 
+            <h:form id="deleteStaffDialogForm">
+                <h:outputText value="#{staffController.staff.firstName}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="ลบข้อมูล"
+                                 update=":staffForm, :notification"
+                                 actionListener="#{staffController.onDelete()}"
+                                 oncomplete="deleteWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="ยกเลิก"
+                                 type="button"
+                                 onclick="deleteWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>
