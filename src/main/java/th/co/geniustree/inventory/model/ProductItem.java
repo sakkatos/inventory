@@ -38,6 +38,13 @@ public class ProductItem implements Serializable {
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
+    public ProductItem(Integer Id) {
+        this.Id = Id;
+    }
+    
+     public ProductItem() {
+    }
+
     public Integer getAmount() {
         return amount;
     }
