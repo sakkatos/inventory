@@ -17,6 +17,11 @@
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
+            <p:inputText value="#{customerController.keyword}"/>
+            <p:commandButton value="search"
+                             update=":searchCustomerDialogForm"
+                             actionListener="#{customerController.onSearch()}"
+                             onsuccess="searchWidgetDialog.show();"/>
             <br/>
             <br/>
             <p:dataTable value="#{customerController.customers}" var="item">
@@ -116,6 +121,31 @@
                                  onclick="deleteWidgetDialog.hide();"/>
             </h:form>
         </p:dialog>
+        
+        <p:dialog id="searchCustomerDialog"
+                      header="result"
+                      width="500"
+                      modal="true"
+                      appendToBody="true"
+                      draggable="false"
+                      resizable="false"
+                      widgetVar="searchWidgetDialog"> 
+                <h:form id="searchCustomerDialogForm" >
+                    <p:dataTable value="#{customerController.customers}"
+                                 var="searchCustomers">
+                        <p:column headerText="No." style="width : 5%">
+                            <h:outputText value="#{searchCustomers.id}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="name">
+                            <h:outputText value="#{searchCustomers.firstName}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <p:commandButton value="close"
+                                     type="button"
+                                     onclick="searchWidgetDialog.hide();"/>
+                </h:form>
+            </p:dialog>
 
     </ui:define>
 </ui:composition>

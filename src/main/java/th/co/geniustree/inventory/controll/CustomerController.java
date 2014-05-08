@@ -39,10 +39,10 @@ public class CustomerController implements Serializable {
         reset();
     }
 
-    
     public void reset() {
         customers = customerService.findAll();
     }
+
     public void onCreate() {
         customer = new Customer();
     }
@@ -74,12 +74,21 @@ public class CustomerController implements Serializable {
 //        c.setId(customerId);
 //        customer=getCustomers().get(getCustomers().indexOf(c));
 //    }
-    
     public List<Customer> findAllCustomer() {
         return customerService.findAll();
     }
 
+    public List<Customer> onSearch() {
+        if(keyword==null){
+            System.out.println("Noooooooooooooooooooo");
+            
+        }
+        customers = customerService.findByFirstNameLike(keyword);
+        return customers;
+    }
+
     //----------------------------------------------------------------------------
+
     public Customer getCustomer() {
         return customer;
     }
@@ -116,7 +125,6 @@ public class CustomerController implements Serializable {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
-    
 
     private String requestParam(String customerId) {
         return FacesContext.getCurrentInstance()
