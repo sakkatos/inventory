@@ -22,7 +22,7 @@ public interface OrderItemService {
 
     public List<OrderItem> findAll();
     
-    public List<OrderItem> findByNameLike(String orderItem);
+    public List<OrderItem> findByIdLike(Integer orderItem);
 
     public Page findAll(PageRequest pageRequest);
     public Page findAllPage(PageRequest pageRequest);

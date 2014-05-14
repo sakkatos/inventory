@@ -15,9 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.model.OrderItem;
-import th.co.geniustree.inventory.model.PurchaseOrder;
 import th.co.geniustree.inventory.service.OrderItemService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
@@ -31,7 +29,7 @@ public class OrderItemController implements Serializable {
 
     private OrderItem orderItem;
     private List<OrderItem> orderItems;
-    private String keyword;
+    private Integer keyword;
     private String orderItemId;
     private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
     private final OrderItemService orderItemService = JSFSpringUtils.getBean(OrderItemService.class);
@@ -88,7 +86,7 @@ public class OrderItemController implements Serializable {
             System.out.println("Noooooooooooooooooooo");
 
         }
-        orderItems = orderItemService.findByNameLike(keyword);
+        orderItems = orderItemService.findByIdLike(keyword);
         return orderItems;
     }
 
@@ -112,11 +110,11 @@ public class OrderItemController implements Serializable {
         this.orderItems = orderItems;
     }
 
-    public String getKeyword() {
+    public Integer getKeyword() {
         return keyword;
     }
 
-    public void setKeyword(String keyword) {
+    public void setKeyword(Integer keyword) {
         this.keyword = keyword;
     }
 
