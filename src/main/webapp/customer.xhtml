@@ -13,29 +13,29 @@
         </f:metadata>
         <h:form id="customerForm">
             #{customerController.reset()}
-            <p:commandButton value="Add customer"
+            <p:commandButton value="เพิ่มข้อมูลลูกค้า"
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
             <p:inputText value="#{customerController.keyword}"/>
-            <p:commandButton value="search"
+            <p:commandButton value="ค้นหา"
                              update=":searchCustomerDialogForm"
                              actionListener="#{customerController.onSearch()}"
                              onsuccess="searchWidgetDialog.show();"/>
             <br/>
             <br/>
             <p:dataTable value="#{customerController.customers}" var="item">
-                <p:column headerText="CustomerId" width="20">#{item.id}</p:column>
-                <p:column headerText="Name">#{item.firstName}</p:column>
-                <p:column headerText="Lastname">#{item.lastName}</p:column>
+                <p:column headerText="รหัสลูกค้า" width="100">#{item.id}</p:column>
+                <p:column headerText="ชื่อ-นามสกุล">#{item.firstName}&nbsp;&nbsp;&nbsp;#{item.lastName}</p:column>
+                <p:column headerText="เบอร์โทรศัพท์">#{item.phoneNumber}</p:column>
                 <p:column headerText="action" >
-                    <p:commandButton value="edit"
+                    <p:commandButton value="แก้ไขข้อมูล"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editCustomerDialogForm"
                                      actionListener="#{customerController.onSelect()}">
                         <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
-                    <p:commandButton value="delete"
+                    <p:commandButton value="ลบ"
                                      onsuccess="deleteWidgetDialog.show();"
                                      update=":deleteCustomerDialogForm"
                                      actionListener="#{customerController.onSelect()}">
@@ -48,27 +48,29 @@
         <p:dialog id="addCustomerDialog"
                   appendToBody="true"
                   modal="true"
+                  resizable="false"
+                  width="600"
                   widgetVar="addWidgetDialog">
             <h:form id="addCustomerDialogForm">
                 <p:panelGrid columns="2">
-                    <h:outputText value="ID"/>
+                    <h:outputText value="รหัสลูกค้า"/>
                     <p:inputText value="#{customerController.customer.id}"/>
 
-                    <h:outputText value="Fristname"/>
+                    <h:outputText value="ชื่อ"/>
                     <p:inputText value="#{customerController.customer.firstName}"/>
 
-                    <h:outputText value="Lastname"/>
+                    <h:outputText value="นามสกุล"/>
                     <p:inputText value="#{customerController.customer.lastName}"/>
 
-                    <h:outputText value="Phone"/>
+                    <h:outputText value="เบอร์โทรศัพท์"/>
                     <p:inputText value="#{customerController.customer.phoneNumber}"/>
-
                 </p:panelGrid>
-                <p:commandButton value="Save" 
+                <br/>
+                <p:commandButton value="บันทึกข้อมูล" 
                                  actionListener="#{customerController.onSave()}"
                                  update=":customerForm, :notification"
                                  onsuccess="addWidgetDialog.hide()"/>
-                <p:commandButton value="Cancel" 
+                <p:commandButton value="ยกเลิก" 
                                  onsuccess="addWidgetDialog.hide()"/>
             </h:form>
         </p:dialog>
@@ -100,7 +102,7 @@
         </p:dialog>
 
         <p:dialog id="deleteCustomerDialog"
-                  header="delete user"
+                  header="ลบผู้ใช้"
                   width="500"
                   appendToBody="true"
                   modal="true"
@@ -108,44 +110,58 @@
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteCustomerDialogForm">
-                <h:outputText value="#{customerController.customer.firstName}"/>
+                <h:outputText value="คุณต้องการลบ #{customerController.customer.firstName} ใช่หรือไม่?"/>
                 <br/>
                 <br/>
-                <p:commandButton value="delete"
+                <p:commandButton value="ลบผู้ใช้"
                                  update=":customerForm, :notification"
                                  actionListener="#{customerController.onDelete()}"
                                  oncomplete="deleteWidgetDialog.hide();"/>
                 <p:spacer width="10"/>
-                <p:commandButton value="cancel"
+                <p:commandButton value="ยกเลิก"
                                  type="button"
                                  onclick="deleteWidgetDialog.hide();"/>
             </h:form>
         </p:dialog>
-        
+
         <p:dialog id="searchCustomerDialog"
-                      header="result"
-                      width="500"
-                      modal="true"
-                      appendToBody="true"
-                      draggable="false"
-                      resizable="false"
-                      widgetVar="searchWidgetDialog"> 
-                <h:form id="searchCustomerDialogForm" >
-                    <p:dataTable value="#{customerController.customers}"
-                                 var="searchCustomers">
-                        <p:column headerText="No." style="width : 5%">
-                            <h:outputText value="#{searchCustomers.id}"></h:outputText>
-                        </p:column>
-                        <p:column headerText="name">
-                            <h:outputText value="#{searchCustomers.firstName}"></h:outputText>
-                        </p:column>
-                    </p:dataTable>
-                    <br/>
-                    <p:commandButton value="close"
-                                     type="button"
-                                     onclick="searchWidgetDialog.hide();"/>
-                </h:form>
-            </p:dialog>
+                  header="ผลการค้นหา"
+                  width="500"
+                  modal="true"
+                  appendToBody="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="searchWidgetDialog"> 
+            <h:form id="searchCustomerDialogForm" >
+                <p:dataTable value="#{customerController.customers}"
+                             var="searchCustomers">
+                    <p:column headerText="รหัสลูกค้า" style="width : 20%">
+                        <h:outputText value="#{searchCustomers.id}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="ชื่อ-นามสกุล">
+                        <h:outputText value="#{searchCustomers.firstName}&nbsp;&nbsp;&nbsp;#{searchCustomers.lastName}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="action" >
+                        <p:commandButton value="แก้ไขข้อมูล"
+                                         onsuccess="editWidgetDialog.show();"
+                                         update=":editCustomerDialogForm"
+                                         actionListener="#{customerController.onSelect()}">
+                            <f:param name="customerId" value="#{item.id}"/>
+                        </p:commandButton>
+                        <p:commandButton value="ลบ"
+                                         onsuccess="deleteWidgetDialog.show();"
+                                         update=":deleteCustomerDialogForm"
+                                         actionListener="#{customerController.onSelect()}">
+                            <f:param name="customerId" value="#{item.id}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <br/>
+                <p:commandButton value="ปิด"
+                                 type="button"
+                                 onclick="searchWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>
