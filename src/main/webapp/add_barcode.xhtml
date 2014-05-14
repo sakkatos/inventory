@@ -36,12 +36,12 @@
 
                     <h:outputText value="Category"/>
                     <p:selectOneListbox value="#{barcodeControl.category.id}" >
+                        <f:ajax listener="#{barcodeControl.findProductByCategory()}" 
+                                render="productList"/>
                         <f:selectItems value="#{barcodeControl.categories}"
                                        var="item"
                                        itemLabel="#{item.name}"
                                        itemValue="#{item.id}"/>
-                        <f:ajax listener="#{barcodeControl.findProductByCategory()}" 
-                                render="productList"/>
                     </p:selectOneListbox>
 
                     <h:outputText value="Product"/>

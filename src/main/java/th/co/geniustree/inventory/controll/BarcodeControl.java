@@ -143,6 +143,9 @@ public class BarcodeControl implements Serializable {
     }
 
     public String getSelectedCategory() {
+        if (selectedCategory==null){
+            selectedCategory="";
+        }
         return selectedCategory;
     }
 
