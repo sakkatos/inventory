@@ -22,9 +22,7 @@ and open the template in the editor.
         Product Page<br/>
         <h:link outcome="index" value="Home"/><br/>
         <h:form id="itemProductForm">
-            <table>
-                <tr>
-                    <td>
+
                         <p:panelGrid columns="6">
                             <p:commandButton value="Barcode" 
                                              actionListener="#{itemControl.addItemByBarcode()}"
@@ -36,20 +34,12 @@ and open the template in the editor.
                             <h:outputLabel value="Amount"/> 
                             <h:outputText value="#{itemControl.sumItemByProduct()}"/>
                         </p:panelGrid>
-                        <h:link value="add product"  outcome="add_barcode"/>
+                        <h:link value="add product"  outcome="add-barcode"/>
                         <p:commandButton value="add barocde"/>
-                    </td>
-                    <td>
+
                         <h:outputText value="#{itemControl.massage}"/>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
 
-                    </td>
-                </tr>
-            </table>
             <p:dataTable value="#{itemControl.items}" var="item">
                 <p:column headerText="Date">#{item.dateIn}</p:column>
                 <p:column headerText="Time">#{item.timeIn}</p:column>

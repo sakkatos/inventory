@@ -39,6 +39,7 @@ public class BarcodeControl implements Serializable {
 
     private String selectedProductId;
     private String selectedBarcode;
+    private String selectedCategory;
 
     @PostConstruct
     public void postConstruct() {
@@ -46,24 +47,34 @@ public class BarcodeControl implements Serializable {
 
     //business logic------------------------------------------------------------
     public void onCreate() {
+        product = new Product();
         pack = new ProductPackage();
     }
 
-    public void onSave(){
+    public void onSave() {
+        product=productService.findOne(product.getId());
         pack.setProduct(product);
         packageService.savePackage(pack);
     }
-    
-    public void findAllProduct(){
+
+    public void findAllProduct() {
         products = productService.findAll();
     }
-    
-    public void findProductByCategory(){
+
+    public void findProductByCategory() {
         products = productService.findProductByCategory(category);
+        System.out.println(category.getName());
+        for(Product p : products){
+            System.out.print("Hello :::::::::::::::    ");
+            System.out.println(p.getName());
+        }
     }
-    
+
     //getter and setter---------------------------------------------------------
     public Product getProduct() {
+        if(product==null){
+            product = new Product();
+        }
         return product;
     }
 
@@ -91,6 +102,9 @@ public class BarcodeControl implements Serializable {
     }
 
     public Category getCategory() {
+        if(category==null){
+            category=new Category();
+        }
         return category;
     }
 
@@ -99,7 +113,7 @@ public class BarcodeControl implements Serializable {
     }
 
     public List<Category> getCategories() {
-        if (categories==null){
+        if (categories == null) {
             categories = categoryService.findAllOrderByName();
         }
         return categories;
@@ -110,7 +124,7 @@ public class BarcodeControl implements Serializable {
     }
 
     public ProductPackage getPack() {
-        if (pack ==null){
+        if (pack == null) {
             pack = new ProductPackage();
         }
         return pack;
@@ -127,5 +141,18 @@ public class BarcodeControl implements Serializable {
     public void setSelectedBarcode(String selectedBarcode) {
         this.selectedBarcode = selectedBarcode;
     }
+
+    public String getSelectedCategory() {
+        if (selectedCategory==null){
+            selectedCategory="";
+        }
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(String selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+    
+    
 
 }

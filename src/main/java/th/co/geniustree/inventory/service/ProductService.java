@@ -48,5 +48,9 @@ public class ProductService {
     public List<Product> findProductByCategory(Category category){
         return productRepo.findProducstByCategory(category);
     }
+    
+    public Product findOne(String id){
+        return productRepo.findOne(id);
+    }
 
 }
