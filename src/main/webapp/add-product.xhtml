@@ -106,7 +106,13 @@ and open the template in the editor.
                     <p:inputText value="#{productController.product.expectPrice}"/>
 
                     <h:outputText value="category"/>
-                    <p:inputText value="#{productController.product.category.name}"/>
+                    <p:selectOneMenu value="#{productController.product.category.id}">
+                        <f:selectItems value="#{productController.categories}"
+                                       var="item"
+                                       itemLabel="#{item.name}"
+                                       itemValue="#{item.id}"
+                                       />
+                    </p:selectOneMenu>
                 </p:panelGrid>
             </h:form>
         </p:dialog>

@@ -14,17 +14,40 @@ and open the template in the editor.
 
     <ui:define name="mainContent">
         <f:metadata>
-            <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
+            <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
         <p:growl id="notification" showDetail="true" showSummary="true"/>
         Category Page
         <h:form>
             <p:dataTable value="#{categoryController.categories}" var="item">
-                <p:column headerText="Parent">#{item.parent}</p:column>
+                <p:column headerText="Parent">#{item.parent.name}</p:column>
                 <p:column headerText="Id">#{item.id}</p:column>
                 <p:column headerText="name">#{item.name}</p:column>
+                <p:column headerText="action">
+                    <p:commandButton value="edit" 
+                                     actionListener="#{categoryController.onSelect()}"
+                                     update=":editCategoryForm"
+                                     onsuccess="editCategoryWidget.show()">
+                        <f:param name="selectedCategoryId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
         </h:form>
+        
+        <p:dialog id="editCategoryWidget">
+            <h:form id="editCategoryForm">
+                <p:panelGrid columns="4">
+                    <h:outputText value="id"/>
+                    <p:inputText value="#{categoryController.category.id}"/>
+                    
+                    <h:outputText value="name"/>
+                    <p:inputText value="#{categoryController.category.name}"/>
+                    
+                    <h:outputText value="Parent"/>
+                    <p:inputText value="#{categoryController.category.parent.name}"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>
