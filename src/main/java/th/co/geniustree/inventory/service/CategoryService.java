@@ -37,12 +37,36 @@ public class CategoryService {
         }
         return category;
     }
-    
-    public List<Category> findAllOrderByName(){
+
+    public List<Category> findAllOrderByName() {
         return categoryRepo.findAllOrderByName();
     }
 
     public void save(Category category) {
         categoryRepo.save(category);
     }
+
+    public Category findOne(String id) {
+        return categoryRepo.findOne(id);
+    }
+    
+    public List<Category> findByParent (Category parent){
+        return categoryRepo.findByParent(parent);
+    }
+    
+    public void saveCategories(List<Category> categories){
+        categoryRepo.save(categories);
+    }
+    
+    public void remove(Category category){
+        Category root = new Category();
+        root.setId("1");root.setName("root");
+        List<Category> cList = categoryRepo.findByParent(category);
+        for (Category c :cList){
+            c.setParent(root);
+        }
+        categoryRepo.save(cList);
+        categoryRepo.delete(category);
+    }
+    
 }

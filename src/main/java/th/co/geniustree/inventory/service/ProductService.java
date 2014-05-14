@@ -37,9 +37,9 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public List<Product> findAllProduct() {
-        return productRepo.findAllProduct();
-    }
+//    public List<Product> findAllProduct() {
+//        return productRepo.findAllProduct();
+//    }
 
     public void save(Product product) {
         productRepo.save(product);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition template="/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="mainContent">
+        <f:metadata>
+            <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
+        </f:metadata>
+        <p:growl id="notification" showDetail="true" showSummary="true"/>
+        Category Page
+        <h:form>
+            <p:dataTable value="#{categoryController.categories}" var="item">
+                <p:column headerText="Parent">#{item.parent}</p:column>
+                <p:column headerText="Id">#{item.id}</p:column>
+                <p:column headerText="name">#{item.name}</p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

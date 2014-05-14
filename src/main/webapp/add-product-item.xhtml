@@ -14,7 +14,7 @@ and open the template in the editor.
 
     <ui:define name="mainContent">
         <f:metadata>
-            <f:viewParam  name="itemId" value="#{itemControl.selectedItemId}" ></f:viewParam>
+            <f:viewParam  name="itemId" value="#{itemController.selectedItemId}" ></f:viewParam>
         </f:metadata>
 
         <p:growl id="notification" showDetail="true" showSummary="true"/>
@@ -25,29 +25,29 @@ and open the template in the editor.
 
                         <p:panelGrid columns="6">
                             <p:commandButton value="Barcode" 
-                                             actionListener="#{itemControl.addItemByBarcode()}"
+                                             actionListener="#{itemController.addItemByBarcode()}"
                                              update=":itemProductForm ,:notification"/>
-                            <p:inputText value="#{itemControl.barcode}">
+                            <p:inputText value="#{itemController.barcode}">
                             </p:inputText>
                             <h:outputLabel value="Product"/> 
-                            <h:outputText value="#{itemControl.product.name}"/>
+                            <h:outputText value="#{itemController.product.name}"/>
                             <h:outputLabel value="Amount"/> 
-                            <h:outputText value="#{itemControl.sumItemByProduct()}"/>
+                            <h:outputText value="#{itemController.sumItemByProduct()}"/>
                         </p:panelGrid>
                         <h:link value="add product"  outcome="add-barcode"/>
                         <p:commandButton value="add barocde"/>
 
-                        <h:outputText value="#{itemControl.massage}"/>
+                        <h:outputText value="#{itemController.massage}"/>
 
 
-            <p:dataTable value="#{itemControl.items}" var="item">
+            <p:dataTable value="#{itemController.items}" var="item">
                 <p:column headerText="Date">#{item.dateIn}</p:column>
                 <p:column headerText="Time">#{item.timeIn}</p:column>
                 <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
                 <p:column headerText="action">
                     <p:commandButton value="remove"
-                                     actionListener="#{itemControl.onSelectItem()}"
+                                     actionListener="#{itemController.onSelectItem()}"
                                      onsuccess="removeItemProductWidget.show()"
                                      update=":removeItemProductForm">
                         <f:param name="itemId" value="#{item.id}"/>
@@ -60,12 +60,12 @@ and open the template in the editor.
             <h:form id="removeItemProductForm">
                 <h:outputText value="Remove this item?"/>
                 <p:panelGrid columns="3">
-                    <h:outputText value="#{itemControl.item.id}"/>
-                    <h:outputText value="#{itemControl.item.timeIn}"/>
-                    <h:outputText value="#{itemControl.item.amount}"/>
+                    <h:outputText value="#{itemController.item.id}"/>
+                    <h:outputText value="#{itemController.item.timeIn}"/>
+                    <h:outputText value="#{itemController.item.amount}"/>
                 </p:panelGrid>
                 <p:commandButton value="remove" 
-                                 actionListener="#{itemControl.onRemoveItem()}"
+                                 actionListener="#{itemController.onRemoveItem()}"
                                  update=":itemProductForm,:notification"
                                  onsuccess="removeItemProductWidget.hide()"/>
             </h:form>

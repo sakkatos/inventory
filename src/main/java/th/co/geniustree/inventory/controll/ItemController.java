@@ -33,7 +33,7 @@ import th.co.geniustree.inventory.service.ProductService;
  */
 @ManagedBean
 @SessionScoped
-public class ItemControl implements Serializable {
+public class ItemController implements Serializable {
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -159,6 +159,9 @@ public class ItemControl implements Serializable {
     }
 
     public List<ProductItem> getItems() {
+        if (items==null){
+            items= new ArrayList<>();
+        }
         return items;
     }
 

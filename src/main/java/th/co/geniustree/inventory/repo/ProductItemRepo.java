@@ -19,7 +19,7 @@ import th.co.geniustree.inventory.model.ProductItem;
 public interface ProductItemRepo extends JpaRepository<ProductItem, Integer>{
     
     @Query("SELECT pi FROM ProductItem pi WHERE pi.product = ?1 ORDER BY pi.dateIn,pi.timeIn DESC ")
-    public List<ProductItem> itemOrderByDateDescend(Product product); 
+    public List<ProductItem> findItemOrderByDateDescend(Product product); 
     
     public List<ProductItem> findByProduct(Product product); 
     

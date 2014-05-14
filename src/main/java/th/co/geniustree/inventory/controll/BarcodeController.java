@@ -25,7 +25,7 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
  */
 @ManagedBean
 @SessionScoped
-public class BarcodeControl implements Serializable {
+public class BarcodeController implements Serializable {
 
     private final ProductService productService = JSFSpringUtils.getBean(ProductService.class);
     private final PackageService packageService = JSFSpringUtils.getBean(PackageService.class);

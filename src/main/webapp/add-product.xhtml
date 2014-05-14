@@ -14,9 +14,114 @@ and open the template in the editor.
 
     <ui:define name="mainContent">
         <f:metadata>
-            <f:viewParam  name="itemId" value="#{itemControl.selectedItemId}" ></f:viewParam>
+            <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
         </f:metadata>
         <p:growl id="notification" showDetail="true" showSummary="true"/>
-        Product page
+        <h:form id="productTableForm">
+            Product page
+            <p:panelGrid columns="4">
+                <p:commandButton value="addProduct"
+                                 update=":addProductForm"
+                                 actionListener="#{productController.onCreate()}"
+                                 onsuccess="addProductDialog.show()"/>
+            </p:panelGrid>
+            <p:dataTable value="#{productController.products}" var="item">
+                <p:column headerText="Category">#{item.category.name}</p:column>
+                <p:column headerText="ProductId">#{item.id}</p:column>
+                <p:column headerText="name">#{item.name}</p:column>
+                <p:column headerText="cost">#{item.cost}</p:column>
+                <p:column headerText="basePrice">#{item.basePrice}</p:column>
+                <p:column headerText="expectPrice">#{item.expectPrice}</p:column>
+                <p:column headerText="action">
+                    <p:commandButton value="edit"
+                                     actionListener="#{productController.onSelect()}" 
+                                     update=":editProductForm"
+                                     onsuccess="editProductDialog.show()">
+                        <f:param name="selectedProductId" value="#{item.id}"/>
+                    </p:commandButton> 
+                    <h:outputText value="  "/>
+                    <p:commandButton value="remove"
+                                     actionListener="#{productController.onSelect()}"
+                                     update=":removeProductForm"
+                                     onsuccess="removeProductDialog.show()">
+                        <f:param name="selectedProductId" value="#{item.id}"/>
+                    </p:commandButton> 
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+        <p:dialog widgetVar="addProductDialog">
+            <h:form id="addProductForm">
+                <p:commandButton value="save"
+                                 actionListener="#{productController.onSave()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="addProductDialog.hide()"/>
+                <p:panelGrid columns="4">
+                    <h:outputText value="Id"/>
+                    <p:inputText value="#{productController.product.id}"/>
+
+                    <h:outputText value="Name"/>
+                    <p:inputText value="#{productController.product.name}"/>
+
+                    <h:outputText value="cost"/>
+                    <p:inputText value="#{productController.product.cost}"/>
+
+                    <h:outputText value="basePrice"/>
+                    <p:inputText value="#{productController.product.basePrice}"/>
+
+                    <h:outputText value="expectPrice"/>
+                    <p:inputText value="#{productController.product.expectPrice}"/>
+
+                    <h:outputText value="category"/>
+                    <p:selectOneMenu value="#{productController.category.id}">
+                        <f:selectItems value="#{productController.categories}"
+                                       var="item"
+                                       itemLabel="#{item.name}"
+                                       itemValue="#{item.id}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="editProductDialog">
+            <h:form id="editProductForm">
+                <p:commandButton value="save"
+                                 actionListener="#{productController.onSave()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="editProductDialog.hide()"/>
+                <p:panelGrid columns="4">
+                    <h:outputText value="Id"/>
+                    <p:inputText value="#{productController.product.id}"/>
+
+                    <h:outputText value="Name"/>
+                    <p:inputText value="#{productController.product.name}"/>
+
+                    <h:outputText value="cost"/>
+                    <p:inputText value="#{productController.product.cost}"/>
+
+                    <h:outputText value="basePrice"/>
+                    <p:inputText value="#{productController.product.basePrice}"/>
+
+                    <h:outputText value="expectPrice"/>
+                    <p:inputText value="#{productController.product.expectPrice}"/>
+
+                    <h:outputText value="category"/>
+                    <p:inputText value="#{productController.product.category.name}"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="removeProductDialog">
+            <h:form id="removeProductForm">
+                <h:outputText value="Remove this product?"/>
+                <p:inputText value="#{productController.product.name}"/>
+
+                <p:commandButton value="remove"
+                                 actionListener="#{productController.onRemove()}"                               
+                                 update=":productTableForm,:notification"
+                                 onsuccess="removeProductDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
