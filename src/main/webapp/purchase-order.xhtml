@@ -19,13 +19,13 @@
                              onsuccess="addWidgetDialog.show()"/>
             <br/>
             <br/>
-            <p:dataTable value="#{purchaseOrderController.purchaseOrders}" var="item">
+            <p:dataTable value="#{purchaseOrderController.purchaseOrders}" var="item">                
                 <p:column headerText="ID" width="20">#{item.id}</p:column>
                 <p:column headerText="Order item">#{item.orderItems}</p:column>
-                <p:column headerText="Staff">#{staffController.staff.lastName}</p:column>
+                <p:column headerText="Staff">#{item.staff.firstName}</p:column>
                 <p:column headerText="Sale date">
                     <h:outputText value="#{item.saleDate}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" locale="th_TH"/>
+                        <f:convertDateTime pattern="dd MMMM yyyy"/>
                     </h:outputText>
                 </p:column>
 
@@ -49,7 +49,7 @@
         <p:dialog id="addPurchaseDialog"
                   header="เพิ่ม purchase order"
                   resizable="false"
-                  appendToBody="true"
+                  appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   widgetVar="addWidgetDialog">
@@ -74,7 +74,7 @@
         <p:dialog id="editPurchaseDialog"
                   header="แก้ไข purchase order"
                   width="500"
-                  appendToBody="true"
+                  appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   resizable="false"
@@ -100,7 +100,7 @@
         <p:dialog id="deletePurchaseDialog"
                   header="ลบ purchase order"
                   width="500"
-                  appendToBody="true"
+                  appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   resizable="false"
@@ -119,19 +119,5 @@
                                  onclick="deleteWidgetDialog.hide();"/>
             </h:form>
         </p:dialog>
-
-        <!--        <p:dialog header="Selected Dates" widgetVar="dialog"
-                          showEffect="fade" hideEffect="fade">
-        
-                    <h:panelGrid id="display" columns="2" cellpadding="5">
-                        <h:outputText value="Popup Date:" />
-                        <h:outputText value="#{calendarBean.date2}" id="popupDate">
-                            <f:convertDateTime pattern="d/M/yyyy"/>
-                        </h:outputText>
-        
-                    </h:panelGrid>
-        
-                </p:dialog>-->
-
     </ui:define>
 </ui:composition>

@@ -125,7 +125,7 @@ public class CustomerController implements Serializable {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
-
+    
     private String requestParam(String paramName) {
         return FacesContext.getCurrentInstance()
                 .getExternalContext()
