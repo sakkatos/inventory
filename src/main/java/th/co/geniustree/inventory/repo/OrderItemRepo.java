@@ -15,6 +15,6 @@ import th.co.geniustree.inventory.model.OrderItem;
  * @author toy
  */
 public interface OrderItemRepo extends JpaRepository<OrderItem, Integer>{
-//    public List<OrderItem> findByNameLike(String orderItem);
+    public List<OrderItem> findByIdLike(Integer orderItem);
     
 }

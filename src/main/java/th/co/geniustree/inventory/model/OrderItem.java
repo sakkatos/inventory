@@ -26,7 +26,7 @@ public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Integer id;
     @Column(name = "sale_Price")
     private BigDecimal salePrice;
     private BigDecimal cost;
@@ -40,7 +40,7 @@ public class OrderItem implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.Id);
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -53,13 +53,27 @@ public class OrderItem implements Serializable {
             return false;
         }
         final OrderItem other = (OrderItem) obj;
-        if (!Objects.equals(this.Id, other.Id)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
+    public OrderItem() {
+    }
 
+    public OrderItem(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer Id) {
+        this.id = Id;
+    }
+    
 
     public BigDecimal getSalePrice() {
         return salePrice;
@@ -100,7 +114,5 @@ public class OrderItem implements Serializable {
     public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
     }
-    
-    
 
 }

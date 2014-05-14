@@ -82,6 +82,7 @@ public class PurchaseOrderController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------------------
+    
     public PurchaseOrder getPurchaseOrder() {
         return purchaseOrder;
     }

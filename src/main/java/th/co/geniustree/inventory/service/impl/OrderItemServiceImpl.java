@@ -43,10 +43,10 @@ public class OrderItemServiceImpl implements OrderItemService{
         return orderItemRepo.findAll();
     }
 
-//    @Override
-//    public List<OrderItem> findByNameLike(String orderItem) {
-//        return orderItemRepo.findByNameLike(orderItem);
-//    }
+    @Override
+    public List<OrderItem> findByIdLike(Integer orderItem) {
+        return orderItemRepo.findByIdLike(orderItem);
+    }
 
     @Override
     public Page findAll(PageRequest pageRequest) {
