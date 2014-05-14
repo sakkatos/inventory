@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.repo.ProductRepo;
 
@@ -42,6 +43,10 @@ public class ProductService {
 
     public void save(Product product) {
         productRepo.save(product);
+    }
+    
+    public List<Product> findProductByCategory(Category category){
+        return productRepo.findProducstByCategory(category);
     }
 
 }

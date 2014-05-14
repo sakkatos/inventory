@@ -9,6 +9,7 @@ package th.co.geniustree.inventory.repo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
 
 /**
@@ -22,5 +23,8 @@ public interface ProductRepo extends JpaRepository<Product, String>{
     
     @Query("SELECT p FROM Product p")
     public List<Product> findAllProduct();
+    
+//    @Query("SELECT p FROM Product p WHERE p.category = ?1 ORDER BY p.category")
+    public List<Product> findProducstByCategory(Category category);
     
 }

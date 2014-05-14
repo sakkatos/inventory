@@ -7,12 +7,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
     <f:metadata>
-        <f:viewParam  name="productId" value="#{productControl.selectedItemId}" ></f:viewParam>
+        <f:viewParam  name="productId" value="#{itemControl.selectedItemId}" ></f:viewParam>
     </f:metadata>
     <ui:define name="mainContent">
         HOME(page2)<br/>
         <h:link outcome="customer" value="customer"/><br/>
-        <h:link outcome="add_product" value="add product"/><br/>
+        <h:link outcome="add_product_item" value="add product item"/><br/>
      
      </ui:define>
 </ui:composition>

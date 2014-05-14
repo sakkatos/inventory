@@ -33,7 +33,12 @@ import th.co.geniustree.inventory.service.ProductService;
  */
 @ManagedBean
 @SessionScoped
-public class ProductControl implements Serializable {
+public class ItemControl implements Serializable {
+
+    private final ProductService productService = getProductManagedBean();
+    private final CategoryService categoryService = getCategoryManagedBean();
+    private final PackageService packageService = getPackageManagedBean();
+    private final ProductItemService itemService = getItemManagedBean();
 
     private Product product;
     private List<Product> products;
@@ -44,13 +49,8 @@ public class ProductControl implements Serializable {
     private List<ProductItem> items;
     private Integer amountOfPack;
     private String barcode;
-    private String massage = "";
     private Integer selectedItemId;
-
-    private final ProductService productService = getProductManagedBean();
-    private final CategoryService categoryService = getCategoryManagedBean();
-    private final PackageService packageService = getPackageManagedBean();
-    private final ProductItemService itemService = getItemManagedBean();
+    private String massage = "";
 
     @PostConstruct
     public void postConstruct() {
@@ -75,7 +75,9 @@ public class ProductControl implements Serializable {
             insertItemByBarcode();
             updateItemLog();
         }
-        massage = setMassage(massage1, massage2);
+//        massage = massage1 + "  " + massage2;
+        massage = concateMassage(massage1, massage2);
+
     }
 
     public Boolean isBarcodeExist() {
@@ -113,13 +115,7 @@ public class ProductControl implements Serializable {
         return itemService.sumAmountByProduct(product);
     }
 
-    public void onCreate() {
-        product = new Product();
-        pack = new ProductPackage();
-        amountOfPack = 0;
-    }
-
-    public void onDeleteItem() {
+    public void onRemoveItem() {
         itemService.removeItem(item);
         items = itemService.itemOrderByDateDescend(product);
     }
@@ -132,11 +128,6 @@ public class ProductControl implements Serializable {
 
     public void findAllProduct() {
         products = productService.findAll();
-    }
-
-    public Category getRootCategory() {
-        category = categoryService.findRoot();
-        return category;
     }
 
 //getter and setter-------------------------------------------------------------
@@ -237,15 +228,18 @@ public class ProductControl implements Serializable {
         this.products = products;
     }
 
-    private String setMassage(String massage1, String massage2) {
+    private String concateMassage(String massage1, String massage2) {
         String totalMassage = "";
-        if (massage1.isEmpty() && massage2.isEmpty()) {
+        Boolean isMassage1Null = (massage1 == null);
+        Boolean isMassage2Null = (massage2 == null);
+        System.out.println("Hello ! " + isMassage1Null + " and " + isMassage1Null);
+        if (!isMassage1Null && !isMassage2Null) {
             totalMassage = massage1 + ", " + massage2;
         }
-        if (massage1.isEmpty()) {
+        if (isMassage1Null && !isMassage2Null) {
             totalMassage = massage2;
         }
-        if (massage2.isEmpty()) {
+        if (!isMassage1Null && isMassage2Null) {
             totalMassage = massage1;
         }
         return totalMassage;
