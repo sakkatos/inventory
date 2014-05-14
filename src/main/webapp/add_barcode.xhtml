@@ -7,14 +7,14 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
     <f:metadata>
-        <f:viewParam  name="productId" value="#{barcodeControl.selectedProductId}" ></f:viewParam>
+        <f:viewParam  name="productId" value="#{barcodeControl.selectedProductId}" />
     </f:metadata>
     <ui:define name="mainContent">
         HOME(page1)<br/>
         <p:growl id="notification" showDetail="true" showSummary="true"/>
         <h:link outcome="index" value="Home"/><br/>
         <h:link outcome="add_product_item" value="product item"/><br/>
-        <h:form id = "barcodeForm">
+        <h:form id = "barcodeForm" >
             <div>
                 <h:outputLabel value="Barcode Form"/><br/>
                 <h:outputLabel value="#{barcodeControl.selectedBarcode}"/>
@@ -26,7 +26,7 @@
                                  update=":barcodeForm,:notification"/>
                 <p:panelGrid columns="4">
                     <h:outputText value="Barcode"/>
-                    <h:inputText value="#{barcodeControl.pack.barcode}" required="true"/>
+                    <h:inputText value="#{barcodeControl.pack.barcode}" />
 
                     <h:outputText value="Amount per package"/>
                     <h:inputText value="#{barcodeControl.pack.amountPerPack}"/>
@@ -34,36 +34,29 @@
                     <h:outputText value="Unit name"/>
                     <h:inputText value="#{barcodeControl.pack.name}"/>
 
-                    <h:outputText value="Product of this barcode"/>
-                    <h:outputText value="#{barcodeControl.pack.product}"/>
-
-                    <h:outputText value="CategoryList" />
-                    
-                    <ui:remove>
-                    <p:selectOneListbox value="#{barcodeControl.category}" 
-                                        onchange="submit()">
-                        <f:selectItems value="#{barcodeControl.categories}" 
-                                       var="listBox" 
-                                       itemLabel="#{listBox.name}" 
-                                       itemValue="#{listBox}" />
-                        <p:column >#{listBox.name}</p:column>
+                    <h:outputText value="Category"/>
+                    <p:selectOneListbox value="#{barcodeControl.category.id}" >
+                        <f:selectItems value="#{barcodeControl.categories}"
+                                       var="item"
+                                       itemLabel="#{item.name}"
+                                       itemValue="#{item.id}"/>
+                        <f:ajax listener="#{barcodeControl.findProductByCategory()}" 
+                                render="productList"/>
                     </p:selectOneListbox>
-                    
-                    <h:outputText value="ProductList"/>
-                    <p:selectOneListbox value="#{barcodeControl.product}"
-                                        onchange="submit()">
+
+                    <h:outputText value="Product"/>
+                    <p:selectOneListbox value="#{barcodeControl.product.id}"
+                                        id="productList">
+                        
                         <f:selectItems value="#{barcodeControl.products}"
                                        var="item"
                                        itemLabel="#{item.name}" 
-                                       itemValue="#{item}" />
+                                       itemValue="#{item.id}" />
                         <p:column >#{listBox.name}</p:column>
                     </p:selectOneListbox>
                 </p:panelGrid>
-                </ui:remove>
             </div>
         </h:form>
-
-
     </ui:define>
 </ui:composition>
 
