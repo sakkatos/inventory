@@ -14,7 +14,7 @@ and open the template in the editor.
 
     <ui:define name="mainContent">
         <f:metadata>
-            <f:viewParam  name="itemId" value="#{productControl.selectedItemId}" ></f:viewParam>
+            <f:viewParam  name="itemId" value="#{itemControl.selectedItemId}" ></f:viewParam>
         </f:metadata>
 
         <p:growl id="notification" showDetail="true" showSummary="true"/>
@@ -27,35 +27,37 @@ and open the template in the editor.
                     <td>
                         <p:panelGrid columns="6">
                             <p:commandButton value="Barcode" 
-                                             actionListener="#{productControl.addItemByBarcode()}"
+                                             actionListener="#{itemControl.addItemByBarcode()}"
                                              update=":itemProductForm ,:notification"/>
-                            <p:inputText value="#{productControl.barcode}"/>
+                            <p:inputText value="#{itemControl.barcode}">
+                            </p:inputText>
                             <h:outputLabel value="Product"/> 
-                            <h:outputText value="#{productControl.product.name}"/>
+                            <h:outputText value="#{itemControl.product.name}"/>
                             <h:outputLabel value="Amount"/> 
-                            <h:outputText value="#{productControl.sumItemByProduct()}"/>
+                            <h:outputText value="#{itemControl.sumItemByProduct()}"/>
                         </p:panelGrid>
-                        <h:outputText value="#{productControl.massage}"/>
+                        <h:link value="add product"  outcome="add_barcode"/>
+                        <p:commandButton value="add barocde"/>
                     </td>
                     <td>
-                        <p:commandButton value="add product"/>
-                        <p:commandButton value="add barocde"/>
+                        <h:outputText value="#{itemControl.massage}"/>
+
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        
+
                     </td>
                 </tr>
             </table>
-            <p:dataTable value="#{productControl.items}" var="item">
-                <p:column headerText="Date">#{productControl.item.dateIn}</p:column>
-                <p:column headerText="Time">#{productControl.item.timeIn}</p:column>
-                <p:column headerText="Amount">#{productControl.item.amount}</p:column>
+            <p:dataTable value="#{itemControl.items}" var="item">
+                <p:column headerText="Date">#{item.dateIn}</p:column>
+                <p:column headerText="Time">#{item.timeIn}</p:column>
+                <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
                 <p:column headerText="action">
                     <p:commandButton value="remove"
-                                     actionListener="#{productControl.onSelectItem()}"
+                                     actionListener="#{itemControl.onSelectItem()}"
                                      onsuccess="removeItemProductWidget.show()"
                                      update=":removeItemProductForm">
                         <f:param name="itemId" value="#{item.id}"/>
@@ -68,12 +70,12 @@ and open the template in the editor.
             <h:form id="removeItemProductForm">
                 <h:outputText value="Remove this item?"/>
                 <p:panelGrid columns="3">
-                    <h:outputText value="#{productControl.item.id}"/>
-                    <h:outputText value="#{productControl.item.timeIn}"/>
-                    <h:outputText value="#{productControl.item.amount}"/>
+                    <h:outputText value="#{itemControl.item.id}"/>
+                    <h:outputText value="#{itemControl.item.timeIn}"/>
+                    <h:outputText value="#{itemControl.item.amount}"/>
                 </p:panelGrid>
                 <p:commandButton value="remove" 
-                                 actionListener="#{productControl.onDeleteItem()}"
+                                 actionListener="#{itemControl.onRemoveItem()}"
                                  update=":itemProductForm,:notification"
                                  onsuccess="removeItemProductWidget.hide()"/>
             </h:form>

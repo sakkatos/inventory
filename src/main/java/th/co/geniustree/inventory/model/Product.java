@@ -32,7 +32,6 @@ public class Product implements Serializable {
     @Column(name = "base_price")
     private BigDecimal basePrice;
     private BigDecimal cost;
-    private String image;
 
     @ManyToOne(targetEntity = Category.class)
     private Category category;
@@ -44,14 +43,14 @@ public class Product implements Serializable {
     private List<ProductPackage> packages;
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    private List<ProductItem> productItem;
+    private List<ProductItem> productItems;
 
-    public List<ProductItem> getProductItem() {
-        return productItem;
+    public List<ProductItem> getProductItems() {
+        return productItems;
     }
 
-    public void setProductItem(List<ProductItem> productItem) {
-        this.productItem = productItem;
+    public void setProductItems(List<ProductItem> productItems) {
+        this.productItems = productItems;
     }
 
     public Category getCategory() {
@@ -60,14 +59,6 @@ public class Product implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getId() {
