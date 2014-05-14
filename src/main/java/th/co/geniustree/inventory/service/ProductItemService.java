@@ -35,7 +35,7 @@ public class ProductItemService {
     }
     
     public List<ProductItem> itemOrderByDateDescend(Product product){
-        return productItemRepo.itemOrderByDateDescend(product);
+        return productItemRepo.findItemOrderByDateDescend(product);
     }
     
     public Integer sumAmountByProduct (Product product){
