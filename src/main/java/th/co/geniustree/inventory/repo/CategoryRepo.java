@@ -20,7 +20,7 @@ public interface CategoryRepo extends JpaRepository<Category, String>{
     @Query("SELECT c FROM Category c ORDER BY c.name")
     public List<Category> findAllOrderByName();
     
-    @Query("SELECT c FROM Category c WHERE c.parent=parent")
-    public List<Category> findByParent(Category parent);
+//    @Query("SELECT c FROM Category c WHERE c.parent=category")
+    public List<Category> findByParent(Category category);
     
 }

@@ -50,6 +50,12 @@ public class ProductController implements Serializable {
         products = findAllProducts();
     }
 
+    public void onEdit(){
+        category = categoryService.findOne(product.getCategory().getId());
+        product.setCategory(category);
+        productService.save(product);
+        products = findAllProducts();
+    }
     public List<Product> findAllProducts() {
         return productService.findAll();
     }
