@@ -121,10 +121,10 @@ public class StaffController implements Serializable {
                 .addMessage(null, new FacesMessage(severity, title, body));
     }
 
-    private String requestParam(String staffId) {
+    private String requestParam(String paramName) {
         return FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap()
-                .get(staffId);
+                .get(paramName);
     }
 }

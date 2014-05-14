@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package th.co.geniustree.inventory.model;
 
 import java.io.Serializable;
@@ -23,19 +22,21 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class PurchaseOrder implements Serializable {
+
     @Id
     private Integer id;
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "sale_date")
     private Date saleDate;
-    
+    private String keyword;
+
     @OneToMany(mappedBy = "purchaseOrder")
     private List<OrderItem> orderItems;
     @ManyToOne
     private Customer customer;
     @ManyToOne
     private Staff staff;
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -58,6 +59,13 @@ public class PurchaseOrder implements Serializable {
         return true;
     }
 
+    public PurchaseOrder() {
+    }
+
+    public PurchaseOrder(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -72,6 +80,14 @@ public class PurchaseOrder implements Serializable {
 
     public void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public List<OrderItem> getOrderItems() {
@@ -98,5 +114,4 @@ public class PurchaseOrder implements Serializable {
         this.staff = staff;
     }
 
-    
 }

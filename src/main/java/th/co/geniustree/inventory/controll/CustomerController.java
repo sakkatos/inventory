@@ -126,11 +126,11 @@ public class CustomerController implements Serializable {
         this.customerId = customerId;
     }
 
-    private String requestParam(String customerId) {
+    private String requestParam(String paramName) {
         return FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap()
-                .get(customerId);
+                .get(paramName);
     }
 
     private void showMessage(FacesMessage.Severity severity, String title, String body) {
