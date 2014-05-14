@@ -22,10 +22,10 @@
             <p:dataTable value="#{purchaseOrderController.purchaseOrders}" var="item">
                 <p:column headerText="ID" width="20">#{item.id}</p:column>
                 <p:column headerText="Order item">#{item.orderItems}</p:column>
-                <p:column headerText="Staff">#{staffController.staff.firstName}</p:column>
+                <p:column headerText="Staff">#{staffController.staff.lastName}</p:column>
                 <p:column headerText="Sale date">
                     <h:outputText value="#{item.saleDate}">
-                        <f:convertDateTime pattern="d/M/yyyy" locale="th_TH"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="th_TH"/>
                     </h:outputText>
                 </p:column>
 
