@@ -28,7 +28,6 @@ public class PurchaseOrder implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "sale_date")
     private Date saleDate;
-    private String keyword;
 
     @OneToMany(mappedBy = "purchaseOrder")
     private List<OrderItem> orderItems;
@@ -80,14 +79,6 @@ public class PurchaseOrder implements Serializable {
 
     public void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 
     public List<OrderItem> getOrderItems() {

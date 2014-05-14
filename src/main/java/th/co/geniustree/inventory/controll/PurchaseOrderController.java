@@ -5,6 +5,8 @@
  */
 package th.co.geniustree.inventory.controll;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +16,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import th.co.geniustree.inventory.model.PurchaseOrder;
-import th.co.geniustree.inventory.model.Staff;
 import th.co.geniustree.inventory.service.PurchaseOrderService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
@@ -24,13 +25,13 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
  */
 @ManagedBean
 @SessionScoped
-public class PurchaseOderController {
+public class PurchaseOrderController implements Serializable {
 
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
     private String keyword;
     private String purchaseOrderId;
-    private static final Logger LOG = Logger.getLogger(PurchaseOderController.class.getName());
+    private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
     private final PurchaseOrderService purchaseOrderService = JSFSpringUtils.getBean(PurchaseOrderService.class);
 
     @PostConstruct
@@ -68,7 +69,6 @@ public class PurchaseOderController {
 //        int indexOf = this.getPurchaseOrders().indexOf(new PurchaseOrder(p));
 //        purchaseOrder = this.getPurchaseOrders().get(indexOf);
 //    }
-
     public void onSelect() {
         String p = requestParam("purchaseOrderId");
 
@@ -76,12 +76,12 @@ public class PurchaseOderController {
         int indexOf = this.getPurchaseOrders().indexOf(new PurchaseOrder(id));
         purchaseOrder = this.getPurchaseOrders().get(indexOf);
     }
+
     public List<PurchaseOrder> findAllPurchaseOrder() {
         return purchaseOrderService.findAll();
     }
-    
-    //------------------------------------------------------------------------------------------------------
 
+    //------------------------------------------------------------------------------------------------------
     public PurchaseOrder getPurchaseOrder() {
         return purchaseOrder;
     }
@@ -91,6 +91,9 @@ public class PurchaseOderController {
     }
 
     public List<PurchaseOrder> getPurchaseOrders() {
+        if (purchaseOrders == null) {
+            purchaseOrders = new ArrayList<>();
+        }
         return purchaseOrders;
     }
 
@@ -113,7 +116,8 @@ public class PurchaseOderController {
     public void setPurchaseOrderId(String purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
     }
-     private void showMessage(FacesMessage.Severity severity, String title, String body) {
+
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage(severity, title, body));
     }

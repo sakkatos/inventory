@@ -1,0 +1,137 @@
+<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/maintemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="purchaseOrderId" value="#{purchaseOrderController.purchaseOrderId}"></f:viewParam>
+        </f:metadata>
+        <h:form id="purchaseForm">
+            #{purchaseOrderController.reset()}
+            <p:commandButton value="Add Purchase Order"
+                             actionListener="#{purchaseOrderController.onCreate()}"
+                             update=":addPurchaseDialogForm"
+                             onsuccess="addWidgetDialog.show()"/>
+            <br/>
+            <br/>
+            <p:dataTable value="#{purchaseOrderController.purchaseOrders}" var="item">
+                <p:column headerText="ID" width="20">#{item.id}</p:column>
+                <p:column headerText="Order item">#{item.orderItems}</p:column>
+                <p:column headerText="Staff">#{staffController.staff.firstName}</p:column>
+                <p:column headerText="Sale date">
+                    <h:outputText value="#{item.saleDate}">
+                        <f:convertDateTime pattern="d/M/yyyy" locale="th_TH"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="action" >
+                    <p:commandButton value="edit"
+                                     onsuccess="editWidgetDialog.show();"
+                                     update=":editPurchaseDialogForm"
+                                     actionListener="#{purchaseOrderController.onSelect()}">
+                        <f:param name="purchaseOrderId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="delete"
+                                     onsuccess="deleteWidgetDialog.show();"
+                                     update=":deletePurchaseDialogForm"
+                                     actionListener="#{purchaseOrderController.onSelect()}">
+                        <f:param name="purchaseOrderId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="addPurchaseDialog"
+                  header="เพิ่ม purchase order"
+                  resizable="false"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  widgetVar="addWidgetDialog">
+            <h:form id="addPurchaseDialogForm">
+                <p:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{purchaseOrderController.purchaseOrder.id}"/>
+
+                    <h:outputText value="Sale Date"/>
+                    <p:calendar value="#{purchaseOrderController.purchaseOrder.saleDate}"/>
+
+                </p:panelGrid>
+                <p:commandButton value="บันทึก" 
+                                 actionListener="#{purchaseOrderController.onSave()}"
+                                 update=":purchaseForm, :notification"
+                                 onsuccess="addWidgetDialog.hide()"/>
+                <p:commandButton value="ยกเลิก" 
+                                 onsuccess="addWidgetDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="editPurchaseDialog"
+                  header="แก้ไข purchase order"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="editWidgetDialog"> 
+            <h:form id="editPurchaseDialogForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Sale Date"/>
+                    <p:calendar value="#{purchaseOrderController.purchaseOrder.saleDate}"/>
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <p:commandButton value="บันทึกการแก้ไข"
+                                 update=":purchaseForm, :notification"
+                                 actionListener="#{purchaseOrderController.onSave()}"
+                                 oncomplete="editWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="ยกเลิก"
+                                 type="button"
+                                 onclick="editWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="deletePurchaseDialog"
+                  header="ลบ purchase order"
+                  width="500"
+                  appendToBody="true"
+                  modal="true"
+                  draggable="false"
+                  resizable="false"
+                  widgetVar="deleteWidgetDialog"> 
+            <h:form id="deletePurchaseDialogForm">
+                <h:outputText value="#{purchaseOrderController.purchaseOrder.id}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="ลบข้อมูล"
+                                 update=":purchaseForm, :notification"
+                                 actionListener="#{purchaseOrderController.onDelete()}"
+                                 oncomplete="deleteWidgetDialog.hide();"/>
+                <p:spacer width="10"/>
+                <p:commandButton value="ยกเลิก"
+                                 type="button"
+                                 onclick="deleteWidgetDialog.hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <!--        <p:dialog header="Selected Dates" widgetVar="dialog"
+                          showEffect="fade" hideEffect="fade">
+        
+                    <h:panelGrid id="display" columns="2" cellpadding="5">
+                        <h:outputText value="Popup Date:" />
+                        <h:outputText value="#{calendarBean.date2}" id="popupDate">
+                            <f:convertDateTime pattern="d/M/yyyy"/>
+                        </h:outputText>
+        
+                    </h:panelGrid>
+        
+                </p:dialog>-->
+
+    </ui:define>
+</ui:composition>
