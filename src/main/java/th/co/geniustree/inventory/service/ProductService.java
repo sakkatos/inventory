@@ -26,7 +26,7 @@ public class ProductService {
     public ProductRepo productRepo;
 
     public Product findByBarcode(String barcode) {
-        return productRepo.findProductByBarcode(barcode);
+        return productRepo.findByBarcode(barcode);
     }
 
     public void remove(Product product) {

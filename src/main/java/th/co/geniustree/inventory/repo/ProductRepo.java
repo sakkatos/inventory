@@ -19,7 +19,7 @@ import th.co.geniustree.inventory.model.Product;
 public interface ProductRepo extends JpaRepository<Product, String>{
     
 //    @Query("SELECT p From Product p JOIN p.packages pk WHERE pk.barcode = ?1")
-    public Product findProductByBarcode(String barcode);
+    public Product findByBarcode(String barcode);
     
 //    @Query("SELECT p FROM Product p ORDER BY p.name")
     public List<Product> findAllProduct();
