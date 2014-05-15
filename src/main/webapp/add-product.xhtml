@@ -73,7 +73,7 @@ and open the template in the editor.
                     <p:inputText value="#{productController.product.expectPrice}"/>
 
                     <h:outputText value="category"/>
-                    <p:selectOneMenu value="#{productController.category.id}">
+                    <p:selectOneMenu value="#{productController.product.category.id}">
                         <f:selectItems value="#{productController.categories}"
                                        var="item"
                                        itemLabel="#{item.name}"
