@@ -40,7 +40,10 @@ public class ProductController implements Serializable {
     //business logic------------------------------------------------------------
     
     public void onCreate(){
+        Category root = categoryService.findRoot();
         product = new Product();
+        product.setCategory(root);
+        
     }
     
     public void onSave() {

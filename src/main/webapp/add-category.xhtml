@@ -17,35 +17,92 @@ and open the template in the editor.
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
         <p:growl id="notification" showDetail="true" showSummary="true"/>
-        Category Page
-        <h:form>
+
+        <h:form id="categoryForm"> 
+            <p:commandButton value="new Category"
+                             actionListener="#{categoryController.onCreate()}"
+                             oncomplete="addCategoryWidget.show()"
+                             update=":addCategoryForm"/>
             <p:dataTable value="#{categoryController.categories}" var="item">
                 <p:column headerText="Parent">#{item.parent.name}</p:column>
                 <p:column headerText="Id">#{item.id}</p:column>
                 <p:column headerText="name">#{item.name}</p:column>
                 <p:column headerText="action">
-                    <p:commandButton value="edit" 
+                    <p:commandButton icon="ui-icon-pencil"
                                      actionListener="#{categoryController.onSelect()}"
                                      update=":editCategoryForm"
-                                     onsuccess="editCategoryWidget.show()">
+                                     oncomplete="editCategoryWidget.show()">
+                        <f:param name="selectedCategoryId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{categoryController.onSelect()}"
+                                     update=":removeCategoryForm"
+                                     oncomplete="removeCategoryWidget.show()">
                         <f:param name="selectedCategoryId" value="#{item.id}"/>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
-        
-        <p:dialog id="editCategoryWidget">
+
+        <p:dialog widgetVar="addCategoryWidget">
+            <h:form id="addCategoryForm">
+                <p:panelGrid columns="4">
+                    <h:outputText value="id"/>
+                    <p:inputText value="#{categoryController.category.id}"/>
+
+                    <h:outputText value="name"/>
+                    <p:inputText value="#{categoryController.category.name}"/>
+
+                    <h:outputText value="Parent"/>
+                    <p:selectOneMenu value="#{categoryController.category.parent.id}">
+                        <f:selectItems value="#{categoryController.categories}"
+                                       var="addItem"
+                                       itemLabel="#{addItem.name}"
+                                       itemValue="#{addItem.id}">
+                        </f:selectItems>
+                    </p:selectOneMenu>
+                    <p:commandButton value="save"
+                                 update=":categoryForm,:notification"
+                                 actionListener="#{categoryController.onSave()}"
+                                 onsuccess="addCategoryWidget.hide()"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="editCategoryWidget">
             <h:form id="editCategoryForm">
                 <p:panelGrid columns="4">
                     <h:outputText value="id"/>
                     <p:inputText value="#{categoryController.category.id}"/>
-                    
+
                     <h:outputText value="name"/>
                     <p:inputText value="#{categoryController.category.name}"/>
-                    
+
                     <h:outputText value="Parent"/>
-                    <p:inputText value="#{categoryController.category.parent.name}"/>
+                    <p:selectOneMenu value="#{categoryController.category.parent.id}">
+                        <f:selectItems value="#{categoryController.categories}"
+                                       var="editItem"
+                                       itemLabel="#{editItem.name}"
+                                       itemValue="#{editItem.id}">
+                        </f:selectItems>
+                    </p:selectOneMenu>
                 </p:panelGrid>
+                <p:commandButton value="save"
+                                 update=":categoryForm,:notification"
+                                 actionListener="#{categoryController.onSave()}"
+                                 onsuccess="editCategoryWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="removeCategoryWidget">
+            <h:form id="removeCategoryForm">
+                <h:outputText value="Remove this category?"/>
+                <p:inputText value="#{categoryController.category.name}"/><br/>
+                <p:commandButton value="remove"
+                                 actionListener="#{categoryController.onremove()}"
+                                 update=":categoryForm,:notification"
+                                 onsuccess="removeCategoryWidget.hide()"/>
+                
             </h:form>
         </p:dialog>
 

@@ -25,10 +25,11 @@ public class StartUpApp implements ServletContextListener {
         ServletContext servletContext = sce.getServletContext();
         CategoryService categoryService = WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CategoryService.class);
         if (categoryService.findRoot()==null){
-            Category category = new Category();
-            category.setId("1");
-            category.setName("root");
-            categoryService.save(category);
+            Category root = new Category();
+            root.setId("1");
+            root.setName("root");
+            root.setParent(new Category());
+            categoryService.save(root);
         };
     }
 

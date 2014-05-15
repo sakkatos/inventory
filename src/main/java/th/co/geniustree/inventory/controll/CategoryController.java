@@ -25,23 +25,40 @@ public class CategoryController implements Serializable {
 
     private Category category;
     private List<Category> categories;
-    
+
     private String selectedCategoryId;
-    
+
     //business logic------------------------------------------------------------
-    public void onSave(){
-          categoryService.save(category);
+    public void onCreate() {
+        category = new Category();
+        category.setParent(categoryService.findRoot());
     }
-    
-    public void onSelect(){
+
+    public void onSave() {
+        Category parent = new Category();
+        parent = categoryService.findOne(category.getParent().getId());
+        category.setParent(parent);
+        categoryService.save(category);
+        findAll();
+    }
+
+    public void findAll() {
+        categories = categoryService.findAllOrderByName();
+    }
+
+    public void onSelect() {
         Category c = new Category();
         c.setId(selectedCategoryId);
-        category= getCategories().get(getCategories().indexOf(c));
+        category = getCategories().get(getCategories().indexOf(c));
+        System.out.println("Hello::::::::::::::::::           ");
+        System.out.println(category.getName() + "->" + category.getParent().getName());
     }
-    
-    public void onremove(){
+
+    public void onremove() {
         categoryService.remove(category);
+        findAll();
     }
+
     //getter and setter---------------------------------------------------------
     public Category getCategory() {
         return category;
@@ -52,7 +69,7 @@ public class CategoryController implements Serializable {
     }
 
     public List<Category> getCategories() {
-        if (categories==null){
+        if (categories == null) {
             categories = categoryService.findAllOrderByName();
         }
         return categories;
@@ -63,8 +80,8 @@ public class CategoryController implements Serializable {
     }
 
     public String getSelectedCategoryId() {
-        if (selectedCategoryId==null){
-            selectedCategoryId="";
+        if (selectedCategoryId == null) {
+            selectedCategoryId = "";
         }
         return selectedCategoryId;
     }
@@ -72,7 +89,5 @@ public class CategoryController implements Serializable {
     public void setSelectedCategoryId(String selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
     }
-    
-    
-    
+
 }

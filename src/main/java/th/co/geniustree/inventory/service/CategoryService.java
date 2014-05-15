@@ -7,7 +7,6 @@ package th.co.geniustree.inventory.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,24 +48,27 @@ public class CategoryService {
     public Category findOne(String id) {
         return categoryRepo.findOne(id);
     }
-    
-    public List<Category> findByParent (Category parent){
+
+    public List<Category> findByParent(Category parent) {
         return categoryRepo.findByParent(parent);
     }
-    
-    public void saveCategories(List<Category> categories){
+
+    public void saveCategories(List<Category> categories) {
         categoryRepo.save(categories);
     }
-    
-    public void remove(Category category){
+
+    public void remove(Category category) {
         Category root = new Category();
-        root.setId("1");root.setName("root");
+        root.setId("1");
+        root.setName("root");
         List<Category> cList = categoryRepo.findByParent(category);
-        for (Category c :cList){
-            c.setParent(root);
+        if (!cList.isEmpty()) {
+            for (Category c : cList) {
+                c.setParent(root);
+            }
+            categoryRepo.save(cList);
         }
-        categoryRepo.save(cList);
         categoryRepo.delete(category);
     }
-    
+
 }
