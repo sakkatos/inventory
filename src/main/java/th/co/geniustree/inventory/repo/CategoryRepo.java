@@ -15,9 +15,9 @@ import th.co.geniustree.inventory.model.Category;
  *
  * @author Nook
  */
-public interface CategoryRepo extends JpaRepository<Category, String>{
+public interface CategoryRepo extends JpaRepository<Category, Integer>{
     
-    @Query("SELECT c FROM Category c ORDER BY c.parent,c.name")
+//    @Query("SELECT c FROM Category c ORDER BY c.parent,c.name")
     public List<Category> findAllOrderByName();
     
 //    @Query("SELECT c FROM Category c WHERE c.parent=category")
