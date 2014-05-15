@@ -20,12 +20,11 @@
             <p:inputText value="#{customerController.keyword}"/>
             <p:commandButton value="ค้นหา"
                              icon="ui-icon-search"
-                             update=":searchCustomerDialogForm"
                              actionListener="#{customerController.onSearch()}"
-                             onsuccess="searchWidgetDialog.show();"/>
+                             update="showCustomer"/>
             <br/>
             <br/>
-            <p:dataTable value="#{customerController.customers}" var="item">
+            <p:dataTable value="#{customerController.customers}" var="item" id="showCustomer">
                 <p:column headerText="รหัสลูกค้า" width="100">#{item.id}</p:column>
                 <p:column headerText="ชื่อ-นามสกุล">#{item.firstName}&nbsp;&nbsp;&nbsp;#{item.lastName}</p:column>
                 <p:column headerText="เบอร์โทรศัพท์">#{item.phoneNumber}</p:column>
