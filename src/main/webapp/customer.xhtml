@@ -19,6 +19,7 @@
                              onsuccess="addWidgetDialog.show()"/>
             <p:inputText value="#{customerController.keyword}"/>
             <p:commandButton value="ค้นหา"
+                             icon="ui-icon-search"
                              update=":searchCustomerDialogForm"
                              actionListener="#{customerController.onSearch()}"
                              onsuccess="searchWidgetDialog.show();"/>
@@ -29,13 +30,15 @@
                 <p:column headerText="ชื่อ-นามสกุล">#{item.firstName}&nbsp;&nbsp;&nbsp;#{item.lastName}</p:column>
                 <p:column headerText="เบอร์โทรศัพท์">#{item.phoneNumber}</p:column>
                 <p:column headerText="action" >
-                    <p:commandButton value="แก้ไขข้อมูล"
+                    <p:commandButton title="แก้ไขข้อมูล"
+                                     icon="ui-icon-pencil"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editCustomerDialogForm"
                                      actionListener="#{customerController.onSelect()}">
                         <f:param name="customerId" value="#{item.id}"/>
                     </p:commandButton>
-                    <p:commandButton value="ลบ"
+                    <p:commandButton title="ลบข้อมูล"
+                                     icon="ui-icon-trash"
                                      onsuccess="deleteWidgetDialog.show();"
                                      update=":deleteCustomerDialogForm"
                                      actionListener="#{customerController.onSelect()}">

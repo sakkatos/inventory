@@ -32,13 +32,14 @@
                 <p:column headerText="ยอดรายการสั่งซื้อ">#{item.orderItems}</p:column>
 
                 <p:column headerText="action" >
-                    <p:commandButton value="แก้ไข"
+                    <p:commandButton title="แก้ไขข้อมูล"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editPurchaseDialogForm"
-                                     actionListener="#{purchaseOrderController.onSelect()}">
+                                     actionListener="#{purchaseOrderController.onSelect()}"
+                                     icon="ui-icon-pencil">
                         <f:param name="purchaseOrderId" value="#{item.id}"/>
                     </p:commandButton>
-                    <p:commandButton value="ลบ"
+                    <p:commandButton title="ลบข้อมูล"
                                      onsuccess="deleteWidgetDialog.show();"
                                      update=":deletePurchaseDialogForm"
                                      actionListener="#{purchaseOrderController.onSelect()}"
