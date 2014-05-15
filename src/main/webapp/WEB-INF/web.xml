@@ -4,6 +4,10 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext*.xml</param-value>
+    </context-param>       
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>pamarin</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -33,4 +37,5 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+
 </web-app>
