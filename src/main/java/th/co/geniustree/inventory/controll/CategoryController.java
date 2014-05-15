@@ -26,7 +26,7 @@ public class CategoryController implements Serializable {
     private Category category;
     private List<Category> categories;
 
-    private String selectedCategoryId;
+    private Integer selectedCategoryId;
 
     //business logic------------------------------------------------------------
     public void onCreate() {
@@ -35,8 +35,7 @@ public class CategoryController implements Serializable {
     }
 
     public void onSave() {
-        Category parent = new Category();
-        parent = categoryService.findOne(category.getParent().getId());
+        Category parent = categoryService.findOne(category.getParent().getId());
         category.setParent(parent);
         categoryService.save(category);
         findAll();
@@ -79,14 +78,14 @@ public class CategoryController implements Serializable {
         this.categories = categories;
     }
 
-    public String getSelectedCategoryId() {
+    public Integer getSelectedCategoryId() {
         if (selectedCategoryId == null) {
-            selectedCategoryId = "";
+            selectedCategoryId = 0;
         }
         return selectedCategoryId;
     }
 
-    public void setSelectedCategoryId(String selectedCategoryId) {
+    public void setSelectedCategoryId(Integer selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
     }
 

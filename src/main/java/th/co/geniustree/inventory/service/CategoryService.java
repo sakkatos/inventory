@@ -25,16 +25,10 @@ public class CategoryService {
     private CategoryRepo categoryRepo;
 
     public Category findRoot() {
-        Category category = new Category();
-        category.setId("1");
-        category = categoryRepo.findOne(category.getId());
-        if (category == null) {
-            category = new Category();
-            category.setId("1");
-            category.setName("root");
-            categoryRepo.save(category);
-        }
-        return category;
+        Category root = new Category();
+        root.setId(1);
+        root = categoryRepo.findOne(root.getId());
+        return root;
     }
 
     public List<Category> findAllOrderByName() {
@@ -45,7 +39,7 @@ public class CategoryService {
         categoryRepo.save(category);
     }
 
-    public Category findOne(String id) {
+    public Category findOne(Integer id) {
         return categoryRepo.findOne(id);
     }
 
@@ -58,9 +52,7 @@ public class CategoryService {
     }
 
     public void remove(Category category) {
-        Category root = new Category();
-        root.setId("1");
-        root.setName("root");
+        Category root = findRoot();
         List<Category> cList = categoryRepo.findByParent(category);
         if (!cList.isEmpty()) {
             for (Category c : cList) {

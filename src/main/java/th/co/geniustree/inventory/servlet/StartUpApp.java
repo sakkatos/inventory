@@ -14,7 +14,7 @@ import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.service.CategoryService;
 
 /**
- * Web application lifecycle listener.
+ * 
  *
  * @author Nook
  */
@@ -26,9 +26,9 @@ public class StartUpApp implements ServletContextListener {
         CategoryService categoryService = WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CategoryService.class);
         if (categoryService.findRoot()==null){
             Category root = new Category();
-            root.setId("1");
             root.setName("root");
-            root.setParent(new Category());
+            Category parent = new Category();parent.setId(0);
+            root.setParent(parent);
             categoryService.save(root);
         };
     }
