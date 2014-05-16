@@ -1,6 +1,6 @@
 <!--<?xml version='1.0' encoding='UTF-8' ?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/template.xhtml"
+<ui:composition template="template/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -9,14 +9,13 @@
     <f:metadata>
         <f:viewParam  name="productId" value="#{itemController.selectedItemId}" ></f:viewParam>
     </f:metadata>
-    <ui:define name="mainContent">
+    <ui:define name="centerReplace">
         HOME(page2)<br/>
         <h:link outcome="customer" value="customer"/><br/>
         <h:link outcome="staff" value="staff"/><br/>
         <h:link outcome="add-product-item" value="add product item"/><br/>
         <h:link outcome="add-product" value="add product"/><br/>
         <h:link outcome="add-category" value="add category"/><br/>
-     
-     </ui:define>
+    </ui:define>
 </ui:composition>
 
