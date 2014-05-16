@@ -33,6 +33,10 @@ public class CategoryService {
         return categoryRepo.findAllOrderByName();
     }
 
+    public List<Category> findAllExceptRoot(){
+        return categoryRepo.findAllExceptRoot();
+    }
+    
     public void save(Category category) {
         categoryRepo.save(category);
     }

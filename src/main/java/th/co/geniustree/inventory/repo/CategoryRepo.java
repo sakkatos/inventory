@@ -18,7 +18,7 @@ import th.co.geniustree.inventory.model.Category;
  */
 public interface CategoryRepo extends JpaRepository<Category, Integer>{
     
-    @Query("SELECT c FROM Category c WHERE c.name NOT IN ('root') ORDER BY c.parent,c.name")
+    @Query("SELECT c FROM Category c ORDER BY c.name")
     public List<Category> findAllOrderByName();
     
     @Query("SELECT c FROM Category c WHERE c.parent=?1")
@@ -26,4 +26,7 @@ public interface CategoryRepo extends JpaRepository<Category, Integer>{
     
     @Query("SELECT c FROM Category c WHERE c.name = :name")
     public Category findByName(@Param("name")String name);
+    
+    @Query("SELECT c FROM Category c WHERE c.name NOT IN ('root') ORDER BY c.name")
+    public List<Category> findAllExceptRoot();
 }

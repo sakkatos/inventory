@@ -54,6 +54,9 @@ public class Product implements Serializable {
     }
 
     public Category getCategory() {
+        if(category==null){
+            category = new Category();
+        }
         return category;
     }
 
