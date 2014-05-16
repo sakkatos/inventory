@@ -26,13 +26,14 @@ public class CategoryController implements Serializable {
 
     private Category category;
     private List<Category> categories;
+    private List<Category> noRootCategories;
 
     private Integer selectedCategoryId;
     
     @PostConstruct 
     public void CategoryController(){
         findRoot();
-        findAll();
+        categories = findAll();
     }
 
     //business logic------------------------------------------------------------
@@ -45,11 +46,15 @@ public class CategoryController implements Serializable {
         Category parent = categoryService.findOne(category.getParent().getId());
         category.setParent(parent);
         categoryService.save(category);
-        findAll();
+        categories = findAll();
     }
 
-    public void findAll() {
-        categories = categoryService.findAllOrderByName();
+    public List<Category> findAll() {
+        return categoryService.findAllOrderByName();
+    }
+    
+    public List<Category> findAllExceptRoot(){
+        return categoryService.findAllExceptRoot();
     }
 
     public void onSelect() {
@@ -61,7 +66,7 @@ public class CategoryController implements Serializable {
     public void onremove() {
         changeParentToRoot(category);
         categoryService.remove(category);
-        findAll();
+        categories = findAll();
     }
 
     public void changeParentToRoot(Category parent) {
@@ -99,7 +104,7 @@ public class CategoryController implements Serializable {
 
     public List<Category> getCategories() {
         if (categories == null) {
-            categories = categoryService.findAllOrderByName();
+            categories = findAll();
         }
         return categories;
     }
@@ -118,5 +123,18 @@ public class CategoryController implements Serializable {
     public void setSelectedCategoryId(Integer selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
     }
+
+    public List<Category> getNoRootCategories() {
+        if (noRootCategories == null){
+            noRootCategories = findAllExceptRoot();
+        }
+        return noRootCategories;
+    }
+
+    public void setNoRootCategories(List<Category> noRootCategories) {
+        this.noRootCategories = noRootCategories;
+    }
+    
+    
 
 }
