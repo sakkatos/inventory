@@ -29,6 +29,9 @@ public class CategoryService {
         return root;
     }
 
+    public List<Category> searchByName(String name){
+        return categoryRepo.searchByName(name);
+    }
     public List<Category> findAllOrderByName() {
         return categoryRepo.findAllOrderByName();
     }

@@ -6,6 +6,7 @@
 package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -29,9 +30,13 @@ public class CategoryController implements Serializable {
     private List<Category> noRootCategories;
 
     private Integer selectedCategoryId;
-    
-    @PostConstruct 
-    public void CategoryController(){
+    private List<Integer> selectedFilterCategories;
+    private String keyword;
+    private Integer filterKeyword;
+    private List<Integer> filterKeywords;
+
+    @PostConstruct
+    public void CategoryController() {
         findRoot();
         categories = findAll();
     }
@@ -46,14 +51,23 @@ public class CategoryController implements Serializable {
         Category parent = categoryService.findOne(category.getParent().getId());
         category.setParent(parent);
         categoryService.save(category);
-        categories = findAll();
+        noRootCategories = findAllExceptRoot();
     }
 
     public List<Category> findAll() {
         return categoryService.findAllOrderByName();
     }
-    
-    public List<Category> findAllExceptRoot(){
+
+    public void searchByName() {
+        if (keyword.equals("")) {
+            noRootCategories = findAllExceptRoot();
+        }
+        if (!keyword.equals("")) {
+            noRootCategories = categoryService.searchByName(keyword);
+        }
+    }
+
+    public List<Category> findAllExceptRoot() {
         return categoryService.findAllExceptRoot();
     }
 
@@ -66,7 +80,7 @@ public class CategoryController implements Serializable {
     public void onremove() {
         changeParentToRoot(category);
         categoryService.remove(category);
-        categories = findAll();
+        noRootCategories = findAllExceptRoot();
     }
 
     public void changeParentToRoot(Category parent) {
@@ -79,8 +93,8 @@ public class CategoryController implements Serializable {
             categoryService.saveCategories(cList);
         }
     }
-    
-    public Category findRoot(){
+
+    public Category findRoot() {
         Category root = categoryService.findRoot();
         if (root == null) {
             root = new Category();
@@ -89,10 +103,10 @@ public class CategoryController implements Serializable {
         }
         return root;
     }
-
+    
     //getter and setter---------------------------------------------------------
     public Category getCategory() {
-        if (category==null){
+        if (category == null) {
             category = new Category();
         }
         return category;
@@ -125,7 +139,7 @@ public class CategoryController implements Serializable {
     }
 
     public List<Category> getNoRootCategories() {
-        if (noRootCategories == null){
+        if (noRootCategories == null) {
             noRootCategories = findAllExceptRoot();
         }
         return noRootCategories;
@@ -134,7 +148,49 @@ public class CategoryController implements Serializable {
     public void setNoRootCategories(List<Category> noRootCategories) {
         this.noRootCategories = noRootCategories;
     }
-    
-    
 
+    public String getKeyword() {
+        if (keyword == null) {
+            keyword = "";
+        }
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public List<Integer> getSelectedFilterCategories() {
+        if (selectedFilterCategories == null) {
+            selectedFilterCategories = new ArrayList<>();
+        }
+        return selectedFilterCategories;
+    }
+
+    public void setSelectedFilterCategories(List<Integer> selectedFilterCategories) {
+        this.selectedFilterCategories = selectedFilterCategories;
+    }
+
+    public Integer getFilterKeyword() {
+        return filterKeyword;
+    }
+
+    public void setFilterKeyword(Integer filterKeyword) {
+        this.filterKeyword = filterKeyword;
+    }
+
+    public List<Integer> getFilterKeywords() {
+        if (filterKeywords==null){
+            
+            
+            
+        }
+        return filterKeywords;
+    }
+
+    public void setFilterKeywords(List<Integer> filterKeywords) {
+        this.filterKeywords = filterKeywords;
+    }
+
+    
 }

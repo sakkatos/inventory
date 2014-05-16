@@ -23,13 +23,15 @@ and open the template in the editor.
                                  actionListener="#{productController.onCreate()}"
                                  onsuccess="addProductDialog.show()"/>
             </div>
-            <p:dataTable value="#{productController.products}" var="item">
-                <p:column headerText="Category">#{item.category.name}</p:column>
-                <p:column headerText="ProductId">#{item.id}</p:column>
+            <p:dataTable id="productTable" value="#{productController.products}" var="item">
+                
+                <p:column headerText="ProductId" >#{item.id}</p:column>
                 <p:column headerText="name">#{item.name}</p:column>
                 <p:column headerText="cost">#{item.cost}</p:column>
                 <p:column headerText="basePrice">#{item.basePrice}</p:column>
                 <p:column headerText="expectPrice">#{item.expectPrice}</p:column>
+                <p:column headerText="remain"></p:column>
+                <p:column headerText="Category" >#{item.category.name}</p:column>
                 <p:column headerText="action">
                     <p:commandButton value="edit"
                                      actionListener="#{productController.onSelect()}" 

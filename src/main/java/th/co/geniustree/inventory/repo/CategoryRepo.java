@@ -27,6 +27,10 @@ public interface CategoryRepo extends JpaRepository<Category, Integer>{
     @Query("SELECT c FROM Category c WHERE c.name = :name")
     public Category findByName(@Param("name")String name);
     
+    @Query("SELECT c FROM Category c WHERE c.name LIKE %:name%")
+    public List<Category> searchByName(@Param("name")String name);
+    
     @Query("SELECT c FROM Category c WHERE c.name NOT IN ('root') ORDER BY c.name")
     public List<Category> findAllExceptRoot();
+    
 }

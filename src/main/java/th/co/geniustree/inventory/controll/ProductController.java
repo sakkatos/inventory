@@ -47,7 +47,7 @@ public class ProductController implements Serializable {
     }
     
     public void onSave() {
-        category = categoryService.findOne(category.getId());
+        category = categoryService.findOne(product.getCategory().getId());
         product.setCategory(category);
         productService.save(product);
         products = findAllProducts();
