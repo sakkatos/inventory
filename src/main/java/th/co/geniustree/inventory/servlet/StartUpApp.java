@@ -22,15 +22,15 @@ public class StartUpApp implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ServletContext servletContext = sce.getServletContext();
-        CategoryService categoryService = WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CategoryService.class);
-        if (categoryService.findRoot()==null){
-            Category root = new Category();
-            root.setName("root");
-            Category parent = new Category();parent.setId(0);
-            root.setParent(parent);
-            categoryService.save(root);
-        };
+//        ServletContext servletContext = sce.getServletContext();
+//        CategoryService categoryService = WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(CategoryService.class);
+//        if (categoryService.findRoot()==null){
+//            Category root = new Category();
+//            root.setName("root");
+//            Category parent = new Category();parent.setId(0);
+//            root.setParent(parent);
+//            categoryService.save(root);
+//        };
     }
 
     @Override
