@@ -7,6 +7,7 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import th.co.geniustree.inventory.model.Category;
@@ -27,11 +28,17 @@ public class CategoryController implements Serializable {
     private List<Category> categories;
 
     private Integer selectedCategoryId;
+    
+    @PostConstruct 
+    public void CategoryController(){
+        findRoot();
+        findAll();
+    }
 
     //business logic------------------------------------------------------------
     public void onCreate() {
         category = new Category();
-        category.setParent(categoryService.findRoot());
+        category.setParent(findRoot());
     }
 
     public void onSave() {
@@ -49,17 +56,40 @@ public class CategoryController implements Serializable {
         Category c = new Category();
         c.setId(selectedCategoryId);
         category = getCategories().get(getCategories().indexOf(c));
-        System.out.println("Hello::::::::::::::::::           ");
-        System.out.println(category.getName() + "->" + category.getParent().getName());
     }
 
     public void onremove() {
+        changeParentToRoot(category);
         categoryService.remove(category);
         findAll();
     }
 
+    public void changeParentToRoot(Category parent) {
+        Category root = findRoot();
+        List<Category> cList = categoryService.findByParent(parent);
+        if (!cList.isEmpty()) {
+            for (Category c : cList) {
+                c.setParent(root);
+            }
+            categoryService.saveCategories(cList);
+        }
+    }
+    
+    public Category findRoot(){
+        Category root = categoryService.findRoot();
+        if (root == null) {
+            root = new Category();
+            root.setName("root");
+            categoryService.save(root);
+        }
+        return root;
+    }
+
     //getter and setter---------------------------------------------------------
     public Category getCategory() {
+        if (category==null){
+            category = new Category();
+        }
         return category;
     }
 

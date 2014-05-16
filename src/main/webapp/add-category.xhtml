@@ -5,19 +5,17 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<ui:composition template="/template.xhtml"
+<ui:composition template="template/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="mainContent">
+    <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
-        <p:growl id="notification" showDetail="true" showSummary="true"/>
-
         <h:form id="categoryForm"> 
             <p:commandButton value="new Category"
                              actionListener="#{categoryController.onCreate()}"
@@ -51,7 +49,7 @@ and open the template in the editor.
                     <p:inputText value="#{categoryController.category.name}"/>
 
                     <h:outputText value="Parent"/>
-                    <p:selectOneMenu value="#{categoryController.category.parent.id}">
+                    <p:selectOneMenu value="#{categoryController.category.parent.id}"  >
                         <f:selectItems value="#{categoryController.categories}"
                                        var="addItem"
                                        itemLabel="#{addItem.name}"

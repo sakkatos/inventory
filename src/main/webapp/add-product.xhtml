@@ -5,26 +5,24 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<ui:composition template="/template.xhtml"
+<ui:composition template="template/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="mainContent">
+    <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
         </f:metadata>
-        <p:growl id="notification" showDetail="true" showSummary="true"/>
         <h:form id="productTableForm">
-            Product page
-            <p:panelGrid columns="4">
+            <div style="margin-bottom: 10px">
                 <p:commandButton value="addProduct"
                                  update=":addProductForm"
                                  actionListener="#{productController.onCreate()}"
                                  onsuccess="addProductDialog.show()"/>
-            </p:panelGrid>
+            </div>
             <p:dataTable value="#{productController.products}" var="item">
                 <p:column headerText="Category">#{item.category.name}</p:column>
                 <p:column headerText="ProductId">#{item.id}</p:column>
