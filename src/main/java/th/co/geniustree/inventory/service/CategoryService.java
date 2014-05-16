@@ -25,9 +25,7 @@ public class CategoryService {
     private CategoryRepo categoryRepo;
 
     public Category findRoot() {
-        Category root = new Category();
-        root.setId(1);
-        root = categoryRepo.findOne(root.getId());
+        Category root = categoryRepo.findByName("root");
         return root;
     }
 
@@ -52,14 +50,6 @@ public class CategoryService {
     }
 
     public void remove(Category category) {
-        Category root = findRoot();
-        List<Category> cList = categoryRepo.findByParent(category);
-        if (!cList.isEmpty()) {
-            for (Category c : cList) {
-                c.setParent(root);
-            }
-            categoryRepo.save(cList);
-        }
         categoryRepo.delete(category);
     }
 

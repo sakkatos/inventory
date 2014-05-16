@@ -27,8 +27,7 @@ public class StartUpApp implements ServletContextListener {
 //        if (categoryService.findRoot()==null){
 //            Category root = new Category();
 //            root.setName("root");
-//            Category parent = new Category();parent.setId(0);
-//            root.setParent(parent);
+//            root.setParent(new Category());
 //            categoryService.save(root);
 //        };
     }
