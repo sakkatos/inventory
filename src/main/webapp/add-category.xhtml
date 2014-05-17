@@ -35,12 +35,13 @@ and open the template in the editor.
                 </span>
             </div>
             <div style="height: 5px"/><div style="clear: both"/>
-            <div >
-                <p:multiSelectListbox value="#{categoryController.filterKeyword}"
-                                      effect="slide">
-                    <f:selectItems value="#{categoryController.filterKeywords}"/>
-                </p:multiSelectListbox>
-            </div>
+            <p:selectOneButton value="#{categoryController.selectedLabel}" >
+                <f:selectItems value="#{categoryController.selectedLabels}"
+                               var="item"
+                               itemLabel="#{item}"
+                               itemValue="#{item}"/>
+                
+            </p:selectOneButton>
             <div style="height: 5px"/><div style="clear: both"/>
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
@@ -51,7 +52,7 @@ and open the template in the editor.
                 <p:column headerText="action">
                     <p:commandButton icon="ui-icon-pencil" 
                                      actionListener="#{categoryController.onSelect()}"
-                                     update=":editCategoryForm"
+                                     update=":editCategoryForm" 
                                      oncomplete="editCategoryWidget.show()">
                         <f:param name="selectedCategoryId" value="#{item.id}"/>
                     </p:commandButton>

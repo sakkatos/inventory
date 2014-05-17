@@ -36,6 +36,7 @@ public class ProductController implements Serializable {
 
     private Integer itemProductAmount;
     private String selectedProductId;
+    private List<String> filterOptionByCategories;
 
     //business logic------------------------------------------------------------
     
@@ -145,4 +146,20 @@ public class ProductController implements Serializable {
         this.selectedProductId = selectedProductId;
     }
 
+    public List<String> getFilterOptionByCategories() {
+        if (filterOptionByCategories==null){
+            filterOptionByCategories = new ArrayList<>();
+            List<Category> cList = categoryService.findAllOrderByName();
+            for (Category c:cList){
+                filterOptionByCategories.add(c.getName());
+            }
+        }
+        return filterOptionByCategories;
+    }
+
+    public void setFilterOptionByCategories(List<String> filterOptionByCategories) {
+        this.filterOptionByCategories = filterOptionByCategories;
+    }
+
+    
 }

@@ -32,6 +32,11 @@ public class CategoryService {
     public List<Category> searchByName(String name){
         return categoryRepo.searchByName(name);
     }
+    
+    public List<Category> searchByNameList(List<String> nameList){
+        return categoryRepo.searchByNameList(nameList);
+    }
+    
     public List<Category> findAllOrderByName() {
         return categoryRepo.findAllOrderByName();
     }

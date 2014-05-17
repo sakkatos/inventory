@@ -1,28 +1,23 @@
 <!--<?xml version='1.0' encoding='UTF-8' ?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/template.xhtml"
+<ui:composition template="template/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <f:metadata>
-        <f:viewParam  name="productId" value="#{barcodeController.selectedProductId}" />
-    </f:metadata>
-    <ui:define name="mainContent">
-        HOME(page1)<br/>
-        <h:link outcome="index" value="Home"/><br/>
-        <h:link outcome="add-product-item" value="product item"/><br/>
+
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam  name="productId" value="#{barcodeController.selectedProductId}" />
+        </f:metadata>
+        <div/>
+        <h:link outcome="add-product-item" value="back"  class="nly"/>
         <h:form id = "barcodeForm" >
             <div>
-                <h:outputLabel value="Barcode Form"/><br/>
+                <h:outputLabel value="new Barcode"/><br/>
                 <h:outputLabel value="#{barcodeController.selectedBarcode}"/>
-                <p:commandButton value="new Pack"
-                                 actionListener="#{barcodeController.onCreate()}"
-                                 update=":barcodeForm,:notification"/>
-                <p:commandButton value="save"
-                                 actionListener="#{barcodeController.onSave()}"
-                                 update=":barcodeForm,:notification"/>
+
                 <p:panelGrid columns="4">
                     <h:outputText value="Barcode"/>
                     <h:inputText value="#{barcodeController.pack.barcode}" />
@@ -34,24 +29,30 @@
                     <h:inputText value="#{barcodeController.pack.name}"/>
 
                     <h:outputText value="Category"/>
-                    <p:selectOneListbox value="#{barcodeController.category.id}" >
+                    <p:selectOneMenu value="#{barcodeController.category.id}" >
                         <f:ajax listener="#{barcodeController.findProductByCategory()}" 
                                 render="productList"/>
                         <f:selectItems value="#{barcodeController.categories}"
                                        var="item"
                                        itemLabel="#{item.name}"
                                        itemValue="#{item.id}"/>
-                    </p:selectOneListbox>
+                    </p:selectOneMenu>
 
                     <h:outputText value="Product"/>
-                    <p:selectOneListbox value="#{barcodeController.product.id}"
-                                        id="productList">
+                    <p:selectOneMenu value="#{barcodeController.product.id}"
+                                     id="productList">
                         <f:selectItems value="#{barcodeController.products}"
                                        var="item"
                                        itemLabel="#{item.name}" 
                                        itemValue="#{item.id}" />
-                    </p:selectOneListbox>
+                    </p:selectOneMenu>
                 </p:panelGrid>
+                <p:commandButton value="new Pack"
+                                 actionListener="#{barcodeController.onCreate()}"
+                                 update=":barcodeForm,:notification"/>
+                <p:commandButton value="save"
+                                 actionListener="#{barcodeController.onSave()}"
+                                 update=":barcodeForm,:notification"/>
             </div>
         </h:form>
     </ui:define>

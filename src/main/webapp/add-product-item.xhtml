@@ -5,39 +5,36 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<ui:composition template="/template.xhtml"
+<ui:composition template="template/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="mainContent">
+    <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam  name="itemId" value="#{itemController.selectedItemId}" ></f:viewParam>
         </f:metadata>
 
         Product Page<br/>
-        <h:link outcome="index" value="Home"/><br/>
+        <h:link outcome="index" 
+                value="Home"/><br/>
+        <h:link value="add barcode" 
+                outcome="add-barcode"/>
         <h:form id="itemProductForm">
+            <p:commandButton value="Barcode" 
+                             actionListener="#{itemController.addItemByBarcode()}"
+                             update=":itemProductForm ,:notification"/>
+            <p:inputText value="#{itemController.barcode}" size="14"/>
+            <p:panelGrid columns="6" >
+                <h:outputLabel value="Product"/> 
+                <h:outputText value="#{itemController.product.name}"/>
+                <h:outputLabel value="Amount"/> 
+                <h:outputText value="#{itemController.sumItemByProduct()}"/>
 
-                        <p:panelGrid columns="6">
-                            <p:commandButton value="Barcode" 
-                                             actionListener="#{itemController.addItemByBarcode()}"
-                                             update=":itemProductForm ,:notification"/>
-                            <p:inputText value="#{itemController.barcode}">
-                            </p:inputText>
-                            <h:outputLabel value="Product"/> 
-                            <h:outputText value="#{itemController.product.name}"/>
-                            <h:outputLabel value="Amount"/> 
-                            <h:outputText value="#{itemController.sumItemByProduct()}"/>
-                        </p:panelGrid>
-                        <h:link value="add product"  outcome="add-barcode"/>
-                        <p:commandButton value="add barocde"/>
-
-                        <h:outputText value="#{itemController.massage}"/>
-
-
+                <h:outputText value="#{itemController.massage}"/>
+            </p:panelGrid>
             <p:dataTable value="#{itemController.items}" var="item">
                 <p:column headerText="Date">#{item.dateIn}</p:column>
                 <p:column headerText="Time">#{item.timeIn}</p:column>

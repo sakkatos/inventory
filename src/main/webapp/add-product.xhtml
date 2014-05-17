@@ -25,13 +25,17 @@ and open the template in the editor.
             </div>
             <p:dataTable id="productTable" value="#{productController.products}" var="item">
                 
-                <p:column headerText="ProductId" >#{item.id}</p:column>
-                <p:column headerText="name">#{item.name}</p:column>
-                <p:column headerText="cost">#{item.cost}</p:column>
-                <p:column headerText="basePrice">#{item.basePrice}</p:column>
-                <p:column headerText="expectPrice">#{item.expectPrice}</p:column>
+                <p:column headerText="ProductId">#{item.id}</p:column>
+                <p:column headerText="name"
+                          sortBy="#{item.name}">#{item.name}</p:column>
+                <p:column headerText="cost"
+                          sortBy="#{item.cost}">#{item.cost}</p:column>
+                <p:column headerText="basePrice"
+                          sortBy="#{item.basePrice}">#{item.basePrice}</p:column>
+                <p:column headerText="expectPrice"
+                          sortBy="#{item.expectPrice}">#{item.expectPrice}</p:column>
                 <p:column headerText="remain"></p:column>
-                <p:column headerText="Category" >#{item.category.name}</p:column>
+                <p:column headerText="Category">#{item.category.name}</p:column>
                 <p:column headerText="action">
                     <p:commandButton value="edit"
                                      actionListener="#{productController.onSelect()}" 
@@ -52,10 +56,8 @@ and open the template in the editor.
         
         <p:dialog widgetVar="addProductDialog">
             <h:form id="addProductForm">
-                <p:commandButton value="save"
-                                 actionListener="#{productController.onSave()}"
-                                 update=":productTableForm,:notification"
-                                 onsuccess="addProductDialog.hide()"/>
+                <h:outputText value="Add new product" />
+                <div style="height: 5px"/>
                 <p:panelGrid columns="4">
                     <h:outputText value="Id"/>
                     <p:inputText value="#{productController.product.id}"/>
@@ -80,6 +82,11 @@ and open the template in the editor.
                                        itemValue="#{item.id}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
+                <div style="height: 5px"/>
+                <p:commandButton value="save"
+                                 actionListener="#{productController.onSave()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="addProductDialog.hide()"/>
             </h:form>
         </p:dialog>
 
