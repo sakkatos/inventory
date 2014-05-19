@@ -17,14 +17,28 @@ and open the template in the editor.
             <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
         </f:metadata>
         <h:form id="productTableForm">
-            <div style="margin-bottom: 10px">
-                <p:commandButton value="addProduct"
+            <div >
+                <p:commandButton value="New Product"
                                  update=":addProductForm"
                                  actionListener="#{productController.onCreate()}"
                                  onsuccess="addProductDialog.show()"/>
             </div>
+            <div style="height: 10px"/>
+            <div style="width: 80%">
+                 <p:selectOneButton id="filterBox" 
+                             value="#{productController.selectedLabel}" >
+                    <f:ajax listener="#{productController.filterCategories()}"
+                            render="productTable"
+                            event="change"/>
+                    <f:selectItems value="#{productController.selectedLabels}"
+                                   var="item"
+                                   itemLabel="#{item}"
+                                   itemValue="#{item}" />
+                </p:selectOneButton>
+            </div>
+            <div style="height: 10px"/>
             <p:dataTable id="productTable" value="#{productController.products}" var="item">
-                
+
                 <p:column headerText="ProductId">#{item.id}</p:column>
                 <p:column headerText="name"
                           sortBy="#{item.name}">#{item.name}</p:column>
@@ -53,7 +67,7 @@ and open the template in the editor.
                 </p:column>
             </p:dataTable>
         </h:form>
-        
+
         <p:dialog widgetVar="addProductDialog">
             <h:form id="addProductForm">
                 <h:outputText value="Add new product" />

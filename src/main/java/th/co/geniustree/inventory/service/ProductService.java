@@ -25,32 +25,32 @@ public class ProductService {
     @Autowired
     public ProductRepo productRepo;
 
-    public Product findByBarcode(String barcode) {
-        return productRepo.findByBarcode(barcode);
+    public void save(Product product) {
+        productRepo.save(product);
     }
 
     public void remove(Product product) {
         productRepo.delete(product);
     }
 
+    public Product findOne(String id) {
+        return productRepo.findOne(id);
+    }
+
+    public Product findByBarcode(String barcode) {
+        return productRepo.findByBarcode(barcode);
+    }
+
     public List<Product> findAll() {
         return productRepo.findAll();
     }
 
-//    public List<Product> findAllProduct() {
-//        return productRepo.findAllProduct();
-//    }
-
-    public void save(Product product) {
-        productRepo.save(product);
-    }
-    
-    public List<Product> findProductByCategory(Category category){
+    public List<Product> findProductByCategory(Category category) {
         return productRepo.findProducstByCategory(category);
     }
-    
-    public Product findOne(String id){
-        return productRepo.findOne(id);
+
+    public List<Product> searchProductByCategoryName(List<String> nameCategories) {
+        return productRepo.searchProductByCategoryName(nameCategories);
     }
 
 }

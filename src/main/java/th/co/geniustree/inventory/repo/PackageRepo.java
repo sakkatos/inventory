@@ -21,4 +21,5 @@ public interface PackageRepo extends JpaRepository<ProductPackage, String> {
 
     @Query("SELECT pkg.product FROM ProductPackage pkg WHERE pkg.barcode = ?1 AND pkg.product != NULL")
     public Product findProductBarcodeBelongTo(String barcode);
+    
 }

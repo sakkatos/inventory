@@ -24,37 +24,8 @@ public class CategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
 
-    public Category findRoot() {
-        Category root = categoryRepo.findByName("root");
-        return root;
-    }
-
-    public List<Category> searchByName(String name){
-        return categoryRepo.searchByName(name);
-    }
-    
-    public List<Category> searchByNameList(List<String> nameList){
-        return categoryRepo.searchByNameList(nameList);
-    }
-    
-    public List<Category> findAllOrderByName() {
-        return categoryRepo.findAllOrderByName();
-    }
-
-    public List<Category> findAllExceptRoot(){
-        return categoryRepo.findAllExceptRoot();
-    }
-    
     public void save(Category category) {
         categoryRepo.save(category);
-    }
-
-    public Category findOne(Integer id) {
-        return categoryRepo.findOne(id);
-    }
-
-    public List<Category> findByParent(Category parent) {
-        return categoryRepo.findByParent(parent);
     }
 
     public void saveCategories(List<Category> categories) {
@@ -63,6 +34,39 @@ public class CategoryService {
 
     public void remove(Category category) {
         categoryRepo.delete(category);
+    }
+
+    public List<Category> searchByName(String name) {
+        return categoryRepo.searchByName(name);
+    }
+
+    public List<Category> searchByNameList(List<String> nameList) {
+        return categoryRepo.searchByNameList(nameList);
+    }
+
+    public Category findOne(Integer id) {
+        return categoryRepo.findOne(id);
+    }
+
+    public Category findRoot() {
+        Category root = categoryRepo.findByName("root");
+        return root;
+    }
+    
+    public Category findByName(String name){
+        return categoryRepo.findByName(name);
+    }
+
+    public List<Category> findByParent(Category parent) {
+        return categoryRepo.findByParent(parent);
+    }
+
+    public List<Category> findAllOrderByName() {
+        return categoryRepo.findAllOrderByName();
+    }
+
+    public List<Category> findAllExceptRoot() {
+        return categoryRepo.findAllExceptRoot();
     }
 
 }

@@ -17,32 +17,38 @@ and open the template in the editor.
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
         <h:form id="categoryForm"> 
-            <div style="margin-top: 0px;
-                 margin-right: 0px;">
+            <div style="margin-right: 0px;">
+                <p:commandButton value="New Category" 
+                                 actionListener="#{categoryController.onCreate()}"
+                                 oncomplete="addCategoryWidget.show()"
+                                 update=":addCategoryForm"/>
+
+            </div>
+            <div style="height: 10px"/><div style="clear: both"/>
+            
+            <div style="width: 70%;display: inline-block">
+                <p:selectOneButton id="filterBox" 
+                                   value="#{categoryController.selectedLabel}" >
+                    <f:ajax listener="#{categoryController.filterCategories()}"
+                            render="categoryTable"
+                            event="change"/>
+                    <f:selectItems value="#{categoryController.categories}"
+                                   var="item"
+                                   itemLabel="#{item.name}"
+                                   itemValue="#{item.name}" />
+                </p:selectOneButton>
+            </div>
+            <span style="float: right;margin-right: 0px">
                 <h:outputText value="Search" 
-                              style="padding-right: 20px;padding-left: 10px"/>
+                              style="padding-right: 10px;padding-left: 10px"/>
                 <p:inputText value="#{categoryController.keyword}">
                     <f:ajax  execute="#this"
                              event="keyup" 
-                             render="categoryTable" 
+                             render="categoryTable"  
                              listener="#{categoryController.searchByName()}"/>
                 </p:inputText>
-                <span style="float: right;margin-right: 20px">
-                    <p:commandButton value="new Category"
-                                     actionListener="#{categoryController.onCreate()}"
-                                     oncomplete="addCategoryWidget.show()"
-                                     update=":addCategoryForm"/>
-                </span>
-            </div>
-            <div style="height: 5px"/><div style="clear: both"/>
-            <p:selectOneButton value="#{categoryController.selectedLabel}" >
-                <f:selectItems value="#{categoryController.selectedLabels}"
-                               var="item"
-                               itemLabel="#{item}"
-                               itemValue="#{item}"/>
-                
-            </p:selectOneButton>
-            <div style="height: 5px"/><div style="clear: both"/>
+            </span>
+            <div style="height: 10px"/><div style="clear: both"/>
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
                          var="item">

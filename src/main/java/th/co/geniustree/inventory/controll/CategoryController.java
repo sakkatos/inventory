@@ -7,6 +7,7 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -34,7 +35,6 @@ public class CategoryController implements Serializable {
     private String keyword;
     private String selectedLabel;
     private List<String> selectedLabels;
-    private List<String> categoryLabels;
     private BackBean backBean;
     private List<BackBean> backBeans;
 
@@ -55,6 +55,20 @@ public class CategoryController implements Serializable {
         category.setParent(parent);
         categoryService.save(category);
         noRootCategories = findAllExceptRoot();
+//        resetFilter();
+    }
+
+    public void onSelect() {
+        Category c = new Category();
+        c.setId(selectedCategoryId);
+        category = getCategories().get(getCategories().indexOf(c));
+    }
+
+    public void onremove() {
+        changeParentToRoot(category);
+        categoryService.remove(category);
+        noRootCategories = findAllExceptRoot();
+//        resetFilter();
     }
 
     public List<Category> findAll() {
@@ -72,18 +86,6 @@ public class CategoryController implements Serializable {
 
     public List<Category> findAllExceptRoot() {
         return categoryService.findAllExceptRoot();
-    }
-
-    public void onSelect() {
-        Category c = new Category();
-        c.setId(selectedCategoryId);
-        category = getCategories().get(getCategories().indexOf(c));
-    }
-
-    public void onremove() {
-        changeParentToRoot(category);
-        categoryService.remove(category);
-        noRootCategories = findAllExceptRoot();
     }
 
     public void changeParentToRoot(Category parent) {
@@ -107,51 +109,92 @@ public class CategoryController implements Serializable {
         return root;
     }
 
-    public void getTreeCategories() {
-        Category root = findRoot();
-        BackBean bkBean = new BackBean();
-        bkBean.setName(root.getName());
-        bkBean.setChildren(recursiveGetChildren(root.getChildren()));
-        backBeans = bkBean.getChildren();
-    }
-
-    public List<BackBean> recursiveGetChildren(List<Category> children) {
-        List<BackBean> bList = new ArrayList<>();
-        if (children != null) {
-            BackBean b;
-            for (Category eachChild : children) {
-                b = new BackBean();
-                b.setName(eachChild.getName());
-                b.setChildren(recursiveGetChildren(eachChild.getChildren()));
-                bList.add(b);
+    public void resetFilter() {
+        selectedLabels = collectCategoryLabelsDepthFirstSearch(findRoot());
+        if (selectedLabels.contains("root")) {
+            selectedLabels.remove("root");
+            List<String> tmp = new ArrayList<>();
+            tmp.add("All");
+            for (String s : selectedLabels) {
+                tmp.add(s);
             }
+            selectedLabels = tmp;
         }
-        return bList;
     }
 
     public void filterCategories() {
-        int indexOf = getCategories().indexOf(category);
-        Category c = getCategories().get(indexOf);
-        categoryLabels = collectCategoryLabels(c);
-        noRootCategories = categoryService.searchByNameList(categoryLabels);
+        List<String> collectedLabels;
+        if (selectedLabel.equals("All")) {
+            noRootCategories = findAllExceptRoot();
+        }
+        if (!selectedLabel.equals("All")) {
+            collectedLabels = collectCategoryLabelsDepthFirstSearch(
+                    categoryService.findByName(selectedLabel));
+            System.out.println("===========================================");
+            for (String s : collectedLabels){
+                System.out.println(s);
+            }
+            System.out.println("===========================================");
+            noRootCategories = categoryService.searchByNameList(collectedLabels);
+        }
     }
 
-    public List<String> collectCategoryLabels(Category c) {
+    public List<String> collectCategoryLabelsDepthFirstSearch(Category c) {
         List<String> labelList = new ArrayList<>();
+        c = categoryService.findOne(c.getId());
         labelList.add(c.getName());
-        List<String> childLabelList = recursiveGetLabel(c.getChildren());
+        List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+        Iterator<String> iterator = childLabelList.iterator();
+        while (iterator.hasNext()){
+            labelList.add(iterator.next());
+        }
+        return labelList;
+    }
+
+    public List<String> recursiveGetLabelDepthFirstSearch(List<Category> children) {
+        List<String> labelList = new ArrayList<>();
+        if (children != null) {
+            Iterator<Category> iterator = children.iterator();
+            while(iterator.hasNext()){
+                Category c = iterator.next();
+                labelList.add(c.getName());
+                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+                Iterator<String> subIterator = childlabelList.iterator();
+                while(subIterator.hasNext()){
+                    labelList.add(subIterator.next());
+                }
+            }
+//            for (Category c : children) {
+//                labelList.add(c.getName());
+//                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+//                Iterator<String> iterator2 = childlabelList.iterator();
+//                while(iterator2.hasNext()){
+//                    labelList.add(iterator2.next());
+//                }
+//            }
+        }
+        return labelList;
+    }
+
+    public List<String> collectCategoryLabelsBreadthFirstSearch(Category c) {
+        List<String> labelList = new ArrayList<>();
+        c = getCategories().get(getCategories().indexOf(c));
+        labelList.add(c.getName());
+        List<String> childLabelList = recursiveGetLabelBreadthFirstSearch(c.getChildren());
         for (String label : childLabelList) {
             labelList.add(label);
         }
         return labelList;
     }
 
-    public List<String> recursiveGetLabel(List<Category> children) {
+    public List<String> recursiveGetLabelBreadthFirstSearch(List<Category> children) {
         List<String> labelList = new ArrayList<>();
         if (children != null) {
             for (Category c : children) {
                 labelList.add(c.getName());
-                List<String> childlabelList = recursiveGetLabel(c.getChildren());
+            }
+            for (Category c : children) {
+                List<String> childlabelList = recursiveGetLabelBreadthFirstSearch(c.getChildren());
                 for (String label : childlabelList) {
                     labelList.add(label);
                 }
@@ -238,17 +281,6 @@ public class CategoryController implements Serializable {
         this.backBeans = backBeans;
     }
 
-    public List<String> getCategoryLabels() {
-        if (categoryLabels == null) {
-            categoryLabels = new ArrayList<>();
-        }
-        return categoryLabels;
-    }
-
-    public void setCategoryLabels(List<String> categoryLabels) {
-        this.categoryLabels = categoryLabels;
-    }
-
     public String getSelectedLabel() {
         return selectedLabel;
     }
@@ -258,7 +290,18 @@ public class CategoryController implements Serializable {
     }
 
     public List<String> getSelectedLabels() {
-        selectedLabels = collectCategoryLabels(findRoot());
+        if (selectedLabels == null) {
+            selectedLabels = collectCategoryLabelsDepthFirstSearch(findRoot());
+            if (selectedLabels.contains("root")) {
+                selectedLabels.remove("root");
+                List<String> tmp = new ArrayList<>();
+                tmp.add("All");
+                for (String s : selectedLabels) {
+                    tmp.add(s);
+                }
+                selectedLabels = tmp;
+            }
+        }
         return selectedLabels;
     }
 
@@ -266,5 +309,26 @@ public class CategoryController implements Serializable {
         this.selectedLabels = selectedLabels;
     }
 
-    
+    //deprecate-----------------------------------------------------------------
+    public void getTreeCategories() {
+        Category root = findRoot();
+        BackBean bkBean = new BackBean();
+        bkBean.setName(root.getName());
+        bkBean.setChildren(recursiveGetChildren(root.getChildren()));
+        backBeans = bkBean.getChildren();
+    }
+
+    public List<BackBean> recursiveGetChildren(List<Category> children) {
+        List<BackBean> bList = new ArrayList<>();
+        if (children != null) {
+            BackBean b;
+            for (Category eachChild : children) {
+                b = new BackBean();
+                b.setName(eachChild.getName());
+                b.setChildren(recursiveGetChildren(eachChild.getChildren()));
+                bList.add(b);
+            }
+        }
+        return bList;
+    }
 }
