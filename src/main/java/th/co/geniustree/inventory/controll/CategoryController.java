@@ -55,8 +55,20 @@ public class CategoryController implements Serializable {
         category.setParent(parent);
         parent.getChildren().add(category);
         categoryService.save(category);
+        categoryService.save(parent);
         noRootCategories = findAllExceptRoot();
-//        resetFilter();
+    }
+
+    public void onEdit() {
+        Category newParent = categoryService.findOne(category.getParent().getId());
+        Category oldParent = categoryService.findByName(category.getParent().getName());
+        category.setParent(newParent);
+        newParent.getChildren().add(category);
+        oldParent.getChildren().remove(category);
+        categoryService.save(category);
+        categoryService.save(newParent);
+        categoryService.save(oldParent);
+        noRootCategories = findAllExceptRoot();
     }
 
     public void onSelect() {
@@ -66,10 +78,10 @@ public class CategoryController implements Serializable {
     }
 
     public void onremove() {
-        changeParentToRoot(category);
+        changeParentOfChildrenToRoot(category);
+        category.getParent().getChildren().remove(category);
         categoryService.remove(category);
         noRootCategories = findAllExceptRoot();
-//        resetFilter();
     }
 
     public List<Category> findAll() {
@@ -89,7 +101,7 @@ public class CategoryController implements Serializable {
         return categoryService.findAllExceptRoot();
     }
 
-    public void changeParentToRoot(Category parent) {
+    public void changeParentOfChildrenToRoot(Category parent) {
         Category root = findRoot();
         List<Category> cList = categoryService.findByParent(parent);
         if (!cList.isEmpty()) {
@@ -132,7 +144,7 @@ public class CategoryController implements Serializable {
             collectedLabels = collectCategoryLabelsDepthFirstSearch(
                     categoryService.findByName(selectedLabel));
             System.out.println("===========================================");
-            for (String s : collectedLabels){
+            for (String s : collectedLabels) {
                 System.out.println(s);
             }
             System.out.println("===========================================");
@@ -146,7 +158,7 @@ public class CategoryController implements Serializable {
         labelList.add(c.getName());
         List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
         Iterator<String> iterator = childLabelList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             labelList.add(iterator.next());
         }
         return labelList;
@@ -156,12 +168,12 @@ public class CategoryController implements Serializable {
         List<String> labelList = new ArrayList<>();
         if (children != null) {
             Iterator<Category> iterator = children.iterator();
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Category c = iterator.next();
                 labelList.add(c.getName());
                 List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
                 Iterator<String> subIterator = childlabelList.iterator();
-                while(subIterator.hasNext()){
+                while (subIterator.hasNext()) {
                     labelList.add(subIterator.next());
                 }
             }
