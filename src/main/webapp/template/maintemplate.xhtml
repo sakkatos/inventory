@@ -9,21 +9,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="resources/style/css/layout.css" />
         <title>Genius-Inventory</title>
-
-        <ui:remove>
-
-            <link type="text/css" rel="resources/style/less" href="resources/style/less/layout.less" />
-            <script type="text/javascript" src="less/less.js"></script>
-            <script type="text/javascript">
-                less.watch(); //less start
-            </script>
-
-            <style type="text/css">
-                body{
-                    font-size: 10pt;
-                }
-            </style>
-        </ui:remove>
         <script type="text/javascript" src="PrimefacesDialog.js">
         </script>
         <script type="text/javascript">
@@ -32,28 +17,34 @@
         </script>
     </h:head>
     <h:body>
-        <p:growl id="notification" showDetail="true" showSummary="true"/>  
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north"
-                          size="100"
-                          gutter="0"
-                          collapsible="true">
-                <h:outputText value="header template"/><br/>
-                <h:link outcome="index" value="HOME"/>
-            </p:layoutUnit>
-            <p:layoutUnit position="west"
-                          size="220"
-                          gutter="0"
-                          collapsible="true">
-                <h:outputText value="left menu template"/>
-            </p:layoutUnit>
-            
-            <p:layoutUnit position="center"
-                          gutter="0"
-                          collapsible="true">
-                <!-- template replace *************** -->
-                                <ui:insert name="centerReplace"/>
-            </p:layoutUnit>
-        </p:layout>
+        <p:growl id="notification" showDetail="true" showSummary="true"/> 
+        <div id="layoutTop">
+            <h:outputText value="Layout Top"
+                          style="text-align: center;"/>
+            <h:link value="HOME" outcome="index"/>
+        </div>
+
+        <div id="layoutLeft">
+          
+                <h:form>
+                    <p:menu style="top: 20px;" >
+                        <p:menuitem value="customer" url="customer.xhtml"/>
+                        <p:menuitem value="staff" url="staff.xhtml"/>
+                        <p:menuitem value="purchase order" url="purchase-order.xhtml"/>
+                        <p:menuitem value="add product item" url="add-product-item.xhtml"/>
+                        <p:menuitem value="add product" url="add-product.xhtml"/>
+                        <p:menuitem value="add category" url="add-category.xhtml"/>
+                    </p:menu>
+                </h:form>
+           
+        </div>
+
+        <div id="layoutCenter">
+            <ui:insert name="centerReplace"/>
+        </div>
+
+        <div id="layoutButtom">
+            Footer
+        </div>
     </h:body>
 </html>
