@@ -1,0 +1,12 @@
+/* line 4, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\000034}}
+input {
+  background-color: #5E5E5E;
+  color: #ffffff;
+}
+/* line 9, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\000039}}
+div.ui-state-active {
+  background-color: #5E5E5E;
+  color: #ffffff;
+}

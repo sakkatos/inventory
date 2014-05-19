@@ -36,7 +36,6 @@ public class ProductController implements Serializable {
 
     private Integer itemProductAmount;
     private String selectedProductId;
-    private List<String> filterOptionByCategories;
     private String selectedLabel;
     private List<String> selectedLabels;
 
@@ -50,15 +49,29 @@ public class ProductController implements Serializable {
 
     public void onSave() {
         category = categoryService.findOne(product.getCategory().getId());
+        
         product.setCategory(category);
         productService.save(product);
+        
+        category.getProducts().add(product);
+        categoryService.save(category);
+        
         products = findAllProducts();
     }
 
     public void onEdit() {
-        category = categoryService.findOne(product.getCategory().getId());
+        Category newCategory = categoryService.findOne(product.getCategory().getId());
+        Category oldCategory = categoryService.findByName(product.getCategory().getName());
+        
         product.setCategory(category);
         productService.save(product);
+        
+        newCategory.getProducts().add(product);
+        categoryService.save(newCategory);
+        
+        oldCategory.getProducts().remove(product);
+        categoryService.save(oldCategory);
+        
         products = findAllProducts();
     }
 
@@ -81,7 +94,7 @@ public class ProductController implements Serializable {
         product = getProducts().get(getProducts().indexOf(p));
     }
 
-    public void filterCategories() {
+    public void filterProductCategories() {
         List<String> collectedLabels = new ArrayList<>();
         if (selectedLabel.equals("All")) {
             products = findAllProducts();
@@ -95,7 +108,6 @@ public class ProductController implements Serializable {
 
     public List<String> collectCategoryLabelsDepthFirstSearch(Category c) {
         List<String> labelList = new ArrayList<>();
-        c = getCategories().get(getCategories().indexOf(c));
         labelList.add(c.getName());
         List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
         for (String label : childLabelList) {
@@ -212,21 +224,6 @@ public class ProductController implements Serializable {
         this.selectedProductId = selectedProductId;
     }
 
-    public List<String> getFilterOptionByCategories() {
-        if (filterOptionByCategories == null) {
-            filterOptionByCategories = new ArrayList<>();
-            List<Category> cList = categoryService.findAllOrderByName();
-            for (Category c : cList) {
-                filterOptionByCategories.add(c.getName());
-            }
-        }
-        return filterOptionByCategories;
-    }
-
-    public void setFilterOptionByCategories(List<String> filterOptionByCategories) {
-        this.filterOptionByCategories = filterOptionByCategories;
-    }
-
     public String getSelectedLabel() {
         if (selectedLabel == null) {
             selectedLabel = "";
@@ -251,7 +248,6 @@ public class ProductController implements Serializable {
                 selectedLabels = tmp;
             }
         }
-
         return selectedLabels;
     }
 

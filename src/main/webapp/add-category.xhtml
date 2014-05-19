@@ -32,12 +32,13 @@ and open the template in the editor.
                     <f:ajax listener="#{categoryController.filterCategories()}"
                             render="categoryTable"
                             event="change"/>
+                    
                     <f:selectItems value="#{categoryController.selectedLabels}"
                                    var="item"
                                    itemLabel="#{item}"
                                    itemValue="#{item}" />
+                    
                 </p:selectOneButton>
-                
             </div>
             <span style="float: right;margin-right: 0px">
                 <h:outputText value="Search" 

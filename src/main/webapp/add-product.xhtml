@@ -27,7 +27,7 @@ and open the template in the editor.
             <div style="width: 80%">
                  <p:selectOneButton id="filterBox" 
                              value="#{productController.selectedLabel}" >
-                    <f:ajax listener="#{productController.filterCategories()}"
+                    <f:ajax listener="#{productController.filterProductCategories()}"
                             render="productTable"
                             event="change"/>
                     <f:selectItems value="#{productController.selectedLabels}"
