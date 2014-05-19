@@ -43,7 +43,7 @@ and open the template in the editor.
                 <h:outputText value="Search" 
                               style="padding-right: 10px;padding-left: 10px"/>
                 <p:inputText value="#{categoryController.keyword}">
-                    <f:ajax  execute="#this"
+                    <f:ajax  execute="@this"
                              event="keyup" 
                              render="categoryTable"  
                              listener="#{categoryController.searchByName()}"/>
