@@ -53,22 +53,36 @@ public class CategoryController implements Serializable {
     public void onSave() {
         Category parent = categoryService.findOne(category.getParent().getId());
         category.setParent(parent);
-        parent.getChildren().add(category);
         categoryService.save(category);
+        parent.getChildren().add(category);
         categoryService.save(parent);
+        categories = findAll();
         noRootCategories = findAllExceptRoot();
+        resetFilter();
     }
 
     public void onEdit() {
         Category newParent = categoryService.findOne(category.getParent().getId());
         Category oldParent = categoryService.findByName(category.getParent().getName());
+
+        System.out.println(newParent.getName());
+        System.out.println(oldParent.getName());
+        
         category.setParent(newParent);
-        newParent.getChildren().add(category);
-        oldParent.getChildren().remove(category);
         categoryService.save(category);
+
+        newParent.getChildren().add(category);
         categoryService.save(newParent);
+        
+//        category.setParent(newParent);
+//        categoryService.save(category);
+
+        oldParent.getChildren().remove(category);
         categoryService.save(oldParent);
+
+        categories = findAll();
         noRootCategories = findAllExceptRoot();
+        resetFilter();
     }
 
     public void onSelect() {
@@ -79,9 +93,12 @@ public class CategoryController implements Serializable {
 
     public void onremove() {
         changeParentOfChildrenToRoot(category);
-        category.getParent().getChildren().remove(category);
+        Category parent = category.getParent();
+        parent.getChildren().remove(category);
+        categoryService.save(parent);
         categoryService.remove(category);
         noRootCategories = findAllExceptRoot();
+        resetFilter();
     }
 
     public List<Category> findAll() {
@@ -107,8 +124,12 @@ public class CategoryController implements Serializable {
         if (!cList.isEmpty()) {
             for (Category c : cList) {
                 c.setParent(root);
+                categoryService.save(c);
+                root.getChildren().add(c);
+                parent.getChildren().remove(c);
             }
-            categoryService.saveCategories(cList);
+            categoryService.save(root);
+            categoryService.save(parent);
         }
     }
 
