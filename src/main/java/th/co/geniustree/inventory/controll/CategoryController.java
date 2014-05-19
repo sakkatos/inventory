@@ -53,6 +53,7 @@ public class CategoryController implements Serializable {
     public void onSave() {
         Category parent = categoryService.findOne(category.getParent().getId());
         category.setParent(parent);
+        parent.getChildren().add(category);
         categoryService.save(category);
         noRootCategories = findAllExceptRoot();
 //        resetFilter();
@@ -164,14 +165,6 @@ public class CategoryController implements Serializable {
                     labelList.add(subIterator.next());
                 }
             }
-//            for (Category c : children) {
-//                labelList.add(c.getName());
-//                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
-//                Iterator<String> iterator2 = childlabelList.iterator();
-//                while(iterator2.hasNext()){
-//                    labelList.add(iterator2.next());
-//                }
-//            }
         }
         return labelList;
     }
