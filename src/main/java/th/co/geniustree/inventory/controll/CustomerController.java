@@ -9,12 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.service.CustomerService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -26,11 +27,12 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
 @ManagedBean
 @SessionScoped
 public class CustomerController implements Serializable {
-
+    
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
-    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
+//    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
     private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
     private String customerId;
 
@@ -52,7 +54,7 @@ public class CustomerController implements Serializable {
             customer = customerService.save(customer);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
-            LOG.log(Level.INFO, ex.getMessage(), ex);
+            LOG.debug( ex.getMessage(), ex);
             showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
         }
     }

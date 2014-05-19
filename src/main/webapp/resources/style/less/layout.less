@@ -6,60 +6,66 @@ and open the template in the editor.
 /* 
     Author     : Toy
 */ 
-@top: 0px;
+@top: 100px;
 @left: 0px;
 @margin: 25px;
 @bottom: 0px;
-@border: deeppink solid;
+@border: #d5d5d5 solid 1px;
 @minWidth: 800px;
 
+body{
+    padding: 0px;
+    margin: 0px;
+    overflow: auto;
+    font : normal 10pt Roboto,arial,sans-serif;
+    min-width: 1000px;
+    color: #444;
+}
 #layoutLeft{
     top: @top + @margin;
     left: @left + @margin;
     width: @left + 250px;
     height: 100%;
-    background-color: blanchedalmond;
+    border: @border;
+    background-color: #f9f9fc;
     position: fixed;
     
 }
 @left2: @left + 250px + @margin;
 #layoutTop{
-    top: @top + @margin;
-    left: @left2;
+    top:@margin;
+    left: @left + @margin;
     right: 0px + @margin;
     height: @top + 100px;
-    background-color: #000000;
+    background-color: #fff;
     position: fixed;
-    border-left: @border;
+    border: @border;
     min-width: @minWidth;
 }
 
-@top2: @top + 100px;
+/*@top2: @top + 100px;*/
 
 #layoutCenter{
-    top: @top2 + @margin;
+    top: @top + @margin;
     left: @left2;
     right: @margin;
     bottom: @bottom + 50px;
-    background-color: chocolate;
+    background-color: #ffffff;
     position: fixed;
     overflow: auto;
     font-size: medium;
-    color: aqua;
+    color: #5E5E5E;
     min-width: @minWidth;
-    border-left: @border;
-    border-top: @border;
-    border-bottom: @border;
-
+    border: @border;
 }
 #layoutButtom{
     bottom: @bottom;
     left: @left2;
     right: @margin;
     height: @bottom + 50px;
-    background-color: lightcoral;
+    background-color: #fff;
     position: fixed;
-    border-left: @border;
+    border: @border;
     min-width: @minWidth;
 
 }
