@@ -1,0 +1,51 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Author     : Toy
+*/
+#layoutLeft {
+  top: 25px;
+  left: 25px;
+  width: 250px;
+  height: 100%;
+  background-color: blanchedalmond;
+  position: fixed;
+}
+#layoutTop {
+  top: 25px;
+  left: 275px;
+  right: 25px;
+  height: 100px;
+  background-color: #000000;
+  position: fixed;
+  border-left: #ff1493 solid;
+  min-width: 800px;
+}
+#layoutCenter {
+  top: 125px;
+  left: 275px;
+  right: 25px;
+  bottom: 50px;
+  background-color: chocolate;
+  position: fixed;
+  overflow: auto;
+  font-size: medium;
+  color: aqua;
+  min-width: 800px;
+  border-left: #ff1493 solid;
+  border-top: #ff1493 solid;
+  border-bottom: #ff1493 solid;
+}
+#layoutButtom {
+  bottom: 0px;
+  left: 275px;
+  right: 25px;
+  height: 50px;
+  background-color: lightcoral;
+  position: fixed;
+  border-left: #ff1493 solid;
+  min-width: 800px;
+}

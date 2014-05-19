@@ -6,12 +6,24 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="resources/style/css/layout.css" />
         <title>Genius-Inventory</title>
-        <style type="text/css">
-            body{
-                font-size: 10pt;
-            }
-        </style>
+
+        <ui:remove>
+
+            <link type="text/css" rel="resources/style/less" href="resources/style/less/layout.less" />
+            <script type="text/javascript" src="less/less.js"></script>
+            <script type="text/javascript">
+                less.watch(); //less start
+            </script>
+
+            <style type="text/css">
+                body{
+                    font-size: 10pt;
+                }
+            </style>
+        </ui:remove>
         <script type="text/javascript" src="PrimefacesDialog.js">
         </script>
         <script type="text/javascript">
@@ -35,11 +47,12 @@
                           collapsible="true">
                 <h:outputText value="left menu template"/>
             </p:layoutUnit>
+            
             <p:layoutUnit position="center"
                           gutter="0"
                           collapsible="true">
-               <!-- template replace *************** -->
-                <ui:insert name="centerReplace"/>
+                <!-- template replace *************** -->
+                                <ui:insert name="centerReplace"/>
             </p:layoutUnit>
         </p:layout>
     </h:body>
