@@ -14,9 +14,10 @@ and open the template in the editor.
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam  name="selectedProductId" value="#{productController.selectedProductId}" />
+            <f:viewParam name="selectedProductId" value="#{productController.selectedProductId}" />
         </f:metadata>
-        <h:form id="productTableForm">
+        #{productController.reset()}
+        <h:form id="productTableForm" >
             <div >
                 <p:commandButton value="New Product"
                                  update=":addProductForm"
@@ -25,10 +26,11 @@ and open the template in the editor.
             </div>
             <div style="height: 10px"/>
             <div style="width: 80%">
-                 <p:selectOneButton id="filterBox" 
-                             value="#{productController.selectedLabel}" >
+                <p:selectOneButton id="filterBox" 
+                                   value="#{productController.selectedLabel}" >
                     <f:ajax listener="#{productController.filterProductCategories()}"
-                            render="productTable"
+                            execute="@this"
+                            render="productTable" 
                             event="change"/>
                     <f:selectItems value="#{productController.selectedLabels}"
                                    var="item"
@@ -37,7 +39,9 @@ and open the template in the editor.
                 </p:selectOneButton>
             </div>
             <div style="height: 10px"/>
-            <p:dataTable id="productTable" value="#{productController.products}" var="item">
+            <p:dataTable id="productTable" 
+                         value="#{productController.products}" 
+                         var="item">
 
                 <p:column headerText="ProductId">#{item.id}</p:column>
                 <p:column headerText="name"
@@ -49,16 +53,25 @@ and open the template in the editor.
                 <p:column headerText="expectPrice"
                           sortBy="#{item.expectPrice}">#{item.expectPrice}</p:column>
                 <p:column headerText="remain"></p:column>
-                <p:column headerText="Category">#{item.category.name}</p:column>
+                <p:column headerText="Category" filterMatchMode="exact"
+                          filterBy="#{item.category.name}" >
+                    <f:facet name="filter" >
+                        <p:selectOneMenu value="#{productController.selectedLabel}">
+                            <f:selectItems value="#{productController.selectedLabels}"
+                                           />
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{item.name}" />
+                    </p:column>
                 <p:column headerText="action">
-                    <p:commandButton value="edit"
+                    <p:commandButton icon="ui-icon-pencil"
                                      actionListener="#{productController.onSelect()}" 
                                      update=":editProductForm"
                                      onsuccess="editProductDialog.show()">
                         <f:param name="selectedProductId" value="#{item.id}"/>
                     </p:commandButton> 
                     <h:outputText value="  "/>
-                    <p:commandButton value="remove"
+                    <p:commandButton icon="ui-icon-trash"
                                      actionListener="#{productController.onSelect()}"
                                      update=":removeProductForm"
                                      onsuccess="removeProductDialog.show()">
