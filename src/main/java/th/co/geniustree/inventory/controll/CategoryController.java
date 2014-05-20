@@ -26,7 +26,7 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
 public class CategoryController implements Serializable {
 
     private final CategoryService categoryService = JSFSpringUtils.getBean(CategoryService.class);
-
+    
     private Category category;
     private List<Category> categories;
     private List<Category> noRootCategories;
@@ -161,11 +161,6 @@ public class CategoryController implements Serializable {
         if (!selectedLabel.equals("All")) {
             collectedLabels = collectCategoryLabelsDepthFirstSearch(
                     categoryService.findByName(selectedLabel));
-//            System.out.println("===========================================");
-//            for (String s : collectedLabels) {
-//                System.out.println(s);
-//            }
-//            System.out.println("===========================================");
             noRootCategories = categoryService.searchByNameList(collectedLabels);
         }
     }

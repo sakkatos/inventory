@@ -32,18 +32,17 @@ and open the template in the editor.
                     <f:ajax listener="#{categoryController.filterCategories()}"
                             render="categoryTable"
                             event="change"/>
-                    
                     <f:selectItems value="#{categoryController.selectedLabels}"
                                    var="item"
                                    itemLabel="#{item}"
                                    itemValue="#{item}" />
-                    
                 </p:selectOneButton>
             </div>
-            <span style="float: right;margin-right: 0px">
+            <span style="float: right;margin-right: 10px">
                 <h:outputText value="Search" 
-                              style="padding-right: 10px;padding-left: 10px"/>
-                <p:inputText value="#{categoryController.keyword}">
+                              style="padding-right: 5px"/>
+                <p:inputText value="#{categoryController.keyword}"
+                             style="width: 120px;">
                     <f:ajax  execute="@this"
                              event="keyup" 
                              render="categoryTable"  
@@ -54,7 +53,7 @@ and open the template in the editor.
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
                          var="item">
-                <p:column headerText="Id">#{item.id}</p:column>
+                <p:column ></p:column>
                 <p:column headerText="name">#{item.name}</p:column>
                 <p:column headerText="Parent">#{item.parent.name}</p:column>
                 <p:column headerText="action">
