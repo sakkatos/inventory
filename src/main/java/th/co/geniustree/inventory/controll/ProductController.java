@@ -39,6 +39,8 @@ public class ProductController implements Serializable {
     private String selectedProductId;
     private String selectedLabel;
     private List<String> selectedLabels;
+    
+    
 
     //business logic------------------------------------------------------------
     public void onCreate() {
@@ -74,7 +76,6 @@ public class ProductController implements Serializable {
         categoryService.save(oldCategory);
 
         products = findAllProducts();
-
     }
 
     public List<Product> findAllProducts() {
@@ -97,7 +98,9 @@ public class ProductController implements Serializable {
     }
 
     public void reset() {
+        //reset categories
         categories=categoryService.findAllOrderByName();
+        //reset labels
         selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
         if (selectedLabels.contains("root")) {
             selectedLabels.remove("root");

@@ -39,6 +39,8 @@ and open the template in the editor.
                 </p:selectOneButton>
             </div>
             <div style="height: 10px"/>
+            <p:inputText />
+            <div style="height: 10px"/>
             <p:dataTable id="productTable" 
                          value="#{productController.products}" 
                          var="item">
@@ -46,23 +48,21 @@ and open the template in the editor.
                 <p:column headerText="ProductId">#{item.id}</p:column>
                 <p:column headerText="name"
                           sortBy="#{item.name}">#{item.name}</p:column>
-                <p:column headerText="cost"
-                          sortBy="#{item.cost}">#{item.cost}</p:column>
+                <p:column headerText="cost" filterBy="#{item.cost}"
+                          filterValue="#{productController.selectedLabels}"
+                          sortBy="#{item.cost}">
+                    
+                    #{item.cost}</p:column>
                 <p:column headerText="basePrice"
                           sortBy="#{item.basePrice}">#{item.basePrice}</p:column>
                 <p:column headerText="expectPrice"
                           sortBy="#{item.expectPrice}">#{item.expectPrice}</p:column>
                 <p:column headerText="remain"></p:column>
-                <p:column headerText="Category" filterMatchMode="exact"
+                <p:column headerText="Category" 
+                          filterMatchMode="contains"
                           filterBy="#{item.category.name}" >
-                    <f:facet name="filter" >
-                        <p:selectOneMenu value="#{productController.selectedLabel}">
-                            <f:selectItems value="#{productController.selectedLabels}"
-                                           />
-                        </p:selectOneMenu>
-                    </f:facet>
-                    <h:outputText value="#{item.name}" />
-                    </p:column>
+                    <h:outputText value="#{item.category.name}" />
+                </p:column>
                 <p:column headerText="action">
                     <p:commandButton icon="ui-icon-pencil"
                                      actionListener="#{productController.onSelect()}" 
