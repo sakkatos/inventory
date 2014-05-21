@@ -106,6 +106,7 @@ public class ItemController implements Serializable {
         item.setTimeIn(Calendar.getInstance().getTime());
         item.setProduct(product);
         itemService.saveItem(item);
+        barcode="";
     }
 
     public void insertItemByHand() {
@@ -118,7 +119,6 @@ public class ItemController implements Serializable {
     }
 
     public void updateItemLog() {
-        product = productService.findByBarcode(barcode);
         items = itemService.itemOrderByDateDescend(product);
     }
 
