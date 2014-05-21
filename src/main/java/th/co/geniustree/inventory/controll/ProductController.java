@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import th.co.geniustree.inventory.model.Category;
@@ -39,8 +40,10 @@ public class ProductController implements Serializable {
     private String selectedProductId;
     private String selectedLabel;
     private List<String> selectedLabels;
-    
-    
+    private String costFilter;
+    private String baseCostFilter;
+    private String expectCostFilter;
+    private String categoryFilter;
 
     //business logic------------------------------------------------------------
     public void onCreate() {
@@ -99,7 +102,7 @@ public class ProductController implements Serializable {
 
     public void reset() {
         //reset categories
-        categories=categoryService.findAllOrderByName();
+        categories = categoryService.findAllOrderByName();
         //reset labels
         selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
         if (selectedLabels.contains("root")) {
@@ -111,6 +114,30 @@ public class ProductController implements Serializable {
             }
             selectedLabels = tmp;
         }
+    }
+
+    public void dataTableFiltering() {
+        System.out.print("===========================================\n");
+        System.out.print("input \n");
+
+        System.out.print(costFilter);
+//        System.out.print(baseCostFilter);
+//        System.out.print(expectCostFilter);
+//        System.out.print(categoryFilter);
+        System.out.print("===========================================\n");
+        translateFilterMassage(costFilter);
+
+    }
+
+    public void translateFilterMassage(String massage) {
+        String regexNumber = "[0-9]+(.{1}[0-9]+)?";
+        String spaces  = "(\\p{Space})*";
+        String lessThanEqual = "((=<)|(<=))"+spaces+regexNumber;
+        String greatThanEqual = "((>=)|(=>))"+spaces+regexNumber;
+        String lessThan = "(<)"+spaces+regexNumber;
+        String greatThan = "(>)"+spaces+regexNumber;
+        String between = regexNumber+spaces+"(-)"+spaces+regexNumber;
+        System.out.println(massage.matches(between));
     }
 
     public void filterProductCategories() {
@@ -250,6 +277,50 @@ public class ProductController implements Serializable {
 
     public void setSelectedLabels(List<String> selectedLabels) {
         this.selectedLabels = selectedLabels;
+    }
+
+    public String getCostFilter() {
+        if (costFilter == null) {
+            costFilter = "";
+        }
+        return costFilter;
+    }
+
+    public void setCostFilter(String costFilter) {
+        this.costFilter = costFilter;
+    }
+
+    public String getBaseCostFilter() {
+        if (baseCostFilter == null) {
+            baseCostFilter = "";
+        }
+        return baseCostFilter;
+    }
+
+    public void setBaseCostFilter(String baseCostFilter) {
+        this.baseCostFilter = baseCostFilter;
+    }
+
+    public String getExpectCostFilter() {
+        if (expectCostFilter == null) {
+            expectCostFilter = "";
+        }
+        return expectCostFilter;
+    }
+
+    public void setExpectCostFilter(String expectCostFilter) {
+        this.expectCostFilter = expectCostFilter;
+    }
+
+    public String getCategoryFilter() {
+        if (categoryFilter == null) {
+            categoryFilter = "";
+        }
+        return categoryFilter;
+    }
+
+    public void setCategoryFilter(String categoryFilter) {
+        this.categoryFilter = categoryFilter;
     }
 
 }

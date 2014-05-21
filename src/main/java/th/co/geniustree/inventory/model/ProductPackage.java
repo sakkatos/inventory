@@ -27,6 +27,9 @@ public class ProductPackage implements Serializable {
     private Product product;
 
     public Product getProduct() {
+        if (product==null){
+            product = new Product();
+        }
         return product;
     }
 
@@ -43,6 +46,9 @@ public class ProductPackage implements Serializable {
     }
 
     public String getBarcode() {
+        if (barcode==null){
+            barcode="";
+        }
         return barcode;
     }
 

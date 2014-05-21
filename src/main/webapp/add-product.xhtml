@@ -39,25 +39,42 @@ and open the template in the editor.
                 </p:selectOneButton>
             </div>
             <div style="height: 10px"/>
-            <p:inputText />
-            <div style="height: 10px"/>
+            <ui:remove>
+                <p:panelGrid columns="4" style="font-size: 14px">
+                    <f:ajax event="keyup" 
+                            listener="#{productController.dataTableFiltering()}">
+                        <h:outputText value="cost"/>
+                        <p:inputText value="#{productController.costFilter}" 
+                                     style="width: 100px"/>
+                        <h:outputText value="base cost"/>
+                        <p:inputText value="#{productController.baseCostFilter}"
+                                     style="width: 100px"/>
+                        <h:outputText value="expect cost"/>
+                        <p:inputText value="#{productController.expectCostFilter}"
+                                     style="width: 100px"/>
+                        <h:outputText value="category"/>
+                        <p:inputText value="#{productController.categoryFilter}"
+                                     style="width: 100px"/>
+                    </f:ajax>
+                </p:panelGrid>
+                <div style="height: 10px"/>
+            </ui:remove>
             <p:dataTable id="productTable" 
                          value="#{productController.products}" 
                          var="item">
 
-                <p:column headerText="ProductId">#{item.id}</p:column>
+                <p:column headerText="ProductId" >#{item.id}</p:column>
                 <p:column headerText="name"
                           sortBy="#{item.name}">#{item.name}</p:column>
-                <p:column headerText="cost" filterBy="#{item.cost}"
-                          sortBy="#{item.cost}">
-                    #{item.cost}</p:column>
+                <p:column headerText="cost" 
+                          sortBy="#{item.cost}">#{item.cost}</p:column>
                 <p:column headerText="basePrice"
                           sortBy="#{item.basePrice}">#{item.basePrice}</p:column>
-                <p:column headerText="expectPrice"
+                <p:column headerText="expectPrice" 
                           sortBy="#{item.expectPrice}">#{item.expectPrice}</p:column>
-                <p:column headerText="remain"></p:column>
+                <p:column headerText="remain">#{item.sumAmount}</p:column>
                 <p:column headerText="Category" 
-                          filterMatchMode="contains"
+                          filterMatchMode="startsWith"
                           filterBy="#{item.category.name}" >
                     <h:outputText value="#{item.category.name}" />
                 </p:column>

@@ -46,9 +46,12 @@ public class ItemController implements Serializable {
     private ProductItem item;
     private List<ProductItem> items;
     private Integer amountOfPack;
+
     private String barcode;
     private Integer selectedItemId;
+    private String selectedBarcode;
     private String massage = "";
+    private Boolean redirect;
 
     @PostConstruct
     public void postConstruct() {
@@ -58,13 +61,13 @@ public class ItemController implements Serializable {
 
 //business logic----------------------------------------------------------------
     public void addItemByBarcode() {
-        String massage1 = "";
-        String massage2 = "";
         if (!isBarcodeExist()) {
-            massage1 = "No barcode info";
+            massage = "No barcode info";
+            System.out.println(massage);
+            onRedirect();
         }
-        if (!isBarcodeBelongTo()) {
-            massage2 = "The barcode not belong to any product";
+        if (isBarcodeExist() && !isBarcodeBelongTo()) {
+            massage = "The barcode not belong to any product";
         }
         if (isBarcodeExist() && isBarcodeBelongTo()) {
             pack = packageService.findBarcode(barcode);
@@ -73,9 +76,14 @@ public class ItemController implements Serializable {
             insertItemByBarcode();
             updateItemLog();
         }
-//        massage = massage1 + "  " + massage2;
-        massage = concateMassage(massage1, massage2);
-
+ 
+    }
+    
+    public String onRedirect(){
+        if (isRedirect()){
+            return "add-barcode.xhtml?selectedBarcode=" + barcode + "faces-redirect=true";
+        }
+        return "";
     }
 
     public Boolean isBarcodeExist() {
@@ -90,17 +98,17 @@ public class ItemController implements Serializable {
 
     public void insertItemByBarcode() {
         item.setAmount(pack.getAmountPerPack() * 1);
-        item.setProduct(product);
         item.setDateIn(Calendar.getInstance().getTime());
         item.setTimeIn(Calendar.getInstance().getTime());
+        item.setProduct(product);
         itemService.saveItem(item);
     }
 
     public void insertItemByHand() {
         item.setAmount(pack.getAmountPerPack() * amountOfPack);
-        item.setProduct(product);
         item.setDateIn(Calendar.getInstance().getTime());
         item.setTimeIn(Calendar.getInstance().getTime());
+        item.setProduct(product);
         itemService.saveItem(item);
     }
 
@@ -109,13 +117,23 @@ public class ItemController implements Serializable {
         items = itemService.itemOrderByDateDescend(product);
     }
 
+    public void reset() {
+        if (selectedBarcode != null || !selectedBarcode.isEmpty()) {
+            pack = packageService.findBarcode(selectedBarcode);
+            barcode = pack.getBarcode();
+        }
+    }
+
     public Integer sumItemByProduct() {
-        return itemService.sumAmountByProduct(product);
+        if (itemService.sumAmountByProduct(getPack().getProduct()) == null) {
+            return 0;
+        }
+        return itemService.sumAmountByProduct(getPack().getProduct());
     }
 
     public void onRemoveItem() {
         itemService.removeItem(item);
-        items = itemService.itemOrderByDateDescend(product);
+        items = itemService.itemOrderByDateDescend(pack.getProduct());
     }
 
     public void onSelectItem() {
@@ -157,8 +175,8 @@ public class ItemController implements Serializable {
     }
 
     public List<ProductItem> getItems() {
-        if (items==null){
-            items= new ArrayList<>();
+        if (items == null) {
+            items = new ArrayList<>();
         }
         return items;
     }
@@ -195,6 +213,9 @@ public class ItemController implements Serializable {
     }
 
     public ProductPackage getPack() {
+        if (pack == null) {
+            pack = new ProductPackage();
+        }
         return pack;
     }
 
@@ -229,21 +250,23 @@ public class ItemController implements Serializable {
         this.products = products;
     }
 
-    private String concateMassage(String massage1, String massage2) {
-        String totalMassage = "";
-        Boolean isMassage1Null = (massage1 == null);
-        Boolean isMassage2Null = (massage2 == null);
-        System.out.println("Hello ! " + isMassage1Null + " and " + isMassage1Null);
-        if (!isMassage1Null && !isMassage2Null) {
-            totalMassage = massage1 + ", " + massage2;
+    public String getSelectedBarcode() {
+        return selectedBarcode;
+    }
+
+    public void setSelectedBarcode(String selectedBarcode) {
+        this.selectedBarcode = selectedBarcode;
+    }
+
+    public Boolean isRedirect() {
+        if (redirect==null){
+            redirect=false;
         }
-        if (isMassage1Null && !isMassage2Null) {
-            totalMassage = massage2;
-        }
-        if (!isMassage1Null && isMassage2Null) {
-            totalMassage = massage1;
-        }
-        return totalMassage;
+        return redirect;
+    }
+
+    public void setRedirect(Boolean redirect) {
+        this.redirect = redirect;
     }
 
     public ProductService getProductManagedBean() {

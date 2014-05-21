@@ -7,6 +7,7 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -37,9 +38,10 @@ public class BarcodeController implements Serializable {
     private Category category;
     private List<Category> categories;
 
-    private String selectedProductId;
     private String selectedBarcode;
-    private String selectedCategory;
+    private String selectedLabel;
+    private List<String> selectedLabels;
+    private Boolean redirect;
 
     @PostConstruct
     public void postConstruct() {
@@ -52,27 +54,77 @@ public class BarcodeController implements Serializable {
     }
 
     public void onSave() {
-        product=productService.findOne(product.getId());
+        product = productService.findOne(product.getId());
+
         pack.setProduct(product);
         packageService.savePackage(pack);
+
+        product.getPackages().add(pack);
+        productService.save(product);
+
+        onredirect();
+    }
+
+    public String onredirect() {
+        if (isRedirect()){
+            return "add-product-item.xhtml?selectedBarcode=" + pack.getBarcode() + "faces-redirect=true";
+        }
+        return "";
     }
 
     public void findAllProduct() {
         products = productService.findAll();
     }
 
-    public void findProductByCategory() {
-        products = productService.findProductByCategory(category);
-        System.out.println(category.getName());
-        for(Product p : products){
-            System.out.print("Hello :::::::::::::::    ");
-            System.out.println(p.getName());
+    public void reset() {
+        products = productService.findAll();
+        getSelectedLabels();
+        categories = categoryService.searchByNameList(selectedLabels);
+    }
+
+    public void filterCategories() {
+        List<String> collectedLabels;
+        if (selectedLabel.equals("All")) {
+            products = productService.findAll();
         }
+        if (!selectedLabel.equals("All")) {
+            collectedLabels = collectCategoryLabelsDepthFirstSearch(
+                    categoryService.findByName(selectedLabel));
+            products = productService.searchProductByCategoryName(collectedLabels);
+        }
+    }
+
+    public List<String> collectCategoryLabelsDepthFirstSearch(Category c) {
+        List<String> labelList = new ArrayList<>();
+        labelList.add(c.getName());
+        List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+        Iterator<String> iterator = childLabelList.iterator();
+        while (iterator.hasNext()) {
+            labelList.add(iterator.next());
+        }
+        return labelList;
+    }
+
+    public List<String> recursiveGetLabelDepthFirstSearch(List<Category> children) {
+        List<String> labelList = new ArrayList<>();
+        if (children != null) {
+            Iterator<Category> iterator = children.iterator();
+            while (iterator.hasNext()) {
+                Category c = iterator.next();
+                labelList.add(c.getName());
+                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+                Iterator<String> subIterator = childlabelList.iterator();
+                while (subIterator.hasNext()) {
+                    labelList.add(subIterator.next());
+                }
+            }
+        }
+        return labelList;
     }
 
     //getter and setter---------------------------------------------------------
     public Product getProduct() {
-        if(product==null){
+        if (product == null) {
             product = new Product();
         }
         return product;
@@ -93,17 +145,9 @@ public class BarcodeController implements Serializable {
         this.products = products;
     }
 
-    public String getSelectedProductId() {
-        return selectedProductId;
-    }
-
-    public void setSelectedProductId(String selectedProductId) {
-        this.selectedProductId = selectedProductId;
-    }
-
     public Category getCategory() {
-        if(category==null){
-            category=new Category();
+        if (category == null) {
+            category = new Category();
         }
         return category;
     }
@@ -142,17 +186,46 @@ public class BarcodeController implements Serializable {
         this.selectedBarcode = selectedBarcode;
     }
 
-    public String getSelectedCategory() {
-        if (selectedCategory==null){
-            selectedCategory="";
+    public String getSelectedLabel() {
+        if (selectedLabel == null) {
+            selectedLabel = "";
         }
-        return selectedCategory;
+        return selectedLabel;
     }
 
-    public void setSelectedCategory(String selectedCategory) {
-        this.selectedCategory = selectedCategory;
+    public void setSelectedLabel(String selectedLabel) {
+        this.selectedLabel = selectedLabel;
     }
-    
-    
+
+    public List<String> getSelectedLabels() {
+        if (selectedLabels == null) {
+            selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
+            if (selectedLabels.contains("root")) {
+                selectedLabels.remove("root");
+                List<String> tmp = new ArrayList<>();
+                tmp.add("All");
+                for (String s : selectedLabels) {
+                    tmp.add(s);
+                }
+                selectedLabels = tmp;
+            }
+        }
+        return selectedLabels;
+    }
+
+    public void setSelectedLabels(List<String> selectedLabels) {
+        this.selectedLabels = selectedLabels;
+    }
+
+    public Boolean isRedirect() {
+        if (redirect==null){
+            redirect=false;
+        }
+        return redirect;
+    }
+
+    public void setRedirect(Boolean redirect) {
+        this.redirect = redirect;
+    }
 
 }

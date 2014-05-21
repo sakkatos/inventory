@@ -16,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -41,8 +42,13 @@ public class Product implements Serializable {
     private List<ProductPackage> packages;
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<ProductItem> productItems;
+    @Transient
+    private Integer sumAmount;
 
     public List<ProductItem> getProductItems() {
+        if (productItems==null){
+            productItems = new ArrayList<>();
+        }
         return productItems;
     }
 
@@ -123,6 +129,15 @@ public class Product implements Serializable {
         this.packages = packages;
     }
 
+    public Integer getSumAmount() {
+        List<ProductItem> items = getProductItems();
+        sumAmount=0;
+        for (ProductItem item : items){
+            sumAmount = sumAmount+item.getAmount();
+        }
+        return sumAmount;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

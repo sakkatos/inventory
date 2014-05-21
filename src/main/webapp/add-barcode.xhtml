@@ -9,11 +9,13 @@
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam  name="productId" value="#{barcodeController.selectedProductId}" />
+            <f:viewParam name="selectedBarcode" 
+                         value="#{barcodeController.pack.barcode}"/>
         </f:metadata>
         <div/>
-        <h:link outcome="add-product-item" value="back"  class="nly"/>
+        <h:link outcome="add-product-item" value="back"/>
         <h:form id = "barcodeForm" >
+            #{barcodeController.reset()}
             <div>
                 <h:outputLabel value="new Barcode"/><br/>
                 <h:outputLabel value="#{barcodeController.selectedBarcode}"/>
@@ -29,13 +31,13 @@
                     <h:inputText value="#{barcodeController.pack.name}"/>
 
                     <h:outputText value="Category"/>
-                    <p:selectOneMenu value="#{barcodeController.category.id}" >
-                        <f:ajax listener="#{barcodeController.findProductByCategory()}" 
+                    <p:selectOneMenu value="#{barcodeController.selectedLabel}" >
+                        <f:ajax listener="#{barcodeController.filterCategories()}" 
                                 render="productList"/>
-                        <f:selectItems value="#{barcodeController.categories}"
+                        <f:selectItems value="#{barcodeController.selectedLabels}"
                                        var="item"
-                                       itemLabel="#{item.name}"
-                                       itemValue="#{item.id}"/>
+                                       itemLabel="#{item}"
+                                       itemValue="#{item}"/>
                     </p:selectOneMenu>
 
                     <h:outputText value="Product"/>
@@ -47,12 +49,9 @@
                                        itemValue="#{item.id}" />
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton value="new Pack"
-                                 actionListener="#{barcodeController.onCreate()}"
-                                 update=":barcodeForm,:notification"/>
                 <p:commandButton value="save"
                                  actionListener="#{barcodeController.onSave()}"
-                                 update=":barcodeForm,:notification"/>
+                                 action="#{barcodeController.onredirect()}"/>
             </div>
         </h:form>
     </ui:define>

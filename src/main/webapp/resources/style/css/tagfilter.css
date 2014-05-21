@@ -1,31 +1,27 @@
-input {
-  background-color: #5E5E5E;
-  color: #ffffff;
-}
-/* line 9, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\000039}}
+/* line 3, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\000033}}
 div.ui-button.ui-widget.ui-state-default span.ui-button.ui-widget.ui-state-default .ui-button-text {
   color: #ff0000;
 }
-/* line 15, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000315}}
+/* line 9, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\000039}}
 .ui-datatable-data tr.ui-widget-content {
   font-size: 12px;
 }
-/* line 26, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000326}}
+/* line 20, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000320}}
 .ui-datatable-data tr.ui-widget-content.ui-datatable-odd {
   background-color: #eaeaea;
 }
-/* line 30, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000330}}
+/* line 24, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000324}}
 .ui-datatable-data tr.ui-widget-content.ui-datatable-odd td {
   padding: 1px 10px;
   border-color: #ffffff;
   height: 14px;
 }
-/* line 37, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000337}}
+/* line 31, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000331}}
 .ui-datatable thead th {
   font-size: 14px;
 }
