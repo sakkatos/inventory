@@ -25,3 +25,27 @@ div.ui-button.ui-widget.ui-state-default span.ui-button.ui-widget.ui-state-defau
 .ui-datatable thead th {
   font-size: 14px;
 }
+/* line 36, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000336}}
+.productDetail {
+  font-size: 14px;
+}
+/* line 42, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000342}}
+.productDetailPanel td:nth-child(1) {
+  background-color: #f5f5f5;
+}
+/* line 47, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000347}}
+.productDetailPanel table[id^=productDetail] {
+  border-color: #eaeaea;
+  border-style: solid;
+  border-width: 1px;
+}
+/*navigative tab*/
+/* line 54, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\tagfilter.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/tagfilter\.less}line{font-family:\0000354}}
+ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all,
+li.ui-state-default.ui-corner-top {
+  background-color: #f5f5f5;
+}

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -52,11 +54,12 @@ public class ItemController implements Serializable {
     private String selectedBarcode;
     private String massage = "";
     private Boolean redirect;
+    private Locale locale;
+
 
     @PostConstruct
     public void postConstruct() {
-//        products = productService.findAll();
-//        LOG.debug("start logger on {}", new Date());
+
     }
 
 //business logic----------------------------------------------------------------
@@ -64,7 +67,7 @@ public class ItemController implements Serializable {
         if (!isBarcodeExist()) {
             massage = "No barcode info";
             System.out.println(massage);
-            onRedirect();
+            redirect=true;
         }
         if (isBarcodeExist() && !isBarcodeBelongTo()) {
             massage = "The barcode not belong to any product";
@@ -81,6 +84,7 @@ public class ItemController implements Serializable {
     
     public String onRedirect(){
         if (isRedirect()){
+            redirect=false;
             return "add-barcode.xhtml?selectedBarcode=" + barcode + "faces-redirect=true";
         }
         return "";
@@ -106,6 +110,7 @@ public class ItemController implements Serializable {
 
     public void insertItemByHand() {
         item.setAmount(pack.getAmountPerPack() * amountOfPack);
+        
         item.setDateIn(Calendar.getInstance().getTime());
         item.setTimeIn(Calendar.getInstance().getTime());
         item.setProduct(product);
@@ -268,6 +273,19 @@ public class ItemController implements Serializable {
     public void setRedirect(Boolean redirect) {
         this.redirect = redirect;
     }
+
+    public Locale getLocale() {
+        if (locale==null){
+            locale = Locale.getDefault();
+        }
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
+    
 
     public ProductService getProductManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();

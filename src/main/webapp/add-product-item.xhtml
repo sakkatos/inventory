@@ -44,8 +44,16 @@ and open the template in the editor.
                 </div>
             </div>
             <p:dataTable value="#{itemController.items}" var="item">
-                <p:column headerText="Date">#{item.dateIn}</p:column>
-                <p:column headerText="Time">#{item.timeIn}</p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{item.dateIn}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" locale="#{itemController.locale}"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Time">
+                    <h:outputText value="#{item.dateIn}">
+                        <f:convertDateTime pattern="HH:mm:ss" locale="#{itemController.locale}"/>
+                    </h:outputText>
+                </p:column>
                 <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
                 <p:column headerText="action">

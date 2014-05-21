@@ -80,7 +80,11 @@ and open the template in the editor.
                 </p:column>
                 <p:column headerText="action">
                     <p:commandButton icon="ui-icon-search"
-                                     />
+                                     actionListener="#{productController.onSelect()}"
+                                     update=":productDetailForm"
+                                     onsuccess="productDetailwidget.show()">
+                        <f:param name="selectedProductId" value="#{item.id}"/>
+                    </p:commandButton>
                     <p:commandButton icon="ui-icon-pencil"
                                      actionListener="#{productController.onSelect()}" 
                                      update=":editProductForm"
@@ -177,6 +181,65 @@ and open the template in the editor.
                                  actionListener="#{productController.onRemove()}"                               
                                  update=":productTableForm,:notification"
                                  onsuccess="removeProductDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="productDetailwidget" 
+                  class="productDetail">
+            <h:form id="productDetailForm">
+                <div style="height: 10px"/>
+                <h:outputText value="Product Detail" style="font-weight: bolder"/>
+                <div style="height: 10px"/>
+                <p:tabView>
+                    <p:tab title="Generic Data">
+                        <div class="productDetailPanel" style="margin-right: 0px">
+                            <p:panelGrid columns="2" >
+                                <h:outputText value="Id" class="tag" style="width: 50%"/>
+                                <h:outputText value="#{productController.product.id}"/>
+
+                                <h:outputText value="Name" class="tag"/>
+                                <h:outputText value="#{productController.product.name}"/>
+
+                                <h:outputText value="Cost" class="tag"/>
+                                <h:outputText value="#{productController.product.cost}"/>
+
+                                <h:outputText value="Base Price" class="tag"/>
+                                <h:outputText value="#{productController.product.basePrice}"/>
+
+                                <h:outputText value="Expect Price"/>
+                                <h:outputText value="#{productController.product.expectPrice}"/>
+
+                                <h:outputText value="Amount"/>
+                                <h:outputText value="#{productController.product.sumAmount}"/>
+                            </p:panelGrid>
+                        </div>
+                    </p:tab>
+                    <p:tab title="Entry List">
+                        <p:dataTable value="#{productController.product.productItems}"
+                                     var="itemList">
+                            <p:column headerText="Date">
+                                <h:outputText value="#{itemList.dateIn}">
+                                    <f:convertDateTime pattern="dd MMMM yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Time">
+                                <h:outputText value="#{itemList.timeIn}">
+                                    <f:convertDateTime pattern="HH:mm:ss" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Amount">
+                                <h:outputText value="#{itemList.amount}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Barcode info">
+                        <p:dataTable value="#{productController.product.packages}"
+                                     var="barcodeItem" >
+                            <p:column headerText="Barcode">#{barcodeItem.barcode}</p:column>
+                            <p:column headerText="units"> #{barcodeItem.amountPerPack}</p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
             </h:form>
         </p:dialog>
 

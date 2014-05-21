@@ -62,11 +62,12 @@ public class BarcodeController implements Serializable {
         product.getPackages().add(pack);
         productService.save(product);
 
-        onredirect();
+        redirect=true;
     }
 
     public String onredirect() {
         if (isRedirect()){
+            redirect=false;
             return "add-product-item.xhtml?selectedBarcode=" + pack.getBarcode() + "faces-redirect=true";
         }
         return "";

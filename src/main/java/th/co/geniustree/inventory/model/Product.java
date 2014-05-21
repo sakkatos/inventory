@@ -46,7 +46,7 @@ public class Product implements Serializable {
     private Integer sumAmount;
 
     public List<ProductItem> getProductItems() {
-        if (productItems==null){
+        if (productItems == null) {
             productItems = new ArrayList<>();
         }
         return productItems;
@@ -57,7 +57,7 @@ public class Product implements Serializable {
     }
 
     public Category getCategory() {
-        if(category==null){
+        if (category == null) {
             category = new Category();
         }
         return category;
@@ -131,13 +131,15 @@ public class Product implements Serializable {
 
     public Integer getSumAmount() {
         List<ProductItem> items = getProductItems();
-        sumAmount=0;
-        for (ProductItem item : items){
-            sumAmount = sumAmount+item.getAmount();
+        sumAmount = 0;
+        if (!items.isEmpty()) {
+            for (ProductItem item : items) {
+                sumAmount = sumAmount + item.getAmount();
+            }
         }
         return sumAmount;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
