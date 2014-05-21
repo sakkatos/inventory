@@ -79,6 +79,8 @@ and open the template in the editor.
                     <h:outputText value="#{item.category.name}" />
                 </p:column>
                 <p:column headerText="action">
+                    <p:commandButton icon="ui-icon-search"
+                                     />
                     <p:commandButton icon="ui-icon-pencil"
                                      actionListener="#{productController.onSelect()}" 
                                      update=":editProductForm"
