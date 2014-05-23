@@ -14,50 +14,52 @@ and open the template in the editor.
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam  name="itemId" value="#{itemController.selectedItemId}" ></f:viewParam>
         </f:metadata>
-        <h:link value="add barcode" 
-                outcome="add-barcode"/>
+        <div class="vertical-gap"/>
+        #{itemController.reset()}
         <h:form id="itemProductForm">
-            <div style="display: inline-block">
-                <p:commandButton value="Barcode" 
-                                 actionListener="#{itemController.addItemByBarcode()}"
-                                 update=":itemProductForm ,:notification"
-                                 action="#{itemController.onRedirect()}"/>
-                <p:inputText value="#{itemController.barcode}" 
-                             style="width: 100px;"/>
-            </div>
-            <div style="display: inline-block">
-                <div style="height: 30px">
-                    
-                    <h:outputText value="Product" 
-                                  style="display: inline-block"/> 
-                    <h:outputText value="#{itemController.pack.product.name}"
-                                  style="display: inline-block"/> 
-                    <h:outputText value="Amount"
-                                  style="display: inline-block"/> 
-                    <h:outputText value="#{itemController.sumItemByProduct()}"
-                                  style="display: inline-block"/> 
+            <div class="toolBar">
+                <div style="display: inline-block">
+                    <p:commandButton value="Barcode" 
+                                     actionListener="#{itemController.addItemByBarcode()}"
+                                     update=":itemProductForm ,:notification"
+                                     action="#{itemController.onRedirect()}"/>
+                    <div class="horizon-gap"/>
+                    <p:inputText value="#{itemController.barcode}" 
+                                 style="width: 100px;"/>
                 </div>
-                <div style="height: 30px">
-                    <h:outputText value="#{itemController.massage}"/>
+                <div style="display: inline-block;float: right;">
+                    <p:panelGrid columns="4" >
+                        <h:outputText value="Product" /> 
+                        <h:outputText value="#{itemController.pack.product.name}"/> 
+                        <h:outputText value="Amount"/> 
+                        <h:outputText value="#{itemController.sumItemByProduct()}"/> 
+                    </p:panelGrid>
                 </div>
             </div>
-            <p:dataTable value="#{itemController.items}" var="item">
+            <div class="vertical-gap"/>
+            <p:dataTable value="#{itemController.items}" 
+                         var="item"
+                         sortBy="timeIn"
+                         sortOrder="descending">
                 <p:column headerText="Date">
                     <h:outputText value="#{item.dateIn}">
-                        <f:convertDateTime pattern="dd MMMM yyyy" locale="#{itemController.locale}"/>
+                        <f:convertDateTime pattern="dd/MMMM/yyyy" 
+                                           locale="#{itemController.locale}"
+                                           timeZone="#{itemController.timeZone}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Time">
-                    <h:outputText value="#{item.dateIn}">
-                        <f:convertDateTime pattern="HH:mm:ss" locale="#{itemController.locale}"/>
+                    <h:outputText value="#{item.timeIn}">
+                        <f:convertDateTime pattern="HH:mm:ss" 
+                                           locale="#{itemController.locale}"
+                                           timeZone="#{itemController.timeZone}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
-                <p:column headerText="action">
-                    <p:commandButton value="remove"
+                <p:column headerText="action" style="text-align: center">
+                    <p:commandButton icon="ui-icon-trash"
                                      actionListener="#{itemController.onSelectItem()}"
                                      onsuccess="removeItemProductWidget.show()"
                                      update=":removeItemProductForm">
@@ -70,12 +72,25 @@ and open the template in the editor.
         <p:dialog widgetVar="removeItemProductWidget">
             <h:form id="removeItemProductForm">
                 <h:outputText value="Remove this item?"/>
-                <p:panelGrid columns="3">
-                    <h:outputText value="#{itemController.item.id}"/>
-                    <h:outputText value="#{itemController.item.timeIn}"/>
+                <br/>
+                <p:panelGrid columns="3" class="horizon-panel">
+                    <h:outputText value="Date"/>
+                    <h:outputText value="Time"/>
+                    <h:outputText value="Amount"/>
+
+                    <h:outputText value="#{itemController.item.dateIn}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" 
+                                           locale="#{itemController.locale}"
+                                           timeZone="#{itemController.timeZone}"/>
+                    </h:outputText>
+                    <h:outputText value="#{itemController.item.timeIn}">
+                        <f:convertDateTime pattern="HH:mm:ss" 
+                                           locale="#{itemController.locale}"
+                                           timeZone="#{itemController.timeZone}"/>
+                    </h:outputText>
                     <h:outputText value="#{itemController.item.amount}"/>
                 </p:panelGrid>
-                <p:commandButton value="remove" 
+                <p:commandButton value="Remove" 
                                  actionListener="#{itemController.onRemoveItem()}"
                                  update=":itemProductForm,:notification"
                                  onsuccess="removeItemProductWidget.hide()"/>

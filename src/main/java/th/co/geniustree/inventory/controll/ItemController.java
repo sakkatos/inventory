@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -57,7 +58,9 @@ public class ItemController implements Serializable {
     private String selectedBarcode;
     private String massage = "";
     private Boolean redirect;
-    private Locale locale;
+    private Locale locale = Locale.getDefault();
+    private TimeZone timeZone = Calendar.getInstance().getTimeZone();
+    private SimpleDateFormat smpDateFormat;
 
     @PostConstruct
     public void postConstruct() {
@@ -103,11 +106,15 @@ public class ItemController implements Serializable {
     }
 
     public void insertItemByBarcode() {
+        Calendar cal = Calendar.getInstance();
         item.setAmount(pack.getAmountPerPack() * 1);
-        item.setDateIn(Calendar.getInstance().getTime());
-        item.setTimeIn(Calendar.getInstance().getTime());
+        item.setDateIn(cal.getTime());
+        item.setTimeIn(cal.getTime());
         item.setProduct(product);
         itemService.saveItem(item);
+        
+        product.getProductItems().add(item);
+        productService.save(product);
         barcode = "";
     }
 
@@ -125,10 +132,9 @@ public class ItemController implements Serializable {
     }
 
     public void reset() {
-        if (selectedBarcode != null || !selectedBarcode.isEmpty()) {
-            pack = packageService.findBarcode(selectedBarcode);
-            barcode = pack.getBarcode();
-        }
+        barcode="";
+        pack = new ProductPackage();
+        items = new ArrayList<>();
     }
 
     public Integer sumItemByProduct() {
@@ -285,6 +291,29 @@ public class ItemController implements Serializable {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    public TimeZone getTimeZone() {
+        if(timeZone==null){
+            timeZone = Calendar.getInstance().getTimeZone();
+        }
+        return timeZone;
+    }
+
+    public void setTimeZone(TimeZone timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public SimpleDateFormat getSmpDateFormat() {
+        if (smpDateFormat==null){
+            smpDateFormat = new SimpleDateFormat("dd:MMM:yyyy");
+            smpDateFormat.setCalendar(Calendar.getInstance());
+        }
+        return smpDateFormat;
+    }
+
+    public void setSmpDateFormat(SimpleDateFormat smpDateFormat) {
+        this.smpDateFormat = smpDateFormat;
     }
 
     public ProductService getProductManagedBean() {
