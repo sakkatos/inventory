@@ -18,25 +18,28 @@ and open the template in the editor.
         </f:metadata>
         #{productController.reset()}
         <h:form id="productTableForm" >
-            <div >
-                <p:commandButton value="New Product"
-                                 update=":addProductForm"
-                                 actionListener="#{productController.onCreate()}"
-                                 onsuccess="addProductDialog.show()"/>
-            </div>
             <div style="height: 10px"/>
-            <div style="width: 80%">
-                <p:selectOneButton id="filterBox" 
-                                   value="#{productController.selectedLabel}" >
-                    <f:ajax listener="#{productController.filterProductCategories()}"
-                            execute="@this"
-                            render="productTable" 
-                            event="change"/>
-                    <f:selectItems value="#{productController.selectedLabels}"
-                                   var="item"
-                                   itemLabel="#{item}"
-                                   itemValue="#{item}" />
-                </p:selectOneButton>
+            <div class="toolBar">
+                <div style="display: inline-block;">
+                    <p:commandButton value="New Product"
+                                     update=":addProductForm"
+                                     actionListener="#{productController.onCreate()}"
+                                     onsuccess="addProductDialog.show()"/>
+                </div>
+
+                <div style="display: inline-block;float: right;">
+                    <p:selectOneMenu id="filterBox" 
+                                     value="#{productController.selectedLabel}" >
+                        <f:ajax listener="#{productController.filterProductCategories()}"
+                                execute="@this"
+                                render="productTable" 
+                                event="change"/>
+                        <f:selectItems value="#{productController.selectedLabels}"
+                                       var="item"
+                                       itemLabel="#{item}"
+                                       itemValue="#{item}" />
+                    </p:selectOneMenu>
+                </div>
             </div>
             <div style="height: 10px"/>
             <ui:remove>

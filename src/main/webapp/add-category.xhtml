@@ -17,39 +17,42 @@ and open the template in the editor.
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
         <h:form id="categoryForm"> 
-            <div style="margin-right: 0px;">
-                <p:commandButton value="New Category" 
-                                 actionListener="#{categoryController.onCreate()}"
-                                 oncomplete="addCategoryWidget.show()"
-                                 update=":addCategoryForm"/>
+            <div style="height: 10px"/>
+            <div class="toolBar">
+                <div style="display: inline-block;">
+                    <p:commandButton value="New Category" 
+                                     actionListener="#{categoryController.onCreate()}"
+                                     oncomplete="addCategoryWidget.show()"
+                                     update=":addCategoryForm"/>
 
+                </div>
+
+                <div style="display: inline-block;margin-right: 10px">
+                    <h:outputText value="Search" 
+                                  style="padding-right: 5px"/>
+                    <p:inputText value="#{categoryController.keyword}"
+                                 style="width: 120px;">
+                        <f:ajax  execute="@this"
+                                 event="keyup" 
+                                 render="categoryTable"  
+                                 listener="#{categoryController.searchByName()}"/>
+                    </p:inputText>
+                </div>
+
+                <div style="display: inline-block;float: right;" >
+                    <p:selectOneMenu id="filterBox" label="Filter"
+                                     value="#{categoryController.selectedLabel}" >
+                        <f:ajax listener="#{categoryController.filterCategories()}"
+                                render="categoryTable"
+                                event="change"/>
+                        <f:selectItems value="#{categoryController.selectedLabels}"
+                                       var="item"
+                                       itemLabel="#{item}"
+                                       itemValue="#{item}" />
+                    </p:selectOneMenu>
+                </div>
             </div>
-            <div style="height: 10px"/><div style="clear: both"/>
-            
-            <div style="width: 70%;display: inline-block">
-                <p:selectOneButton id="filterBox" 
-                                   value="#{categoryController.selectedLabel}" >
-                    <f:ajax listener="#{categoryController.filterCategories()}"
-                            render="categoryTable"
-                            event="change"/>
-                    <f:selectItems value="#{categoryController.selectedLabels}"
-                                   var="item"
-                                   itemLabel="#{item}"
-                                   itemValue="#{item}" />
-                </p:selectOneButton>
-            </div>
-            <span style="float: right;margin-right: 10px">
-                <h:outputText value="Search" 
-                              style="padding-right: 5px"/>
-                <p:inputText value="#{categoryController.keyword}"
-                             style="width: 120px;">
-                    <f:ajax  execute="@this"
-                             event="keyup" 
-                             render="categoryTable"  
-                             listener="#{categoryController.searchByName()}"/>
-                </p:inputText>
-            </span>
-            <div style="height: 10px"/><div style="clear: both"/>
+            <div style="height: 5px"/>
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
                          rowIndexVar="rownum"
