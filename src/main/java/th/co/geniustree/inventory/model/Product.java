@@ -140,6 +140,9 @@ public class Product implements Serializable {
         return sumAmount;
     }
 
+    public void setSumAmount(Integer sumAmount) {
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

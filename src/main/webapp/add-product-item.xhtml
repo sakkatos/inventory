@@ -14,21 +14,21 @@ and open the template in the editor.
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam  name="itemId" value="#{itemController.selectedItemId}" ></f:viewParam>
         </f:metadata>
-        <h:link value="add barcode" 
-                outcome="add-barcode"/>
+        <div class="vertical-gap"/>
+        #{itemController.reset()}
         <h:form id="itemProductForm">
-            <div>
+            <div class="toolBar">
                 <div style="display: inline-block">
                     <p:commandButton value="Barcode" 
                                      actionListener="#{itemController.addItemByBarcode()}"
                                      update=":itemProductForm ,:notification"
                                      action="#{itemController.onRedirect()}"/>
+                    <div class="horizon-gap"/>
                     <p:inputText value="#{itemController.barcode}" 
                                  style="width: 100px;"/>
                 </div>
-                <div style="display: inline-block;float: right;margin-right: 5px">
+                <div style="display: inline-block;float: right;">
                     <p:panelGrid columns="4" >
                         <h:outputText value="Product" /> 
                         <h:outputText value="#{itemController.pack.product.name}"/> 
@@ -37,7 +37,7 @@ and open the template in the editor.
                     </p:panelGrid>
                 </div>
             </div>
-            <div style="height:  5px"/>
+            <div class="vertical-gap"/>
             <p:dataTable value="#{itemController.items}" 
                          var="item"
                          sortBy="timeIn"
@@ -58,7 +58,7 @@ and open the template in the editor.
                 </p:column>
                 <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
-                <p:column headerText="action">
+                <p:column headerText="action" style="text-align: center">
                     <p:commandButton icon="ui-icon-trash"
                                      actionListener="#{itemController.onSelectItem()}"
                                      onsuccess="removeItemProductWidget.show()"

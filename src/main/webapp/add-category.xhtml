@@ -17,7 +17,7 @@ and open the template in the editor.
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
         <h:form id="categoryForm"> 
-            <div style="height: 10px"/>
+            <div class="vertical-gap"/>
             <div class="toolBar">
                 <div style="display: inline-block;">
                     <p:commandButton value="New Category" 
@@ -30,6 +30,7 @@ and open the template in the editor.
                 <div style="display: inline-block;margin-right: 10px">
                     <h:outputText value="Search" 
                                   style="padding-right: 5px"/>
+                    <div class="horizon-gap"/>
                     <p:inputText value="#{categoryController.keyword}"
                                  style="width: 120px;">
                         <f:ajax  execute="@this"
@@ -52,7 +53,7 @@ and open the template in the editor.
                     </p:selectOneMenu>
                 </div>
             </div>
-            <div style="height: 5px"/>
+            <div class="vertical-gap"/>
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
                          rowIndexVar="rownum"
@@ -60,7 +61,7 @@ and open the template in the editor.
                 <p:column style="width: 10px;text-align: center">#{rownum+1}</p:column>
                 <p:column headerText="name">#{item.name}</p:column>
                 <p:column headerText="Parent">#{item.parent.name}</p:column>
-                <p:column headerText="action">
+                <p:column headerText="action" style="text-align: center">
                     <p:commandButton icon="ui-icon-pencil" 
                                      actionListener="#{categoryController.onSelect()}"
                                      update=":editCategoryForm" 

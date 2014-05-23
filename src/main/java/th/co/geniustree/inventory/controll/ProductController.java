@@ -110,6 +110,8 @@ public class ProductController implements Serializable {
     }
     
     public void reset() {
+        //reset products
+        products = productService.findAll();
         //reset categories
         categories = categoryService.findAllOrderByName();
         //reset labels

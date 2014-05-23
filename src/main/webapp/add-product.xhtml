@@ -18,7 +18,7 @@ and open the template in the editor.
         </f:metadata>
         #{productController.reset()}
         <h:form id="productTableForm" >
-            <div style="height: 10px"/>
+            <div class="vertical-gap"/>
             <div class="toolBar">
                 <div style="display: inline-block;">
                     <p:commandButton value="New Product"
@@ -41,7 +41,7 @@ and open the template in the editor.
                     </p:selectOneMenu>
                 </div>
             </div>
-            <div style="height: 10px"/>
+            <div class="vertical-gap"/>
             <ui:remove>
                 <p:panelGrid columns="4" style="font-size: 14px">
                     <f:ajax event="keyup" 
@@ -80,7 +80,7 @@ and open the template in the editor.
                 <p:column headerText="Category">
                     <h:outputText value="#{item.category.name}"/>
                 </p:column>
-                <p:column headerText="action">
+                <p:column headerText="action" style="text-align: center">
                     <p:commandButton icon="ui-icon-search"
                                      actionListener="#{productController.onSelectLazyLoad()}"
                                      update=":productDetailForm"
@@ -248,6 +248,7 @@ and open the template in the editor.
                             <p:column headerText="Amount">
                                 <h:outputText value="#{lazyItem.amount}"/>
                             </p:column>
+                            <p:column headerText="Staff"></p:column>
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Barcode info">

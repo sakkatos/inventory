@@ -106,12 +106,7 @@ public class ItemController implements Serializable {
     }
 
     public void insertItemByBarcode() {
-        TimeZone localTimeZone = TimeZone.getDefault();
         Calendar cal = Calendar.getInstance();
-//        SimpleDateFormat smpDate = new SimpleDateFormat("dd:MMM:yyyy", Locale.getDefault());
-//        smpDate.setCalendar(cal);
-//        SimpleDateFormat smpTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-//        smpTime.setCalendar(cal);
         item.setAmount(pack.getAmountPerPack() * 1);
         item.setDateIn(cal.getTime());
         item.setTimeIn(cal.getTime());
@@ -137,10 +132,9 @@ public class ItemController implements Serializable {
     }
 
     public void reset() {
-        if (selectedBarcode != null || !selectedBarcode.isEmpty()) {
-            pack = packageService.findBarcode(selectedBarcode);
-            barcode = pack.getBarcode();
-        }
+        barcode="";
+        pack = new ProductPackage();
+        items = new ArrayList<>();
     }
 
     public Integer sumItemByProduct() {
