@@ -31,6 +31,7 @@ public class CustomerController implements Serializable {
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
+    private CustomerLoadLazy customerLoadLazy;
     private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
 //    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
     private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
@@ -42,7 +43,8 @@ public class CustomerController implements Serializable {
     }
 
     public void reset() {
-        customers = customerService.findAll();
+//        customers = customerService.findAll();
+        customerLoadLazy = new CustomerLoadLazy();
     }
 
     public void onCreate() {
@@ -90,6 +92,14 @@ public class CustomerController implements Serializable {
     }
 
     //----------------------------------------------------------------------------
+    public CustomerLoadLazy getCustomerLoadLazy() {
+        return customerLoadLazy;
+    }
+
+    public void setCustomerLoadLazy(CustomerLoadLazy customerLoadLazy) {
+        this.customerLoadLazy = customerLoadLazy;
+    }
+    
 
     public Customer getCustomer() {
         return customer;
