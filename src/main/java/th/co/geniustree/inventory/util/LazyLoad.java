@@ -19,11 +19,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import th.co.geniustree.inventory.model.Product;
 
 /**
  *
  * @author Nook
+ * @param <T>
  */
 public abstract class LazyLoad<T> extends LazyDataModel<T> {
 

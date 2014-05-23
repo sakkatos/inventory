@@ -15,7 +15,6 @@ import th.co.geniustree.inventory.model.Customer;
  *
  * @author toy
  */
-
 public interface CustomerService {
     public Customer save(Customer customer);
 
@@ -26,6 +25,5 @@ public interface CustomerService {
     public List<Customer> findByFirstNameLike(String customer);
 
     public Page findAll(PageRequest pageRequest);
-    public Page findAllPage(PageRequest pageRequest);
-    
+    public Page findAllPage(PageRequest pageRequest);  
 }
