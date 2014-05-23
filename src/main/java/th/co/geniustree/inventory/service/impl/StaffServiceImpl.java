@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,16 +49,21 @@ public class StaffServiceImpl implements StaffService{
        return staffRepo.findByFirstNameLike(staff);
     }
 
-    @Override
-    public Page findAll(PageRequest pageRequest) {
-        return staffRepo.findAll(pageRequest);
-        
-    }
+//    @Override
+//    public Page findAll(PageRequest pageRequest) {
+//        return staffRepo.findAll(pageRequest);
+//        
+//    }
+//
+//    @Override
+//    public Page findAllPage(PageRequest pageRequest) {
+//        return null;
+//        
+//    }
 
     @Override
-    public Page findAllPage(PageRequest pageRequest) {
-        return null;
-        
+    public Page<Staff> findAll(Pageable page) {
+        return staffRepo.findAll(page);
     }
     
 }
