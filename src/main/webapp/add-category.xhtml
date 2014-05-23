@@ -52,8 +52,9 @@ and open the template in the editor.
             <div style="height: 10px"/><div style="clear: both"/>
             <p:dataTable id="categoryTable" 
                          value="#{categoryController.noRootCategories}" 
+                         rowIndexVar="rownum"
                          var="item">
-                <p:column ></p:column>
+                <p:column style="width: 10px;text-align: center">#{rownum+1}</p:column>
                 <p:column headerText="name">#{item.name}</p:column>
                 <p:column headerText="Parent">#{item.parent.name}</p:column>
                 <p:column headerText="action">

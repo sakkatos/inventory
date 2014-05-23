@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import th.co.geniustree.inventory.model.Category;
@@ -17,6 +16,7 @@ import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.ProductItemService;
 import th.co.geniustree.inventory.service.ProductService;
+import th.co.geniustree.inventory.util.ItemLazyLoad;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
@@ -44,6 +44,9 @@ public class ProductController implements Serializable {
     private String baseCostFilter;
     private String expectCostFilter;
     private String categoryFilter;
+    
+    private ItemLazyLoad itemLazy;
+
 
     //business logic------------------------------------------------------------
     public void onCreate() {
@@ -99,7 +102,13 @@ public class ProductController implements Serializable {
         p.setId(selectedProductId);
         product = getProducts().get(getProducts().indexOf(p));
     }
-
+    
+    public void onSelectLazyLoad(){
+        onSelect();
+        getItemLazy();
+        itemLazy.setProduct(product);
+    }
+    
     public void reset() {
         //reset categories
         categories = categoryService.findAllOrderByName();
@@ -117,26 +126,17 @@ public class ProductController implements Serializable {
     }
 
     public void dataTableFiltering() {
-        System.out.print("===========================================\n");
-        System.out.print("input \n");
-
-        System.out.print(costFilter);
-//        System.out.print(baseCostFilter);
-//        System.out.print(expectCostFilter);
-//        System.out.print(categoryFilter);
-        System.out.print("===========================================\n");
         translateFilterMassage(costFilter);
-
     }
 
     public void translateFilterMassage(String massage) {
         String regexNumber = "[0-9]+(.{1}[0-9]+)?";
-        String spaces  = "(\\p{Space})*";
-        String lessThanEqual = "((=<)|(<=))"+spaces+regexNumber;
-        String greatThanEqual = "((>=)|(=>))"+spaces+regexNumber;
-        String lessThan = "(<)"+spaces+regexNumber;
-        String greatThan = "(>)"+spaces+regexNumber;
-        String between = regexNumber+spaces+"(-)"+spaces+regexNumber;
+        String spaces = "(\\p{Space})*";
+        String lessThanEqual = "((=<)|(<=))" + spaces + regexNumber;
+        String greatThanEqual = "((>=)|(=>))" + spaces + regexNumber;
+        String lessThan = "(<)" + spaces + regexNumber;
+        String greatThan = "(>)" + spaces + regexNumber;
+        String between = regexNumber + spaces + "(-)" + spaces + regexNumber;
         System.out.println(massage.matches(between));
     }
 
@@ -321,6 +321,17 @@ public class ProductController implements Serializable {
 
     public void setCategoryFilter(String categoryFilter) {
         this.categoryFilter = categoryFilter;
+    }
+
+    public ItemLazyLoad getItemLazy() {
+        if (itemLazy==null){
+            itemLazy = new ItemLazyLoad();
+        }
+        return itemLazy;
+    }
+
+    public void setItemLazy(ItemLazyLoad itemLazy) {
+        this.itemLazy = itemLazy;
     }
 
 }

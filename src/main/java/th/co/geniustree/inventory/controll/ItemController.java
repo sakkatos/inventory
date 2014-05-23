@@ -16,6 +16,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.jsf.FacesContextUtils;
 import th.co.geniustree.inventory.model.Category;
@@ -56,7 +59,6 @@ public class ItemController implements Serializable {
     private Boolean redirect;
     private Locale locale;
 
-
     @PostConstruct
     public void postConstruct() {
 
@@ -67,7 +69,7 @@ public class ItemController implements Serializable {
         if (!isBarcodeExist()) {
             massage = "No barcode info";
             System.out.println(massage);
-            redirect=true;
+            redirect = true;
         }
         if (isBarcodeExist() && !isBarcodeBelongTo()) {
             massage = "The barcode not belong to any product";
@@ -79,12 +81,12 @@ public class ItemController implements Serializable {
             insertItemByBarcode();
             updateItemLog();
         }
- 
+
     }
-    
-    public String onRedirect(){
-        if (isRedirect()){
-            redirect=false;
+
+    public String onRedirect() {
+        if (isRedirect()) {
+            redirect = false;
             return "add-barcode.xhtml?selectedBarcode=" + barcode + "faces-redirect=true";
         }
         return "";
@@ -106,12 +108,12 @@ public class ItemController implements Serializable {
         item.setTimeIn(Calendar.getInstance().getTime());
         item.setProduct(product);
         itemService.saveItem(item);
-        barcode="";
+        barcode = "";
     }
 
     public void insertItemByHand() {
         item.setAmount(pack.getAmountPerPack() * amountOfPack);
-        
+
         item.setDateIn(Calendar.getInstance().getTime());
         item.setTimeIn(Calendar.getInstance().getTime());
         item.setProduct(product);
@@ -264,8 +266,8 @@ public class ItemController implements Serializable {
     }
 
     public Boolean isRedirect() {
-        if (redirect==null){
-            redirect=false;
+        if (redirect == null) {
+            redirect = false;
         }
         return redirect;
     }
@@ -275,7 +277,7 @@ public class ItemController implements Serializable {
     }
 
     public Locale getLocale() {
-        if (locale==null){
+        if (locale == null) {
             locale = Locale.getDefault();
         }
         return locale;
@@ -284,8 +286,6 @@ public class ItemController implements Serializable {
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
-    
-    
 
     public ProductService getProductManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package th.co.geniustree.inventory.util;
 
 import java.lang.reflect.Field;
@@ -20,18 +19,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import th.co.geniustree.inventory.model.Product;
 
 /**
  *
  * @author Nook
  */
 public abstract class LazyLoad<T> extends LazyDataModel<T> {
- 
+
     private static final Logger LOG = LoggerFactory.getLogger(LazyLoad.class);
     private List<T> list;
     private long totalElements;
     //
- 
+
     @Override
     public T getRowData(String id) {
         if (list != null) {
@@ -42,10 +42,10 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
                 }
             }
         }
- 
+
         return null;
     }
- 
+
     private Object getIdOfInstance(Object instance) {
         Object instanceId = null;
         try {
@@ -58,8 +58,8 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
                     break;
                 }
             }
- 
-            if(idField != null){
+
+            if (idField != null) {
                 String idName = idField.getName();
                 idName = idName.substring(0, 1).toUpperCase() + idName.substring(1);
                 Method method = instanceClass.getDeclaredMethod("get" + idName);
@@ -68,15 +68,15 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
         } catch (Exception ex) {
             LOG.warn(null, ex);
         }
- 
+
         return instanceId;
     }
- 
+
     @Override
     public Object getRowKey(T instance) {
         return getIdOfInstance(instance);
     }
- 
+
     @Override
     public void setRowIndex(final int rowIndex) {
         if (rowIndex == -1 || getPageSize() == 0) {
@@ -85,12 +85,12 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
             super.setRowIndex(rowIndex % getPageSize());
         }
     }
- 
+
     /**
-     *  callback method
+     * callback method
      */
     public abstract Page<T> load(Pageable page);
- 
+
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         Sort.Direction direction;
@@ -99,7 +99,7 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
         } else {
             direction = Sort.Direction.DESC;
         }
- 
+
         Page<T> page = load(new PageRequest(first / pageSize, pageSize, direction, sortField));
         if (page != null) {
             list = page.getContent();
@@ -110,14 +110,13 @@ public abstract class LazyLoad<T> extends LazyDataModel<T> {
             totalElements = 0L;
             setRowCount(0);
         }
- 
         return list;
     }
- 
+
     public List<T> getContents() {
         return list;
     }
- 
+
     public long getTotalElements() {
         return totalElements;
     }

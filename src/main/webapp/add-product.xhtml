@@ -60,9 +60,10 @@ and open the template in the editor.
                 <div style="height: 10px"/>
             </ui:remove>
             <p:dataTable id="productTable" 
-                         value="#{productController.products}" 
+                         value="#{productController.products}"
+                         rowIndexVar="rownum"
                          var="item">
-
+                <p:column style="width: 10px;text-align: center">#{rownum+1}</p:column>
                 <p:column headerText="ProductId" >#{item.id}</p:column>
                 <p:column headerText="name"
                           sortBy="#{item.name}">#{item.name}</p:column>
@@ -73,14 +74,12 @@ and open the template in the editor.
                 <p:column headerText="expectPrice" 
                           sortBy="#{item.expectPrice}">#{item.expectPrice}</p:column>
                 <p:column headerText="remain">#{item.sumAmount}</p:column>
-                <p:column headerText="Category" 
-                          filterMatchMode="startsWith"
-                          filterBy="#{item.category.name}" >
-                    <h:outputText value="#{item.category.name}" />
+                <p:column headerText="Category">
+                    <h:outputText value="#{item.category.name}"/>
                 </p:column>
                 <p:column headerText="action">
                     <p:commandButton icon="ui-icon-search"
-                                     actionListener="#{productController.onSelect()}"
+                                     actionListener="#{productController.onSelectLazyLoad()}"
                                      update=":productDetailForm"
                                      onsuccess="productDetailwidget.show()">
                         <f:param name="selectedProductId" value="#{item.id}"/>
@@ -215,20 +214,36 @@ and open the template in the editor.
                         </div>
                     </p:tab>
                     <p:tab title="Entry List">
-                        <p:dataTable value="#{productController.product.productItems}"
-                                     var="itemList">
-                            <p:column headerText="Date">
-                                <h:outputText value="#{itemList.dateIn}">
+                        <p:dataTable value="#{productController.itemLazy}"
+                                     lazy="true"
+                                     paginator="true"
+                                     pageLinks="3"
+                                     rows="10"
+                                     paginatorPosition="top"
+                                     rowsPerPageTemplate="5 , 10 , 15"   
+                                     sortBy="timeIn"
+                                     sortOrder="descending"
+                                     paginatorTemplate="
+                                     {CurrentPageReport} 
+                                     {FirstPageLink}
+                                     {PageLinks} 
+                                     {LastPageLink}
+                                     {RowsPerPageDropdown}"
+                                     rowIndexVar="rownum" 
+                                     var="lazyItem">
+                            <p:column>#{rownum+1}</p:column>
+                            <p:column headerText="Date" sortBy="#{lazyItem.dateIn}">
+                                <h:outputText value="#{lazyItem.dateIn}">
                                     <f:convertDateTime pattern="dd MMMM yyyy" />
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="Time">
-                                <h:outputText value="#{itemList.timeIn}">
+                            <p:column headerText="Time" sortBy="#{lazyItem.timeIn}">
+                                <h:outputText value="#{lazyItem.timeIn}">
                                     <f:convertDateTime pattern="HH:mm:ss" />
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Amount">
-                                <h:outputText value="#{itemList.amount}"/>
+                                <h:outputText value="#{lazyItem.amount}"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>

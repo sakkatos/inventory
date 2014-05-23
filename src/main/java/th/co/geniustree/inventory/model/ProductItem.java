@@ -26,7 +26,7 @@ public class ProductItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Integer id;
     private Integer amount;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateIn;
@@ -38,7 +38,7 @@ public class ProductItem implements Serializable {
     private Product product;
 
     public ProductItem(Integer Id) {
-        this.Id = Id;
+        this.id = Id;
     }
     
      public ProductItem() {
@@ -77,17 +77,17 @@ public class ProductItem implements Serializable {
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.Id);
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -100,7 +100,7 @@ public class ProductItem implements Serializable {
             return false;
         }
         final ProductItem other = (ProductItem) obj;
-        if (!Objects.equals(this.Id, other.Id)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;

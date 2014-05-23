@@ -7,6 +7,8 @@
 package th.co.geniustree.inventory.repo;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import th.co.geniustree.inventory.model.Product;
@@ -20,6 +22,8 @@ public interface ProductItemRepo extends JpaRepository<ProductItem, Integer>{
     
     @Query("SELECT pi FROM ProductItem pi WHERE pi.product = ?1 ORDER BY pi.dateIn,pi.timeIn DESC ")
     public List<ProductItem> findItemOrderByDateDescend(Product product); 
+    
+    public Page<ProductItem> findByProduct(Product product,Pageable pageable);
     
     public List<ProductItem> findByProduct(Product product); 
     
