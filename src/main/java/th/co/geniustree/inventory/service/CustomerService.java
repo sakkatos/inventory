@@ -25,7 +25,7 @@ public interface CustomerService {
     
     public List<Customer> findByFirstNameLike(String customer);
 
-    public Page findAll(PageRequest pageRequest);
-    public Page findAllPage(PageRequest pageRequest);
+//    public Page findAll(PageRequest pageRequest);
+//    public Page findAllPage(PageRequest pageRequest);
     public Page<Customer> findAll(Pageable page);
 }

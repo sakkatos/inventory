@@ -8,7 +8,6 @@ package th.co.geniustree.inventory.controll;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import th.co.geniustree.inventory.lazyload.CustomerLazyLoad;
 import th.co.geniustree.inventory.model.Customer;
 import th.co.geniustree.inventory.service.CustomerService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -31,7 +31,7 @@ public class CustomerController implements Serializable {
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
-    private CustomerLoadLazy customerLoadLazy;
+    private CustomerLazyLoad customerLazyLoad;
     private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
 //    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
     private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
@@ -44,7 +44,7 @@ public class CustomerController implements Serializable {
 
     public void reset() {
 //        customers = customerService.findAll();
-        customerLoadLazy = new CustomerLoadLazy();
+        customerLazyLoad = new CustomerLazyLoad();
     }
 
     public void onCreate() {
@@ -83,21 +83,19 @@ public class CustomerController implements Serializable {
     }
 
     public List<Customer> onSearch() {
-        if(keyword==null){
-            System.out.println("Noooooooooooooooooooo");
-            
+        if(keyword==null){            
         }
         customers = customerService.findByFirstNameLike(keyword);
         return customers;
     }
 
     //----------------------------------------------------------------------------
-    public CustomerLoadLazy getCustomerLoadLazy() {
-        return customerLoadLazy;
+    public CustomerLazyLoad getCustomerLazyLoad() {
+        return customerLazyLoad;
     }
 
-    public void setCustomerLoadLazy(CustomerLoadLazy customerLoadLazy) {
-        this.customerLoadLazy = customerLoadLazy;
+    public void setCustomerLazyLoad(CustomerLazyLoad customerLazyLoad) {
+        this.customerLazyLoad = customerLazyLoad;
     }
     
 
