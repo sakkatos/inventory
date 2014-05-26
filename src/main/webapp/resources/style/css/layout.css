@@ -6,8 +6,6 @@ and open the template in the editor.
 /* 
     Author     : Toy
 */
-/* line 16, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000316}}
 body {
   padding: 0px;
   margin: 0px;
@@ -16,8 +14,6 @@ body {
   min-width: 1000px;
   color: #444;
 }
-/* line 24, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000324}}
 #layoutLeft {
   top: 125px;
   left: 25px;
@@ -27,8 +23,6 @@ body {
   background-color: #f9f9fc;
   position: fixed;
 }
-/* line 34, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000334}}
 #layoutTop {
   top: 25px;
   left: 25px;
@@ -40,8 +34,6 @@ body {
   min-width: 800px;
 }
 /*@top2: @top + 100px;*/
-/* line 47, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000347}}
 #layoutCenter {
   top: 125px;
   left: 225px;
@@ -55,8 +47,6 @@ body {
   min-width: 800px;
   border: #d5d5d5 solid 1px;
 }
-/* line 60, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000360}}
 #layoutButtom {
   bottom: 0px;
   left: 225px;
@@ -66,4 +56,11 @@ body {
   position: fixed;
   border: #d5d5d5 solid 1px;
   min-width: 800px;
+}
+.ui-menuitem-text {
+  font: normal 10pt Roboto, arial, sans-serif;
+  color: red;
+}
+.ui-menu .ui-menuitem-link:hover .ui-menuitem-text {
+  color: #fff;
 }

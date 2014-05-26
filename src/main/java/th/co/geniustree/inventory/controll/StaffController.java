@@ -40,10 +40,14 @@ public class StaffController implements Serializable {
     public void StaffController() {
         reset();
     }
-    
-      public void reset() {
-//        staffs = staffService.findAll();
-          staffLazyLoad = new StaffLazyLoad();
+
+    public void reset() {
+        staffs = staffService.findAll();
+//        staffLazyLoad = new StaffLazyLoad();
+    }
+
+    public void loadLazy() {
+        staffLazyLoad = new StaffLazyLoad();
     }
 
     public void onCreate() {
@@ -90,7 +94,6 @@ public class StaffController implements Serializable {
     public void setStaffLazyLoad(StaffLazyLoad staffLazyLoad) {
         this.staffLazyLoad = staffLazyLoad;
     }
-    
 
     public Staff getStaff() {
         return staff;

@@ -13,6 +13,7 @@
         </f:metadata>
         <h:form id="staffForm">
             #{staffController.reset()}
+            #{staffController.loadLazy()}
             <p:commandButton value="Add Staff"
                              actionListener="#{staffController.onCreate()}"
                              update=":addStaffDialogForm"
@@ -113,7 +114,7 @@
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteStaffDialogForm">
-                <h:outputText value="#{staffController.staff.firstName}"/>
+                <h:outputText value="ต้องการลบ #{staffController.staff.firstName} ใช่หรือไม่"/>
                 <br/>
                 <br/>
                 <p:commandButton value="ลบข้อมูล"
