@@ -44,6 +44,7 @@ public class ProductController implements Serializable {
     private String baseCostFilter;
     private String expectCostFilter;
     private String categoryFilter;
+    private String url;
     
     private ItemLazyLoad itemLazy;
 
@@ -335,5 +336,16 @@ public class ProductController implements Serializable {
     public void setItemLazy(ItemLazyLoad itemLazy) {
         this.itemLazy = itemLazy;
     }
+
+    public String getUrl() {
+        url="manage-item.xhtml";
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
+    
 
 }

@@ -8,42 +8,24 @@
     <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
+            <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
         </f:metadata>
         #{itemManageController.reset()}
         <h:form id="itemDateForm">
             <div class="vertical-gap"/>
-
+            <h:link value="Back" outcome="add-product.xhtml"/>
+            <div class="vertical-gap"/>
             <div class="toolBar">
-                <div class="vertical-panel" style="display: inline-block">
-                    <p:panelGrid columns="2">
+                <div style="display: inline-block">
+                    <p:commandButton value="New Item"/>
+                </div>
+                <div class="vertical-panel" style="display: inline-block;float: right">
+                    <p:panelGrid columns="4">
                         <h:outputText value="Product"/>
                         <h:outputText value="#{itemManageController.product.name}"/>
                         <h:outputText value="Amount"/>
                         <h:outputText value="#{itemManageController.product.sumAmount}"/>
                     </p:panelGrid>
-                </div>
-                <div style="display: inline-block;float: right">
-                    <p:selectOneMenu id="categoryList"
-                                     value="#{itemManageController.categoryLabel}">
-                        <f:selectItems value="#{itemManageController.categoryLabels}"
-                                       var="item"
-                                       itemLabel="#{item}"
-                                       itemValue="#{item}"/>
-                        <f:ajax execute="@this"
-                                listener="#{itemManageController.filterProducstByCategory()}"
-                                render="productList"/>
-                    </p:selectOneMenu>
-                    <div class="horizon-gap"/>
-                    <p:selectOneMenu id="productList" 
-                                     value="#{itemManageController.selectedProductId}">
-                        <f:selectItems value="#{itemManageController.products}"
-                                       var="item"
-                                       itemLabel="#{item.name}"
-                                       itemValue="#{item.id}"/>
-                        <f:ajax execute="@this"
-                                listener="#{itemManageController.filtertItemsByProduct()}"
-                                render="itemDataTable"/>
-                    </p:selectOneMenu>
                 </div>
             </div>
             <div class="vertical-gap"/>
@@ -88,11 +70,43 @@
                 <p:column headerText="Staff"></p:column>
                 <p:column headerText="Action">
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{itemManageController.onSelect()}">
+                                     actionListener="#{itemManageController.onSelect()}"
+                                     onsuccess="removeItemWidget.show()"
+                                     update=":removeItemForm">
                         <f:param name="selectedItemId" value="#{item.id}"/>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
+        
+        <p:dialog widgetVar="removeItemWidget">
+            <h:form id="removeItemForm">
+                <h:outputText value="Remove this item?"/>
+                <br/>
+                <div class="horizon-panel">
+                    <p:panelGrid columns="3">
+                        <h:outputText value="Date"/>
+                        <h:outputText value="Time"/>
+                        <h:outputText value="Amount"/>
+
+                        <h:outputText value="#{itemManageController.item.dateIn}">
+                            <f:convertDateTime pattern="dd MMMM yyyy" 
+                                               locale="#{itemController.locale}"
+                                               timeZone="#{itemController.timeZone}"/>
+                        </h:outputText>
+                        <h:outputText value="#{itemManageController.item.timeIn}">
+                            <f:convertDateTime pattern="HH:mm:ss" 
+                                               locale="#{itemController.locale}"
+                                               timeZone="#{itemController.timeZone}"/>
+                        </h:outputText>
+                        <h:outputText value="#{itemManageController.item.amount}"/>
+                    </p:panelGrid>
+                </div>
+                <p:commandButton value="Remove" 
+                                 actionListener="#{itemManageController.onRemove()}"
+                                 update=":itemDateForm,:notification"
+                                 onsuccess="removeItemWidget.hide()"/>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

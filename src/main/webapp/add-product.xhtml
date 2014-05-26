@@ -15,6 +15,7 @@ and open the template in the editor.
     <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam name="selectedProductId" value="#{productController.selectedProductId}" />
+            <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
         </f:metadata>
         #{productController.reset()}
         <h:form id="productTableForm" >
@@ -220,6 +221,11 @@ and open the template in the editor.
                         </div>
                     </p:tab>
                     <p:tab title="Entry List">
+                        <p:commandButton value="Edit" 
+                                         action="manage-item" >
+                                <f:param name="selectedProductId" 
+                                         value="#{productController.selectedProductId}"/>
+                        </p:commandButton>
                         <p:dataTable value="#{productController.itemLazy}"
                                      lazy="true"
                                      paginator="true"
@@ -237,6 +243,7 @@ and open the template in the editor.
                                      {RowsPerPageDropdown}"
                                      rowIndexVar="rownum" 
                                      var="lazyItem">
+                            <h:inputHidden value="#{lazyItem.id}"/>
                             <p:column>#{rownum+1}</p:column>
                             <p:column headerText="Date" sortBy="#{lazyItem.dateIn}">
                                 <h:outputText value="#{lazyItem.dateIn}">

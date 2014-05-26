@@ -39,10 +39,25 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="vertical-gap"/>
-            <p:dataTable value="#{itemController.items}" 
+            <p:dataTable value="#{itemController.itemLazy}"
+                         lazy="true"
+                         paginator="true"
+                         rows="10"
+                         pageLinks="5"
+                         paginatorTemplate="
+                         {CurrentPageReport} 
+                         {FirstPageLink}
+                         {PreviousPageLink}
+                         {PageLinks} 
+                         {NextPageLink}
+                         {LastPageLink}
+                         {RowsPerPageDropdown}"
+                         rowIndexVar="rowNum"
+                         rowsPerPageTemplate="10,15,20"
                          var="item"
                          sortBy="timeIn"
                          sortOrder="descending">
+                <p:column >#{rowNum+1}</p:column>
                 <p:column headerText="Date">
                     <h:outputText value="#{item.dateIn}">
                         <f:convertDateTime pattern="dd/MMMM/yyyy" 
@@ -74,8 +89,7 @@ and open the template in the editor.
             <h:form id="removeItemProductForm">
                 <h:outputText value="Remove this item?"/>
                 <br/>
-                <div class="horizon-panel">
-                    <p:panelGrid columns="3">
+                    <p:panelGrid columns="3" styleClass="horizon-panel">
                         <h:outputText value="Date"/>
                         <h:outputText value="Time"/>
                         <h:outputText value="Amount"/>
@@ -92,7 +106,6 @@ and open the template in the editor.
                         </h:outputText>
                         <h:outputText value="#{itemController.item.amount}"/>
                     </p:panelGrid>
-                </div>
                 <p:commandButton value="Remove" 
                                  actionListener="#{itemController.onRemoveItem()}"
                                  update=":itemProductForm,:notification"
