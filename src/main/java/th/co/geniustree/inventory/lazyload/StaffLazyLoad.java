@@ -3,24 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package th.co.geniustree.inventory.lazyload;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import th.co.geniustree.inventory.model.Customer;
-import th.co.geniustree.inventory.service.CustomerService;
+import th.co.geniustree.inventory.model.Staff;
+import th.co.geniustree.inventory.service.StaffService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
  *
  * @author toy
  */
-public class CustomerLazyLoad extends LazyLoad<Customer>{
-    private final CustomerService customerService = JSFSpringUtils.getBean(CustomerService.class);
+public class StaffLazyLoad extends LazyLoad<Staff>{
+    private final StaffService staffService = JSFSpringUtils.getBean(StaffService.class);
 
     @Override
-    public Page<Customer> load(Pageable page) {
-        return customerService.findAll(page);
+    public Page<Staff> load(Pageable page) {
+        return staffService.findAll(page);
     }
     
 }

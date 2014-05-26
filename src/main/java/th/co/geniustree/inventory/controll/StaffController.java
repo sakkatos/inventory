@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import th.co.geniustree.inventory.lazyload.StaffLazyLoad;
 import th.co.geniustree.inventory.model.Staff;
 import th.co.geniustree.inventory.service.StaffService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -31,6 +32,7 @@ public class StaffController implements Serializable {
     private List<Staff> staffs;
     private String keyword;
     private String staffId;
+    private StaffLazyLoad staffLazyLoad;
     private static final Logger LOG = Logger.getLogger(StaffController.class.getName());
     private final StaffService staffService = JSFSpringUtils.getBean(StaffService.class);
 
@@ -40,7 +42,8 @@ public class StaffController implements Serializable {
     }
     
       public void reset() {
-        staffs = staffService.findAll();
+//        staffs = staffService.findAll();
+          staffLazyLoad = new StaffLazyLoad();
     }
 
     public void onCreate() {
@@ -80,6 +83,14 @@ public class StaffController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------
+    public StaffLazyLoad getStaffLazyLoad() {
+        return staffLazyLoad;
+    }
+
+    public void setStaffLazyLoad(StaffLazyLoad staffLazyLoad) {
+        this.staffLazyLoad = staffLazyLoad;
+    }
+    
 
     public Staff getStaff() {
         return staff;

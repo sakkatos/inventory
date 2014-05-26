@@ -43,15 +43,15 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepo.findAll();
     }
 
-    @Override
-    public Page findAll(PageRequest pageRequest) {
-        return customerRepo.findAll(pageRequest);
-    }
-
-    @Override
-    public Page findAllPage(PageRequest pageRequest) {
-        return null;
-    }
+//    @Override
+//    public Page findAll(PageRequest pageRequest) {
+//        return customerRepo.findAll(pageRequest);
+//    }
+//
+//    @Override
+//    public Page findAllPage(PageRequest pageRequest) {
+//        return null;
+//    }
 
     @Override
     public List<Customer> findByFirstNameLike(String customer) {

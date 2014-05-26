@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package th.co.geniustree.inventory.util;
+package th.co.geniustree.inventory.lazyload;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

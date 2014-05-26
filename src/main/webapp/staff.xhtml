@@ -19,7 +19,17 @@
                              onsuccess="addWidgetDialog.show()"/>
             <br/>
             <br/>
-            <p:dataTable value="#{staffController.staffs}" var="item">
+            <p:dataTable value="#{staffController.staffLazyLoad}" 
+                         var="item"
+                         rows="5"
+                         lazy="true"
+                         sortBy="id"
+                         sortOrder="ASCENDING"
+                         rowIndexVar="counter"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25">
                 <p:column headerText="ID" width="20">#{item.id}</p:column>
                 <p:column headerText="Name">#{item.firstName}</p:column>
                 <p:column headerText="Lastname">#{item.lastName}</p:column>

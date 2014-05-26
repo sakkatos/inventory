@@ -18,5 +18,6 @@ import th.co.geniustree.inventory.model.Customer;
  */
 public interface CustomerRepo extends JpaRepository<Customer, String>{
     public List<Customer> findByFirstNameLike(String customer);
+    @Override
     public Page<Customer> findAll(Pageable page);
 }
