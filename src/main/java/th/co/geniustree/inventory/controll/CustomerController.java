@@ -27,7 +27,7 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
 @ManagedBean
 @SessionScoped
 public class CustomerController implements Serializable {
-    
+
     private Customer customer;
     private List<Customer> customers;
     private String keyword;
@@ -38,12 +38,16 @@ public class CustomerController implements Serializable {
     private String customerId;
 
     @PostConstruct
+
     public void CustomerController() {
         reset();
     }
 
     public void reset() {
-//        customers = customerService.findAll();
+        customers = customerService.findAll();
+    }
+
+    public void loadLazy() {
         customerLazyLoad = new CustomerLazyLoad();
     }
 
@@ -56,7 +60,7 @@ public class CustomerController implements Serializable {
             customer = customerService.save(customer);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
-            LOG.debug( ex.getMessage(), ex);
+            LOG.debug(ex.getMessage(), ex);
             showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
         }
     }
@@ -83,7 +87,7 @@ public class CustomerController implements Serializable {
     }
 
     public List<Customer> onSearch() {
-        if(keyword==null){            
+        if (keyword == null) {
         }
         customers = customerService.findByFirstNameLike(keyword);
         return customers;
@@ -97,7 +101,6 @@ public class CustomerController implements Serializable {
     public void setCustomerLazyLoad(CustomerLazyLoad customerLazyLoad) {
         this.customerLazyLoad = customerLazyLoad;
     }
-    
 
     public Customer getCustomer() {
         return customer;
@@ -135,7 +138,7 @@ public class CustomerController implements Serializable {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
-    
+
     private String requestParam(String paramName) {
         return FacesContext.getCurrentInstance()
                 .getExternalContext()

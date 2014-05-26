@@ -8,11 +8,14 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
-        </f:metadata>
+        <ui:remove>
+            <f:metadata>
+                <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
+            </f:metadata>
+        </ui:remove>
         <h:form id="customerForm">
             #{customerController.reset()}
+            
             <p:commandButton value="เพิ่มข้อมูลลูกค้า"
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
@@ -124,7 +127,7 @@
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteCustomerDialogForm">
-                <h:outputText value="คุณต้องการลบ #{customerController.customer.firstName} ใช่หรือไม่?"/>
+                <h:outputText value="คุณต้องการลบผู้ใช้ใช่หรือไม่?"/>
                 <br/>
                 <br/>
                 <p:commandButton value="ลบผู้ใช้"
