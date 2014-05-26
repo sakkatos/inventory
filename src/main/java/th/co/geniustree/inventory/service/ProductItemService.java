@@ -26,7 +26,7 @@ import th.co.geniustree.inventory.repo.ProductItemRepo;
 public class ProductItemService {
     
     @Autowired
-    public ProductItemRepo productItemRepo;
+    private ProductItemRepo productItemRepo;
     
     public void saveItem(ProductItem productItem){
         productItemRepo.save(productItem);
@@ -38,6 +38,10 @@ public class ProductItemService {
     
     public List<ProductItem> itemOrderByDateDescend(Product product){
         return productItemRepo.findItemOrderByDateDescend(product);
+    }
+    
+    public ProductItem findOne(Integer id){
+        return productItemRepo.findOne(id);
     }
     
     public Page<ProductItem> findByProductLazyLoad(Product product,Pageable pageable){

@@ -26,6 +26,9 @@ and open the template in the editor.
                                      actionListener="#{productController.onCreate()}"
                                      onsuccess="addProductDialog.show()"/>
                 </div>
+                <div style="display: inline-block">
+                    <h:link outcome="manage-item.xhtm"  value="Manage Product Items"/>
+                </div>
 
                 <div style="display: inline-block;float: right;">
                     <p:selectOneMenu id="filterBox" 
@@ -194,7 +197,7 @@ and open the template in the editor.
                 <div style="height: 10px"/>
                 <p:tabView>
                     <p:tab title="Generic Data">
-                        <div class="productDetailPanel" style="margin-right: 0px">
+                        <div class="vertical-panel" style="margin-right: 0px">
                             <p:panelGrid columns="2" >
                                 <h:outputText value="Id" class="tag" style="width: 50%"/>
                                 <h:outputText value="#{productController.product.id}"/>

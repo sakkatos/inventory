@@ -6,6 +6,93 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="centerReplace">
-     blank...
+        <f:metadata>
+            <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
+        </f:metadata>
+        #{itemManageController.reset()}
+        <h:form id="itemDateForm">
+            <div class="vertical-gap"/>
+
+            <div class="toolBar">
+                <div class="vertical-panel" style="display: inline-block">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Product"/>
+                        <h:outputText value="#{itemManageController.product.name}"/>
+                        <h:outputText value="Amount"/>
+                        <h:outputText value="#{itemManageController.product.sumAmount}"/>
+                    </p:panelGrid>
+                </div>
+                <div style="display: inline-block;float: right">
+                    <p:selectOneMenu id="categoryList"
+                                     value="#{itemManageController.categoryLabel}">
+                        <f:selectItems value="#{itemManageController.categoryLabels}"
+                                       var="item"
+                                       itemLabel="#{item}"
+                                       itemValue="#{item}"/>
+                        <f:ajax execute="@this"
+                                listener="#{itemManageController.filterProducstByCategory()}"
+                                render="productList"/>
+                    </p:selectOneMenu>
+                    <div class="horizon-gap"/>
+                    <p:selectOneMenu id="productList" 
+                                     value="#{itemManageController.selectedProductId}">
+                        <f:selectItems value="#{itemManageController.products}"
+                                       var="item"
+                                       itemLabel="#{item.name}"
+                                       itemValue="#{item.id}"/>
+                        <f:ajax execute="@this"
+                                listener="#{itemManageController.filtertItemsByProduct()}"
+                                render="itemDataTable"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="vertical-gap"/>
+
+            <p:dataTable id="itemDataTable"
+                         value="#{itemManageController.itemLazy}"
+                         lazy="true"
+                         rows="15"
+                         paginator="true"
+                         paginatorAlwaysVisible="true"
+                         pageLinks="5"
+                         paginatorTemplate="
+                         {CurrentPageReport} 
+                         {FirstPageLink}
+                         {PreviousPageLink}
+                         {PageLinks} 
+                         {NextPageLink}
+                         {LastPageLink}
+                         {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,15,20"
+                         var="item"
+                         sortBy="timeIn"
+                         sortOrder="descending"
+                         rowIndexVar="rowNum">
+                <p:column style="width: 15px;
+                          text-align: center">#{rowNum+1}</p:column>
+                <p:column headerText="Date">
+                    <h:outputText value= "#{item.dateIn}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" 
+                                           locale="#{itemManageController.locale}"
+                                           timeZone="#{itemManageController.timeZone}"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Time">
+                    <h:outputText value= "#{item.timeIn}">
+                        <f:convertDateTime pattern="HH:mm:ss" 
+                                           locale="#{itemManageController.locale}"
+                                           timeZone="#{itemManageController.timeZone}"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Amount">#{item.amount}</p:column>
+                <p:column headerText="Staff"></p:column>
+                <p:column headerText="Action">
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{itemManageController.onSelect()}">
+                        <f:param name="selectedItemId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

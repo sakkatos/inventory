@@ -26,7 +26,7 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
 public class CategoryController implements Serializable {
 
     private final CategoryService categoryService = JSFSpringUtils.getBean(CategoryService.class);
-    
+
     private Category category;
     private List<Category> categories;
     private List<Category> noRootCategories;
@@ -52,13 +52,13 @@ public class CategoryController implements Serializable {
 
     public void onSave() {
         Category parent = categoryService.findOne(category.getParent().getId());
-        
+
         category.setParent(parent);
         categoryService.save(category);
-        
+
         parent.getChildren().add(category);
         categoryService.save(parent);
-        
+
         categories = findAll();
         noRootCategories = findAllExceptRoot();
         resetFilter();
@@ -155,6 +155,7 @@ public class CategoryController implements Serializable {
 
     public void filterCategories() {
         List<String> collectedLabels;
+        selectedLabel = selectedLabel.replace("-", "");
         if (selectedLabel.equals("All")) {
             noRootCategories = findAllExceptRoot();
         }
@@ -168,7 +169,10 @@ public class CategoryController implements Serializable {
     public List<String> collectCategoryLabelsDepthFirstSearch(Category c) {
         List<String> labelList = new ArrayList<>();
         labelList.add(c.getName());
-        List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+        Integer level = 0;
+        level = level + 1;
+        String prefix = "";
+        List<String> childLabelList = recursiveGetLabelDepthFirstSearch(c.getChildren(), level, prefix);
         Iterator<String> iterator = childLabelList.iterator();
         while (iterator.hasNext()) {
             labelList.add(iterator.next());
@@ -176,14 +180,18 @@ public class CategoryController implements Serializable {
         return labelList;
     }
 
-    public List<String> recursiveGetLabelDepthFirstSearch(List<Category> children) {
+    public List<String> recursiveGetLabelDepthFirstSearch(List<Category> children, Integer level, String prefix) {
         List<String> labelList = new ArrayList<>();
         if (children != null) {
             Iterator<Category> iterator = children.iterator();
+            if (level > 1) {
+                prefix = prefix.concat("--");
+            }
             while (iterator.hasNext()) {
                 Category c = iterator.next();
-                labelList.add(c.getName());
-                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren());
+                labelList.add(prefix.concat(c.getName()));
+                level = level + 1;
+                List<String> childlabelList = recursiveGetLabelDepthFirstSearch(c.getChildren(), level, prefix);
                 Iterator<String> subIterator = childlabelList.iterator();
                 while (subIterator.hasNext()) {
                     labelList.add(subIterator.next());

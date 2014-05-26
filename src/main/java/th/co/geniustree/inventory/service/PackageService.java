@@ -23,7 +23,7 @@ import th.co.geniustree.inventory.repo.PackageRepo;
 public class PackageService {
 
     @Autowired
-    public PackageRepo packageRepo;
+    private PackageRepo packageRepo;
 
     public List<ProductPackage> findAll() {
         return packageRepo.findAll();

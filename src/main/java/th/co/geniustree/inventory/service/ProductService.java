@@ -23,7 +23,7 @@ import th.co.geniustree.inventory.repo.ProductRepo;
 public class ProductService {
 
     @Autowired
-    public ProductRepo productRepo;
+    private ProductRepo productRepo;
 
     public void save(Product product) {
         productRepo.save(product);
