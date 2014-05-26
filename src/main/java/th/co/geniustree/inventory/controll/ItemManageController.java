@@ -31,8 +31,6 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
 public class ItemManageController implements Serializable {
 
     private final ProductService productService = JSFSpringUtils.getBean(ProductService.class);
-    private final CategoryService categoryService = JSFSpringUtils.getBean(CategoryService.class);
-    private final PackageService packageService = JSFSpringUtils.getBean(PackageService.class);
     private final ProductItemService itemService = JSFSpringUtils.getBean(ProductItemService.class);
 
     private ProductItem item;
@@ -63,9 +61,6 @@ public class ItemManageController implements Serializable {
     }
 
     public void reset() {
-        System.out.println("=================================================");
-        System.out.println("product " + selectedProductId);
-        System.out.println("=================================================");
         if (selectedProductId == null) {
             selectedProductId = "";
         }

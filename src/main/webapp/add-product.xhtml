@@ -191,7 +191,7 @@ and open the template in the editor.
         </p:dialog>
 
         <p:dialog widgetVar="productDetailwidget" 
-                  class="productDetail">
+                  styleClass="productDetail">
             <h:form id="productDetailForm">
                 <div style="height: 10px"/>
                 <h:outputText value="Product Detail" style="font-weight: bolder"/>
@@ -200,16 +200,16 @@ and open the template in the editor.
                     <p:tab title="Generic Data">
                         <div class="vertical-panel" style="margin-right: 0px">
                             <p:panelGrid columns="2" >
-                                <h:outputText value="Id" class="tag" style="width: 50%"/>
+                                <h:outputText value="Id" style="width: 50%"/>
                                 <h:outputText value="#{productController.product.id}"/>
 
-                                <h:outputText value="Name" class="tag"/>
+                                <h:outputText value="Name" />
                                 <h:outputText value="#{productController.product.name}"/>
 
-                                <h:outputText value="Cost" class="tag"/>
+                                <h:outputText value="Cost" />
                                 <h:outputText value="#{productController.product.cost}"/>
 
-                                <h:outputText value="Base Price" class="tag"/>
+                                <h:outputText value="Base Price" />
                                 <h:outputText value="#{productController.product.basePrice}"/>
 
                                 <h:outputText value="Expect Price"/>
