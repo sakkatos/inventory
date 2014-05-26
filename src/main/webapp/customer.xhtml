@@ -15,7 +15,7 @@
         </ui:remove>
         <h:form id="customerForm">
             #{customerController.reset()}
-            
+            #{customerController.loadLazy()}
             <p:commandButton value="เพิ่มข้อมูลลูกค้า"
                              actionListener="#{customerController.onCreate()}"
                              update=":addCustomerDialogForm"
