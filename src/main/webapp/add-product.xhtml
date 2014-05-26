@@ -262,6 +262,11 @@ and open the template in the editor.
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Barcode info">
+                        <p:commandButton value="Edit" 
+                                         action="manage-item" >
+                                <f:param name="selectedProductId" 
+                                         value="#{productController.selectedProductId}"/>
+                        </p:commandButton>
                         <p:dataTable value="#{productController.product.packages}"
                                      var="barcodeItem" >
                             <p:column headerText="Barcode">#{barcodeItem.barcode}</p:column>

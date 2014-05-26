@@ -128,9 +128,6 @@ public class ItemManageController implements Serializable {
     }
 
     public void setSelectedProductId(String selectedProductId) {
-        System.out.println("=================================================");
-        System.out.println(selectedProductId);
-        System.out.println("=================================================");
         this.selectedProductId = selectedProductId;
     }
 
