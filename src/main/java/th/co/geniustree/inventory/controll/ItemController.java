@@ -6,20 +6,17 @@
 package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.jsf.FacesContextUtils;
 import th.co.geniustree.inventory.model.Category;
@@ -30,6 +27,7 @@ import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.PackageService;
 import th.co.geniustree.inventory.service.ProductItemService;
 import th.co.geniustree.inventory.service.ProductService;
+import th.co.geniustree.inventory.util.ItemLazyLoad;
 
 /**
  *
@@ -52,6 +50,8 @@ public class ItemController implements Serializable {
     private ProductItem item;
     private List<ProductItem> items;
     private Integer amountOfPack;
+
+    private ItemLazyLoad itemLazy;
 
     private String barcode;
     private Integer selectedItemId;
@@ -112,9 +112,10 @@ public class ItemController implements Serializable {
         item.setTimeIn(cal.getTime());
         item.setProduct(product);
         itemService.saveItem(item);
-        
+
         product.getProductItems().add(item);
         productService.save(product);
+        getItemLazy().setProduct(product);
         barcode = "";
     }
 
@@ -132,9 +133,10 @@ public class ItemController implements Serializable {
     }
 
     public void reset() {
-        barcode="";
+        barcode = "";
         pack = new ProductPackage();
         items = new ArrayList<>();
+        getItemLazy().setProduct(productService.findByBarcode(barcode));
     }
 
     public Integer sumItemByProduct() {
@@ -294,7 +296,7 @@ public class ItemController implements Serializable {
     }
 
     public TimeZone getTimeZone() {
-        if(timeZone==null){
+        if (timeZone == null) {
             timeZone = Calendar.getInstance().getTimeZone();
         }
         return timeZone;
@@ -305,7 +307,7 @@ public class ItemController implements Serializable {
     }
 
     public SimpleDateFormat getSmpDateFormat() {
-        if (smpDateFormat==null){
+        if (smpDateFormat == null) {
             smpDateFormat = new SimpleDateFormat("dd:MMM:yyyy");
             smpDateFormat.setCalendar(Calendar.getInstance());
         }
@@ -316,6 +318,19 @@ public class ItemController implements Serializable {
         this.smpDateFormat = smpDateFormat;
     }
 
+    public ItemLazyLoad getItemLazy() {
+        if (itemLazy == null) {
+            itemLazy = new ItemLazyLoad();
+            itemLazy.setProduct(getProduct());
+        }
+        return itemLazy;
+    }
+
+    public void setItemLazy(ItemLazyLoad itemLazy) {
+        this.itemLazy = itemLazy;
+    }
+
+    //--------------------------------------------------------------------------
     public ProductService getProductManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
         return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(ProductService.class);
