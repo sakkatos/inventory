@@ -69,7 +69,7 @@ public class BarcodeController implements Serializable {
     public String onredirect() {
         if (isRedirect()){
             redirect=false;
-            return "add-product-item.xhtml?selectedBarcode=" + pack.getBarcode() + "faces-redirect=true";
+            return "/product-item/add-product-item.xhtml?selectedBarcode=" + pack.getBarcode() + "faces-redirect=true";
         }
         return "";
     }

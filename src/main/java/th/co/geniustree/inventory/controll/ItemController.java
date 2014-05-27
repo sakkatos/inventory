@@ -92,7 +92,7 @@ public class ItemController implements Serializable {
         if (isRedirect()) {
             redirect = false;
             requestNewBarcode=true;
-            return "add-barcode.xhtml?selectedBarcode=" + barcode 
+            return "/barcode/barcode.xhtml?selectedBarcode=" + barcode 
                     +"&newBarcode="+requestNewBarcode
                     + "faces-redirect=true";
         }
