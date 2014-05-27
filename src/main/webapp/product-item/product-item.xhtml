@@ -16,7 +16,8 @@
         #{itemManageController.reset()}
         <h:form id="itemDateForm">
             <div class="vertical-gap"/>
-            <h:link value="Back" outcome="/product/product.xhtml"/>
+            <p:commandButton value="Back"  ajax="false"
+                             action="/product/product.xhtml"/>
             <div class="vertical-gap"/>
             <div class="toolBar">
                 <div style="display: inline-block">
@@ -95,13 +96,13 @@
 
                         <h:outputText value="#{itemManageController.item.dateIn}">
                             <f:convertDateTime pattern="dd MMMM yyyy" 
-                                               locale="#{itemController.locale}"
-                                               timeZone="#{itemController.timeZone}"/>
+                                               locale="#{itemAddController.locale}"
+                                               timeZone="#{itemAddController.timeZone}"/>
                         </h:outputText>
                         <h:outputText value="#{itemManageController.item.timeIn}">
                             <f:convertDateTime pattern="HH:mm:ss" 
-                                               locale="#{itemController.locale}"
-                                               timeZone="#{itemController.timeZone}"/>
+                                               locale="#{itemAddController.locale}"
+                                               timeZone="#{itemAddController.timeZone}"/>
                         </h:outputText>
                         <h:outputText value="#{itemManageController.item.amount}"/>
                     </p:panelGrid>

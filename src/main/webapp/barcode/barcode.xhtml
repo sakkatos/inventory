@@ -8,7 +8,120 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="centerReplace">
-       manage barcode!
+        <f:metadata>
+            <f:viewParam name="selectedBarcode" 
+                         value="#{barcodeManageController.selectedBarcode}"/>
+            <f:viewParam name="selectedProductId" 
+                         value="#{barcodeManageController.selectedProductId}"/>
+        </f:metadata>
+        #{barcodeManageController.reset()}
+        <h:form id="barcodeTableForm">
+            <div class="vertical-gap"/>
+            <div class="toolBar" >
+                <div style="display: inline-block;">
+                    <p:panelGrid columns="2" styleClass="vertical-panel">
+                        <h:outputText value="Product"/>
+                        <h:outputText value="#{barcodeManageController.product.name}"/>
+                    </p:panelGrid>
+                </div>
+                <p:commandButton value="New Barcode"
+                                 style="float: right;display: inline-block"
+                                 actionListener="#{barcodeManageController.onCreate()}"
+                                 update=":addBarcodeForm"
+                                 onsuccess="addBarcodeWidget.show()"/>
+            </div>
+            <div class="vertical-gap"/>
+            <p:dataTable value="#{barcodeManageController.packs}"
+                         var ="item"
+                         rowIndexVar="rowNum">
+                <p:column>#{rowNum+1}</p:column>
+                <p:column headerText="Barcode">#{item.barcode}</p:column>
+                <p:column headerText="Amount per unit">#{item.amountPerPack}</p:column>
+                <p:column headerText="Unit name">#{item.name}</p:column>
+                <p:column headerText="Action">
+                    <p:commandButton icon="ui-icon-pencil" 
+                                     actionListener="#{barcodeManageController.onSelect()}"
+                                     update=":editBarcodeForm"
+                                     onsuccess="editBarcodeWidget.show()">
+                        <f:param name="selectedBarcode" value="#{item.barcode}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{barcodeManageController.onSelect()}"
+                                     update=":removeBarcodeForm"
+                                     onsuccess="removeBarcodeWidget.show()">
+                        <f:param name="selectedBarcode" value="#{item.barcode}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <div class="vertical-gap"/>
+            <p:commandButton value="Done" ajax="false"
+                             action="/product/product.xhtml"/>
+        </h:form>
+
+        <p:dialog widgetVar="editBarcodeWidget">
+            <h:form id="editBarcodeForm">
+                <h:outputText value="Edit this barcode : "/>
+                <h:outputText value="#{barcodeManageController.pack.barcode}"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
+                    <h:outputText value="Amount per unit"/>
+                    <h:inputText value="#{barcodeManageController.pack.amountPerPack}"
+                                 style="width: 20px"/>
+
+                    <h:outputText value="Unit name"/>
+                    <h:inputText value="#{barcodeManageController.pack.name}"
+                                 style="width: 120px"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="Save"
+                                 actionListener="#{barcodeManageController.onEdit()}"
+                                 update=":barcodeTableForm,:notification"
+                                 onsuccess="editBarcodeWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="removeBarcodeWidget">
+            <h:form id="removeBarcodeForm">
+                <h:outputText value="Remove this barcode : "/>
+                <h:outputText value="#{barcodeManageController.pack.barcode}"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
+                    <h:outputText value="Amount per unit"/>
+                    <h:outputText value="#{barcodeManageController.pack.amountPerPack}"/>
+
+                    <h:outputText value="Unit name"/>
+                    <h:outputText value="#{barcodeManageController.pack.name}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="Save"
+                                 actionListener="#{barcodeManageController.onRemove()}"
+                                 update=":barcodeTableForm,:notification"
+                                 onsuccess="removeBarcodeWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="addBarcodeWidget">
+            <h:form id="addBarcodeForm">
+                <h:outputText value="New barcode"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
+                    <h:outputText value="Barcode"/>
+                    <h:inputText value="#{barcodeManageController.pack.barcode}"/>
+
+                    <h:outputText value="Amount per unit"/>
+                    <h:inputText value="#{barcodeManageController.pack.amountPerPack}"/>
+
+                    <h:outputText value="Unit name"/>
+                    <h:inputText value="#{barcodeManageController.pack.name}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="Save"
+                                 actionListener="#{barcodeManageController.onSave()}"
+                                 update=":barcodeTableForm,:notification"
+                                 onsuccess="addBarcodeWidget.hide()"/>
+            </h:form>
+        </p:dialog>
+        
     </ui:define>
 </ui:composition>
 
