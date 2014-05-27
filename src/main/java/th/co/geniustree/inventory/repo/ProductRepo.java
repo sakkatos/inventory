@@ -6,6 +6,8 @@
 package th.co.geniustree.inventory.repo;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +28,9 @@ public interface ProductRepo extends JpaRepository<Product, String> {
 
     @Query("SELECT p FROM Product p WHERE p.category = ?1 ORDER BY p.category")
     public List<Product> findProducstByCategory(Category category);
+    
+    @Query("SELECT p FROM Product p WHERE p.category.name IN :nameCategories")
+    public Page<Product> searchProductByCategoryName(@Param("nameCategories")List<String> nameCategories,Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE p.category.name IN :nameCategories")
     public List<Product> searchProductByCategoryName(@Param("nameCategories") List<String> nameCategories);

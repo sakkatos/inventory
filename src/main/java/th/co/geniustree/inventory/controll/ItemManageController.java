@@ -19,7 +19,7 @@ import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.PackageService;
 import th.co.geniustree.inventory.service.ProductItemService;
 import th.co.geniustree.inventory.service.ProductService;
-import th.co.geniustree.inventory.util.ItemLazyLoad;
+import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**

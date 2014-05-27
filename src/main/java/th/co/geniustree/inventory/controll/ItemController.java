@@ -27,7 +27,7 @@ import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.PackageService;
 import th.co.geniustree.inventory.service.ProductItemService;
 import th.co.geniustree.inventory.service.ProductService;
-import th.co.geniustree.inventory.util.ItemLazyLoad;
+import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
 
 /**
  *
@@ -58,6 +58,7 @@ public class ItemController implements Serializable {
     private String selectedBarcode;
     private String massage = "";
     private Boolean redirect;
+    private Boolean requestNewBarcode;
     private Locale locale = Locale.getDefault();
     private TimeZone timeZone = Calendar.getInstance().getTimeZone();
     private SimpleDateFormat smpDateFormat;
@@ -90,7 +91,10 @@ public class ItemController implements Serializable {
     public String onRedirect() {
         if (isRedirect()) {
             redirect = false;
-            return "add-barcode.xhtml?selectedBarcode=" + barcode + "faces-redirect=true";
+            requestNewBarcode=true;
+            return "add-barcode.xhtml?selectedBarcode=" + barcode 
+                    +"&newBarcode="+requestNewBarcode
+                    + "faces-redirect=true";
         }
         return "";
     }
@@ -137,6 +141,7 @@ public class ItemController implements Serializable {
         pack = new ProductPackage();
         items = new ArrayList<>();
         getItemLazy().setProduct(productService.findByBarcode(barcode));
+        requestNewBarcode=false;
     }
 
     public Integer sumItemByProduct() {
@@ -329,6 +334,19 @@ public class ItemController implements Serializable {
     public void setItemLazy(ItemLazyLoad itemLazy) {
         this.itemLazy = itemLazy;
     }
+
+    public Boolean isRequestNewBarcode() {
+        if(requestNewBarcode==null){
+            requestNewBarcode=false;
+        }
+        return requestNewBarcode;
+    }
+
+    public void setRequestNewBarcode(Boolean requestNewBarcode) {
+        this.requestNewBarcode = requestNewBarcode;
+    }
+    
+    
 
     //--------------------------------------------------------------------------
     public ProductService getProductManagedBean() {

@@ -11,12 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
+import th.co.geniustree.inventory.lazyload.ProductLazyLoad;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.service.CategoryService;
 import th.co.geniustree.inventory.service.ProductItemService;
 import th.co.geniustree.inventory.service.ProductService;
-import th.co.geniustree.inventory.util.ItemLazyLoad;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
@@ -47,6 +48,7 @@ public class ProductController implements Serializable {
     private String url;
     
     private ItemLazyLoad itemLazy;
+    private ProductLazyLoad productLazy;
 
 
     //business logic------------------------------------------------------------
@@ -126,6 +128,7 @@ public class ProductController implements Serializable {
             }
             selectedLabels = tmp;
         }
+        getProductLazy().setCategoryLabels(selectedLabels);
     }
 
     public void dataTableFiltering() {
@@ -147,13 +150,14 @@ public class ProductController implements Serializable {
         System.out.println(selectedLabel);
         List<String> collectedLabels = new ArrayList<>();
         if (selectedLabel.equals("All")) {
-            products = findAllProducts();
+            collectedLabels = collectCategoryLabelsDepthFirstSearch(
+                    categoryService.findRoot());
         }
         if (!selectedLabel.equals("All")) {
             collectedLabels = collectCategoryLabelsDepthFirstSearch(
                     categoryService.findByName(selectedLabel));
-            products = productService.searchProductByCategoryName(collectedLabels);
         }
+        getProductLazy().setCategoryLabels(collectedLabels);
     }
 
     public List<String> collectCategoryLabelsDepthFirstSearch(Category c) {
@@ -345,7 +349,16 @@ public class ProductController implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
-    
-    
 
+    public ProductLazyLoad getProductLazy() {
+        if (productLazy==null){
+            productLazy = new ProductLazyLoad();
+        }
+        return productLazy;
+    }
+
+    public void setProductLazy(ProductLazyLoad productLazy) {
+        this.productLazy = productLazy;
+    }
+    
 }
