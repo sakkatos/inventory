@@ -70,12 +70,15 @@ public class StaffController implements Serializable {
 
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
-
-    public void onSelect() {
-        String s = requestParam("staffId");
-        int indexOf = this.getStaffs().indexOf(new Staff(s));
-        staff = this.getStaffs().get(indexOf);
+    public void onSelect(){
+        staff = getStaffLazyLoad().getRowData(staffId);
     }
+
+//    public void onSelect() {
+//        String s = requestParam("staffId");
+//        int indexOf = this.getStaffs().indexOf(new Staff(s));
+//        staff = this.getStaffs().get(indexOf);
+//    }
 
 //    public void onSelectCustomer() {
 //        Customer c = new Customer();

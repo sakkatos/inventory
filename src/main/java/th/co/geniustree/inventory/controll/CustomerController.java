@@ -70,12 +70,16 @@ public class CustomerController implements Serializable {
 
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
-
-    public void onSelect() {
-        String c = customerId;
-        int indexOf = this.getCustomers().indexOf(new Customer(c));
-        customer = this.getCustomers().get(indexOf);
+    public void onSelect(){
+//        String c = customerId;
+        customer = this.getCustomerLazyLoad().getRowData(customerId);
     }
+//select from list
+//    public void onSelect() {
+//        String c = customerId;
+//        int indexOf = this.getCustomers().indexOf(new Customer(c));
+//        customer = this.getCustomers().get(indexOf);
+//    }
 
 //    public void onSelect() {
 //        Customer c = new Customer();

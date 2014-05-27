@@ -38,13 +38,13 @@
                 <p:column headerText="Lastname">#{item.lastName}</p:column>
                 <p:column headerText="action" >
                     <p:commandButton icon="ui-icon-pencil"
-                                     onsuccess="editWidgetDialog.show();"
+                                     onsuccess="editWidgetDialog.show()"
                                      update=":editStaffDialogForm"
                                      actionListener="#{staffController.onSelect()}">
                         <f:param name="staffId" value="#{item.id}"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-trash"
-                                     onsuccess="deleteWidgetDialog.show();"
+                                     onsuccess="deleteWidgetDialog.show()"
                                      update=":deleteStaffDialogForm"
                                      actionListener="#{staffController.onSelect()}">
                         <f:param name="staffId" value="#{item.id}"/>
