@@ -12,7 +12,9 @@
             <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
         </f:metadata>
         <h:form id="staffForm">
-            #{staffController.reset()}
+            <ui:remove>
+                #{staffController.reset()}
+            </ui:remove>
             #{staffController.loadLazy()}
             <p:commandButton value="Add Staff"
                              actionListener="#{staffController.onCreate()}"
