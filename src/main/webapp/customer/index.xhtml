@@ -1,6 +1,6 @@
 <!--<?xml version='1.0' encoding='UTF-8' ?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="template/maintemplate.xhtml"
+<ui:composition template="/_template_/index.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -8,13 +8,13 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="centerReplace">
-        <ui:remove>
+        
             <f:metadata>
                 <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
             </f:metadata>
-        </ui:remove>
+        
         <h:form id="customerForm">
-            #{customerController.reset()}
+           
             #{customerController.loadLazy()}
             <p:commandButton value="เพิ่มข้อมูลลูกค้า"
                              actionListener="#{customerController.onCreate()}"

@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" type="text/css" href="resources/style/css/layout.css" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style/css/layout.css" />
 
         <title>Genius-Inventory</title>
         <script type="text/javascript" src="PrimefacesDialog.js">
@@ -16,26 +16,26 @@
             PrimefacesDialog.on('show', function() {
             });
         </script>
-        <link rel="stylesheet" type="text/css" href="resources/style/css/tagfilter.css" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style/css/tagfilter.css" />
     </h:head>
     <h:body>
         <p:growl id="notification" showDetail="true" showSummary="true"/> 
         <div id="layoutTop">
             <h:outputText value="Layout Top"
                           style="text-align: center;"/>
-            <h:link value="HOME" outcome="index"/>
+            <h:link value="HOME" outcome="/index.xhtml"/>
         </div>
 
         <div id="layoutLeft">
             <center>
                 <h:form>
                     <p:menu style="top: 20px;" >
-                        <p:menuitem value="customer" url="customer.xhtml"/>
-                        <p:menuitem value="staff" url="staff.xhtml"/>
-                        <p:menuitem value="purchase order" url="purchase-order.xhtml"/>
-                        <p:menuitem value="add product item" url="add-product-item.xhtml"/>
-                        <p:menuitem value="add product" url="add-product.xhtml"/>
-                        <p:menuitem value="add category" url="add-category.xhtml"/>
+                        <p:menuitem value="customer" url="/customer"/>
+                        <p:menuitem value="staff" url="/staff"/>
+                        <p:menuitem value="purchase order" url="/purchase-order"/>
+                        <p:menuitem value="product item" url="/add-product-item"/>
+                        <p:menuitem value="add product" url="/add-product"/>
+                        <p:menuitem value="add category" url="/add-category"/>
                     </p:menu>
                 </h:form>
             </center>

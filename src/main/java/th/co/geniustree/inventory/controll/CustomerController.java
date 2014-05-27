@@ -72,7 +72,7 @@ public class CustomerController implements Serializable {
     }
 
     public void onSelect() {
-        String c = requestParam("customerId");
+        String c = customerId;
         int indexOf = this.getCustomers().indexOf(new Customer(c));
         customer = this.getCustomers().get(indexOf);
     }
