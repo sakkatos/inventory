@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package th.co.geniustree.inventory.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +23,11 @@ import th.co.geniustree.inventory.service.OrderItemService;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class OrderItemServiceImpl implements OrderItemService{
+public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
     private OrderItemRepo orderItemRepo;
-    
+
     @Override
     public OrderItem save(OrderItem orderItem) {
         return orderItemRepo.save(orderItem);
@@ -57,5 +57,10 @@ public class OrderItemServiceImpl implements OrderItemService{
     public Page findAllPage(PageRequest pageRequest) {
         return null;
     }
-    
+
+    @Override
+    public Page<OrderItem> findAll(Pageable page) {
+        return orderItemRepo.findAll(page);
+    }
+
 }

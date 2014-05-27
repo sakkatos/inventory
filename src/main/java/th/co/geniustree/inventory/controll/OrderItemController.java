@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import th.co.geniustree.inventory.lazyload.OrderItemLazyLoad;
 import th.co.geniustree.inventory.model.OrderItem;
 import th.co.geniustree.inventory.service.OrderItemService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -29,6 +30,7 @@ public class OrderItemController implements Serializable {
 
     private OrderItem orderItem;
     private List<OrderItem> orderItems;
+    private OrderItemLazyLoad orderItemLazyLoad;
     private Integer keyword;
     private String orderItemId;
     private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
@@ -41,6 +43,10 @@ public class OrderItemController implements Serializable {
 
     public void reset() {
         orderItems = orderItemService.findAll();
+    }
+
+    public void loadLazy() {
+        orderItemLazyLoad = new OrderItemLazyLoad();
     }
 
     public void onCreate() {
@@ -63,34 +69,39 @@ public class OrderItemController implements Serializable {
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
+    public void onSelect() {
+        orderItem = this.getOrderItemLazyLoad().getRowData(orderItemId);
+    }
 //    public void onSelect() {
 //        String o = requestParam("orderItemId");
 //        int indexOf = this.getOrderItems().indexOf(new OrderItem(o));
 //        orderItem = this.getOrderItems().get(indexOf);
 //    }
-
-    public void onSelect() {
-        String o = requestParam("orderItemId");
-
-        Integer id = Integer.valueOf(o);
-        int indexOf = this.getOrderItems().indexOf(new OrderItem(id));
-        orderItem = this.getOrderItems().get(indexOf);
-    }
+//    public void onSelect() {
+//        String o = orderItemId;
+//        Integer id = Integer.valueOf(o);
+//        int indexOf = this.getOrderItems().indexOf(new OrderItem(id));
+//        orderItem = this.getOrderItems().get(indexOf);
+//    }
 
     public List<OrderItem> findAllOrderItems() {
         return orderItemService.findAll();
     }
 
     public List<OrderItem> onSearch() {
-        if (keyword == null) {
-            System.out.println("Noooooooooooooooooooo");
-
-        }
         orderItems = orderItemService.findByIdLike(keyword);
         return orderItems;
     }
 
     //------------------------------------------------------------------------------------------
+    public OrderItemLazyLoad getOrderItemLazyLoad() {
+        return orderItemLazyLoad;
+    }
+
+    public void setOrderItemLazyLoad(OrderItemLazyLoad orderItemLazyLoad) {
+        this.orderItemLazyLoad = orderItemLazyLoad;
+    }
+
     public OrderItem getOrderItem() {
         return orderItem;
     }

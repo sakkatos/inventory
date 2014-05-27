@@ -1,16 +1,113 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<!--<?xml version='1.0' encoding='UTF-8' ?>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/_template_/maintemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="orderItemId" value="#{orderItemController.orderItemId}"></f:viewParam>
+        </f:metadata>
+        <h:form id="orderItemForm">
+            #{orderItemController.loadLazy()}
+            <p:commandButton value="เพิ่ม order item"
+                             actionListener="#{orderItemController.onCreate()}"
+                             update=":addOrderItemForm"
+                             onsuccess="addWidgetDialog.show()"/>
+            <p:dataTable value="#{orderItemController.orderItemLazyLoad}"
+                         var="item"
+                         rows="5"
+                         lazy="true"
+                         sortBy="id"
+                         sortOrder="ASCENDING"
+                         rowIndexVar="counter"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25">
+                <p:column headerText="ID">#{item.id}</p:column>
+                <p:column headerText="Action">
+                    <p:commandButton icon="ui-icon-pencil"
+                                     onsuccess="editWidgetDialog.show()"
+                                     update=":editOrderItemForm"
+                                     actionListener="#{orderItemController.onSelect()}">
+                        <f:param name="orderItemId" value="#{item.id}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash"
+                                     onsuccess="deleteWidgetDialog.show()"
+                                     update=":deleteOrderItemForm"
+                                     actionListener="#{orderItemController.onSelect()}">
+                        <f:param name="orderItemId" value="#{item.id}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="addOrderItemDialog"
+                  header="Add Order Item"
+                  resizable="false"
+                  appendTo="@(body)"
+                  modal="true"
+                  draggable="true"
+                  widgetVar="addWidgetDialog">
+            <h:form id="addOrderItemForm">
+                <p:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{orderItemController.orderItem.id}"/>
+                </p:panelGrid>
+                <p:commandButton value="Add"
+                                 actionListener="#{orderItemController.onSave()}"
+                                 update=":orderItemForm, :notification"
+                                 onsuccess="addWidgetDialog.hide()"/>
+                <p:commandButton value="Cancle"
+                                 onsuccess="addWidgetDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="editOrderItemDialog"
+                  header="Edit Order Item"
+                  width="500"
+                  appendTo="@(body)"
+                  modal="true"
+                  draggable="true"
+                  resizable="false"
+                  widgetVar="editWidgetDialog">
+            <h:form id="editOrderItemForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{orderItemController.orderItem.id}"/>
+                </h:panelGrid>
+                <p:commandButton value="Edit"
+                                 update=":orderItemForm, :notification"
+                                 actionListener="#{orderItemController.onSave()}"
+                                 oncomplete="editWidgetDialog.hide();"/>
+                <p:commandButton value="Cancle"
+                                 onclick="editWidgetDialog.hide()"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="deleteOrderItemDialog"
+                  header="Edit Order Item"
+                  width="500"
+                  appendTo="@(body)"
+                  modal="true"
+                  draggable="true"
+                  resizable="false"
+                  widgetVar="deleteWidgetDialog">
+            <h:form id="deleteOrderItemForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="ID"/>
+                    <p:inputText value="#{orderItemController.orderItem.id}"/>
+                </h:panelGrid>
+                <p:commandButton value="Delete"
+                                 update=":orderItemForm, :notification"
+                                 actionListener="#{orderItemController.onDelete()}"
+                                 oncomplete="deleteWidgetDialog.hide()"/>
+                <p:commandButton value="Cancle"
+                                 onclick="deleteWidgetDialog.hide()"/>
+            </h:form>
+
+        </p:dialog>
+    </ui:define>
+</ui:composition>
