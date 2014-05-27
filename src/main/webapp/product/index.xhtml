@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<ui:composition template="template/maintemplate.xhtml"
+<ui:composition template="/_template_/index.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -28,7 +28,7 @@ and open the template in the editor.
                                      onsuccess="addProductDialog.show()"/>
                 </div>
                 <div style="display: inline-block">
-                    <h:link outcome="manage-item.xhtm"  value="Manage Product Items"/>
+                    <h:link outcome="manage-barcode.xhtm"  value="Manage Barcode"/>
                 </div>
 
                 <div style="display: inline-block;float: right;">
@@ -67,7 +67,20 @@ and open the template in the editor.
                 <div style="height: 10px"/>
             </ui:remove>
             <p:dataTable id="productTable" 
-                         value="#{productController.products}"
+                         value="#{productController.productLazy}"
+                         lazy="true"
+                         paginator="true"
+                         paginatorTemplate="
+                         {CurrentPageReport} 
+                         {FirstPageLink}
+                         {PreviousPageLink}
+                         {PageLinks} 
+                         {NextPageLink}
+                         {LastPageLink}
+                         {RowsPerPageDropdown}"
+                         rows="10" pageLinks="5" 
+                         sortBy="name" 
+                         rowsPerPageTemplate="10,15,20"
                          rowIndexVar="rownum"
                          var="item">
                 <p:column style="width: 10px;text-align: center">#{rownum+1}</p:column>
@@ -111,21 +124,21 @@ and open the template in the editor.
         <p:dialog widgetVar="addProductDialog">
             <h:form id="addProductForm">
                 <h:outputText value="Add new product" />
-                <div style="height: 5px"/>
-                <p:panelGrid columns="4">
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
                     <h:outputText value="Id"/>
                     <p:inputText value="#{productController.product.id}"/>
 
                     <h:outputText value="Name"/>
                     <p:inputText value="#{productController.product.name}"/>
 
-                    <h:outputText value="cost"/>
+                    <h:outputText value="Cost"/>
                     <p:inputText value="#{productController.product.cost}"/>
 
-                    <h:outputText value="basePrice"/>
+                    <h:outputText value="BasePrice"/>
                     <p:inputText value="#{productController.product.basePrice}"/>
 
-                    <h:outputText value="expectPrice"/>
+                    <h:outputText value="ExpectPrice"/>
                     <p:inputText value="#{productController.product.expectPrice}"/>
 
                     <h:outputText value="category"/>
@@ -146,11 +159,9 @@ and open the template in the editor.
 
         <p:dialog widgetVar="editProductDialog">
             <h:form id="editProductForm">
-                <p:commandButton value="save"
-                                 actionListener="#{productController.onSave()}"
-                                 update=":productTableForm,:notification"
-                                 onsuccess="editProductDialog.hide()"/>
-                <p:panelGrid columns="4">
+                <h:outputText value="Edit Product Info"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
                     <h:outputText value="Id"/>
                     <p:inputText value="#{productController.product.id}"/>
 
@@ -175,14 +186,23 @@ and open the template in the editor.
                                        />
                     </p:selectOneMenu>
                 </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="save"
+                                 actionListener="#{productController.onSave()}"
+                                 update=":productTableForm,:notification"
+                                 onsuccess="editProductDialog.hide()"/>
             </h:form>
         </p:dialog>
 
         <p:dialog widgetVar="removeProductDialog">
             <h:form id="removeProductForm">
                 <h:outputText value="Remove this product?"/>
-                <p:inputText value="#{productController.product.name}"/>
-
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
+                    <h:outputText value="Name"/>
+                    <h:outputText value="#{productController.product.name}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="remove"
                                  actionListener="#{productController.onRemove()}"                               
                                  update=":productTableForm,:notification"
@@ -190,8 +210,7 @@ and open the template in the editor.
             </h:form>
         </p:dialog>
 
-        <p:dialog widgetVar="productDetailwidget" 
-                  class="productDetail">
+        <p:dialog widgetVar="productDetailwidget">
             <h:form id="productDetailForm">
                 <div style="height: 10px"/>
                 <h:outputText value="Product Detail" style="font-weight: bolder"/>
@@ -200,16 +219,16 @@ and open the template in the editor.
                     <p:tab title="Generic Data">
                         <div class="vertical-panel" style="margin-right: 0px">
                             <p:panelGrid columns="2" >
-                                <h:outputText value="Id" class="tag" style="width: 50%"/>
+                                <h:outputText value="Id" style="width: 50%"/>
                                 <h:outputText value="#{productController.product.id}"/>
 
-                                <h:outputText value="Name" class="tag"/>
+                                <h:outputText value="Name" />
                                 <h:outputText value="#{productController.product.name}"/>
 
-                                <h:outputText value="Cost" class="tag"/>
+                                <h:outputText value="Cost" />
                                 <h:outputText value="#{productController.product.cost}"/>
 
-                                <h:outputText value="Base Price" class="tag"/>
+                                <h:outputText value="Base Price" />
                                 <h:outputText value="#{productController.product.basePrice}"/>
 
                                 <h:outputText value="Expect Price"/>
@@ -223,8 +242,8 @@ and open the template in the editor.
                     <p:tab title="Entry List">
                         <p:commandButton value="Edit" 
                                          action="manage-item" >
-                                <f:param name="selectedProductId" 
-                                         value="#{productController.selectedProductId}"/>
+                            <f:param name="selectedProductId" 
+                                     value="#{productController.selectedProductId}"/>
                         </p:commandButton>
                         <p:dataTable value="#{productController.itemLazy}"
                                      lazy="true"
@@ -237,9 +256,9 @@ and open the template in the editor.
                                      sortOrder="descending"
                                      paginatorTemplate="
                                      {CurrentPageReport} 
-                                     {FirstPageLink}
+                                     {PreviousPageLink}
                                      {PageLinks} 
-                                     {LastPageLink}
+                                     {NextPageLink}
                                      {RowsPerPageDropdown}"
                                      rowIndexVar="rownum" 
                                      var="lazyItem">
@@ -262,6 +281,11 @@ and open the template in the editor.
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Barcode info">
+                        <p:commandButton value="Edit" 
+                                         action="manage-item" >
+                            <f:param name="selectedProductId" 
+                                     value="#{productController.selectedProductId}"/>
+                        </p:commandButton>
                         <p:dataTable value="#{productController.product.packages}"
                                      var="barcodeItem" >
                             <p:column headerText="Barcode">#{barcodeItem.barcode}</p:column>

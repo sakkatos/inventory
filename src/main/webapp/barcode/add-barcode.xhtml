@@ -1,6 +1,6 @@
 <!--<?xml version='1.0' encoding='UTF-8' ?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="template/maintemplate.xhtml"
+<ui:composition template="/_template_/index.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -10,17 +10,20 @@
     <ui:define name="centerReplace">
         <f:metadata>
             <f:viewParam name="selectedBarcode" 
-                         value="#{barcodeController.pack.barcode}"/>
+                         value="#{barcodeController.selectedBarcode}"/>
+            <f:viewParam name="requestNewBarcode" 
+                         value="#{barcodeController.requestNewBarcode}"/>
         </f:metadata>
+        #{barcodeController.reset()}
         <div/>
         <h:link outcome="add-product-item" value="back"/>
         <h:form id = "barcodeForm" >
             #{barcodeController.reset()}
             <div>
-                <h:outputLabel value="new Barcode"/><br/>
-                <h:outputLabel value="#{barcodeController.selectedBarcode}"/>
-
-                <p:panelGrid columns="4">
+                <div class="vertical-gap"/>
+                <h:outputLabel value="Add New Barcode"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
                     <h:outputText value="Barcode"/>
                     <h:inputText value="#{barcodeController.pack.barcode}" />
 
@@ -30,6 +33,24 @@
                     <h:outputText value="Unit name"/>
                     <h:inputText value="#{barcodeController.pack.name}"/>
 
+                    <h:outputText value="Product"/>
+                    <p:panel>
+                        <p:selectOneMenu value="#{barcodeController.selectedLabel}" >
+                            <f:ajax listener="#{barcodeController.filterCategories()}" 
+                                    render="productList"/>
+                            <f:selectItems value="#{barcodeController.selectedLabels}"
+                                           var="item"
+                                           itemLabel="#{item}"
+                                           itemValue="#{item}"/>
+                        </p:selectOneMenu>
+                        <p:selectOneMenu value="#{barcodeController.product.id}"
+                                         id="productList">
+                            <f:selectItems value="#{barcodeController.products}"
+                                           var="item"
+                                           itemLabel="#{item.name}" 
+                                           itemValue="#{item.id}" />
+                        </p:selectOneMenu>
+                    </p:panel>
                     <h:outputText value="Category"/>
                     <p:selectOneMenu value="#{barcodeController.selectedLabel}" >
                         <f:ajax listener="#{barcodeController.filterCategories()}" 
@@ -39,16 +60,8 @@
                                        itemLabel="#{item}"
                                        itemValue="#{item}"/>
                     </p:selectOneMenu>
-
-                    <h:outputText value="Product"/>
-                    <p:selectOneMenu value="#{barcodeController.product.id}"
-                                     id="productList">
-                        <f:selectItems value="#{barcodeController.products}"
-                                       var="item"
-                                       itemLabel="#{item.name}" 
-                                       itemValue="#{item.id}" />
-                    </p:selectOneMenu>
                 </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="save"
                                  actionListener="#{barcodeController.onSave()}"
                                  action="#{barcodeController.onredirect()}"/>

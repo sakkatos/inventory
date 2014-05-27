@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package th.co.geniustree.inventory.util;
+package th.co.geniustree.inventory.lazyload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductItem;
 import th.co.geniustree.inventory.service.ProductItemService;
+import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
  *

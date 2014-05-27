@@ -42,6 +42,7 @@ public class BarcodeController implements Serializable {
     private String selectedLabel;
     private List<String> selectedLabels;
     private Boolean redirect;
+    private Boolean requestNewBarcode;
 
     @PostConstruct
     public void postConstruct() {
@@ -78,9 +79,14 @@ public class BarcodeController implements Serializable {
     }
 
     public void reset() {
-        products = productService.findAll();
+        if (isRequestNewBarcode()){
+            onCreate();
+            pack.setBarcode(selectedBarcode);
+            requestNewBarcode=false;
+        }
         getSelectedLabels();
         categories = categoryService.searchByNameList(selectedLabels);
+        products = productService.findAll();
     }
 
     public void filterCategories() {
@@ -228,5 +234,18 @@ public class BarcodeController implements Serializable {
     public void setRedirect(Boolean redirect) {
         this.redirect = redirect;
     }
+
+    public Boolean isRequestNewBarcode() {
+        if (requestNewBarcode==null){
+            requestNewBarcode=false;
+        }
+        return requestNewBarcode;
+    }
+
+    public void setRequestNewBarcode(Boolean requestNewBarcode) {
+        this.requestNewBarcode = requestNewBarcode;
+    }
+
+
 
 }

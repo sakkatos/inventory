@@ -7,6 +7,8 @@ package th.co.geniustree.inventory.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,10 @@ public class ProductService {
         return productRepo.findProducstByCategory(category);
     }
 
+    public Page<Product> searchProductByCategoryName(List<String> nameCategories,Pageable pageable) {
+        return productRepo.searchProductByCategoryName(nameCategories, pageable);
+    }
+    
     public List<Product> searchProductByCategoryName(List<String> nameCategories) {
         return productRepo.searchProductByCategoryName(nameCategories);
     }
