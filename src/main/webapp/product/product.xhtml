@@ -28,10 +28,6 @@ and open the template in the editor.
                                      actionListener="#{productController.onCreate()}"
                                      onsuccess="addProductDialog.show()"/>
                 </div>
-                <div style="display: inline-block">
-                    <h:link outcome="/barcode/barcode.xhtm"  value="Manage Barcode"/>
-                </div>
-
                 <div style="display: inline-block;float: right;">
                     <p:selectOneMenu id="filterBox" 
                                      value="#{productController.selectedLabel}" >
