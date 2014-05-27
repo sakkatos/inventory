@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
 import th.co.geniustree.inventory.lazyload.ProductLazyLoad;
 import th.co.geniustree.inventory.model.Category;
@@ -45,11 +46,10 @@ public class ProductController implements Serializable {
     private String baseCostFilter;
     private String expectCostFilter;
     private String categoryFilter;
-    private String url;
-    
+    private String productItemUrl;
+
     private ItemLazyLoad itemLazy;
     private ProductLazyLoad productLazy;
-
 
     //business logic------------------------------------------------------------
     public void onCreate() {
@@ -105,13 +105,13 @@ public class ProductController implements Serializable {
         p.setId(selectedProductId);
         product = getProducts().get(getProducts().indexOf(p));
     }
-    
-    public void onSelectLazyLoad(){
+
+    public void onSelectLazyLoad() {
         onSelect();
         getItemLazy();
         itemLazy.setProduct(product);
     }
-    
+
     public void reset() {
         //reset products
         products = productService.findAll();
@@ -186,6 +186,14 @@ public class ProductController implements Serializable {
             }
         }
         return labelList;
+    }
+
+    public void buildUrl() {
+        setProductItemUrl("/product-item/product-item.xhtml");
+    }
+
+    public String fetchURL() {
+        return getProductItemUrl();
     }
 
     //getter and setter---------------------------------------------------------
@@ -331,7 +339,7 @@ public class ProductController implements Serializable {
     }
 
     public ItemLazyLoad getItemLazy() {
-        if (itemLazy==null){
+        if (itemLazy == null) {
             itemLazy = new ItemLazyLoad();
         }
         return itemLazy;
@@ -341,17 +349,19 @@ public class ProductController implements Serializable {
         this.itemLazy = itemLazy;
     }
 
-    public String getUrl() {
-        url="manage-item.xhtml";
-        return url;
+    public String getProductItemUrl() {
+        if (productItemUrl==null) {
+            productItemUrl = "/product-item/product-item.xhtml";
+        }
+        return productItemUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setProductItemUrl(String productItemUrl) {
+        this.productItemUrl = productItemUrl;
     }
 
     public ProductLazyLoad getProductLazy() {
-        if (productLazy==null){
+        if (productLazy == null) {
             productLazy = new ProductLazyLoad();
         }
         return productLazy;
@@ -360,5 +370,5 @@ public class ProductController implements Serializable {
     public void setProductLazy(ProductLazyLoad productLazy) {
         this.productLazy = productLazy;
     }
-    
+
 }

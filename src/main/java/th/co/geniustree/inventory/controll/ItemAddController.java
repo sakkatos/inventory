@@ -35,7 +35,7 @@ import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
  */
 @ManagedBean
 @SessionScoped
-public class ItemController implements Serializable {
+public class ItemAddController implements Serializable {
 
     private final ProductService productService = getProductManagedBean();
     private final CategoryService categoryService = getCategoryManagedBean();
@@ -58,7 +58,7 @@ public class ItemController implements Serializable {
     private String selectedBarcode;
     private String massage = "";
     private Boolean redirect;
-    private Boolean requestNewBarcode;
+    private String requestNewBarcode;
     private Locale locale = Locale.getDefault();
     private TimeZone timeZone = Calendar.getInstance().getTimeZone();
     private SimpleDateFormat smpDateFormat;
@@ -91,9 +91,9 @@ public class ItemController implements Serializable {
     public String onRedirect() {
         if (isRedirect()) {
             redirect = false;
-            requestNewBarcode=true;
-            return "/barcode/barcode.xhtml?selectedBarcode=" + barcode 
-                    +"&newBarcode="+requestNewBarcode
+            requestNewBarcode="true";
+            return "/barcode/add-barcode.xhtml?selectedBarcode=" + barcode 
+                    +"&requestNewBarcode="+requestNewBarcode
                     + "faces-redirect=true";
         }
         return "";
@@ -141,7 +141,7 @@ public class ItemController implements Serializable {
         pack = new ProductPackage();
         items = new ArrayList<>();
         getItemLazy().setProduct(productService.findByBarcode(barcode));
-        requestNewBarcode=false;
+        requestNewBarcode="false";
     }
 
     public Integer sumItemByProduct() {
@@ -335,18 +335,17 @@ public class ItemController implements Serializable {
         this.itemLazy = itemLazy;
     }
 
-    public Boolean isRequestNewBarcode() {
+    public String getRequestNewBarcode() {
         if(requestNewBarcode==null){
-            requestNewBarcode=false;
+            requestNewBarcode="false";
         }
         return requestNewBarcode;
     }
 
-    public void setRequestNewBarcode(Boolean requestNewBarcode) {
+    public void setRequestNewBarcode(String requestNewBarcode) {
         this.requestNewBarcode = requestNewBarcode;
     }
-    
-    
+
 
     //--------------------------------------------------------------------------
     public ProductService getProductManagedBean() {

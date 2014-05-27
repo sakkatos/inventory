@@ -16,6 +16,7 @@ and open the template in the editor.
         <f:metadata>
             <f:viewParam name="selectedProductId" value="#{productController.selectedProductId}" />
             <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
+            <f:viewParam name="selectedProductId" value="#{barcodeManageController.selectedProductId}"/>
         </f:metadata>
         #{productController.reset()}
         <h:form id="productTableForm" >
@@ -240,8 +241,8 @@ and open the template in the editor.
                         </div>
                     </p:tab>
                     <p:tab title="Entry List">
-                        <p:commandButton value="Edit" 
-                                         action="manage-item" >
+                        <p:commandButton value="Edit item" ajax="false"
+                                       action="/product-item/product-item.xhtml" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>
                         </p:commandButton>
@@ -281,8 +282,8 @@ and open the template in the editor.
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Barcode info">
-                        <p:commandButton value="Edit" 
-                                         action="manage-item" >
+                        <p:commandButton value="Edit" ajax="false"
+                                         action="/barcode/barcode.xhtml" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>
                         </p:commandButton>

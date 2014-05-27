@@ -14,32 +14,32 @@ and open the template in the editor.
 
     <ui:define name="centerReplace">
         <f:metadata>
-            <f:viewParam name="itemId" value="#{itemController.selectedItemId}"/>
+            <f:viewParam name="itemId" value="#{itemAddController.selectedItemId}"/>
         </f:metadata>
         <div class="vertical-gap"/>
-        #{itemController.reset()}
+        #{itemAddController.reset()}
         <h:form id="itemProductForm">
             <div class="toolBar">
                 <div style="display: inline-block">
                     <p:commandButton value="Barcode" 
-                                     actionListener="#{itemController.addItemByBarcode()}"
+                                     actionListener="#{itemAddController.addItemByBarcode()}"
                                      update=":itemProductForm ,:notification"
-                                     action="#{itemController.onRedirect()}"/>
+                                     action="#{itemAddController.onRedirect()}"/>
                     <div class="horizon-gap"/>
-                    <p:inputText value="#{itemController.barcode}" 
+                    <p:inputText value="#{itemAddController.barcode}" 
                                  style="width: 100px;"/>
                 </div>
                 <div style="display: inline-block;float: right;">
                     <p:panelGrid columns="4" >
                         <h:outputText value="Product" /> 
-                        <h:outputText value="#{itemController.pack.product.name}"/> 
+                        <h:outputText value="#{itemAddController.pack.product.name}"/> 
                         <h:outputText value="Amount"/> 
-                        <h:outputText value="#{itemController.sumItemByProduct()}"/> 
+                        <h:outputText value="#{itemAddController.sumItemByProduct()}"/> 
                     </p:panelGrid>
                 </div>
             </div>
             <div class="vertical-gap"/>
-            <p:dataTable value="#{itemController.itemLazy}"
+            <p:dataTable value="#{itemAddController.itemLazy}"
                          lazy="true"
                          paginator="true"
                          rows="10"
@@ -61,22 +61,22 @@ and open the template in the editor.
                 <p:column headerText="Date">
                     <h:outputText value="#{item.dateIn}">
                         <f:convertDateTime pattern="dd/MMMM/yyyy" 
-                                           locale="#{itemController.locale}"
-                                           timeZone="#{itemController.timeZone}"/>
+                                           locale="#{itemAddController.locale}"
+                                           timeZone="#{itemAddController.timeZone}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Time">
                     <h:outputText value="#{item.timeIn}">
                         <f:convertDateTime pattern="HH:mm:ss" 
-                                           locale="#{itemController.locale}"
-                                           timeZone="#{itemController.timeZone}"/>
+                                           locale="#{itemAddController.locale}"
+                                           timeZone="#{itemAddController.timeZone}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Staff"></p:column>
                 <p:column headerText="action" style="text-align: center">
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{itemController.onSelectItem()}"
+                                     actionListener="#{itemAddController.onSelectItem()}"
                                      onsuccess="removeItemProductWidget.show()"
                                      update=":removeItemProductForm">
                         <f:param name="itemId" value="#{item.id}"/>
@@ -94,20 +94,20 @@ and open the template in the editor.
                         <h:outputText value="Time"/>
                         <h:outputText value="Amount"/>
 
-                        <h:outputText value="#{itemController.item.dateIn}">
+                        <h:outputText value="#{itemAddController.item.dateIn}">
                             <f:convertDateTime pattern="dd MMMM yyyy" 
-                                               locale="#{itemController.locale}"
-                                               timeZone="#{itemController.timeZone}"/>
+                                               locale="#{itemAddController.locale}"
+                                               timeZone="#{itemAddController.timeZone}"/>
                         </h:outputText>
-                        <h:outputText value="#{itemController.item.timeIn}">
+                        <h:outputText value="#{itemAddController.item.timeIn}">
                             <f:convertDateTime pattern="HH:mm:ss" 
-                                               locale="#{itemController.locale}"
-                                               timeZone="#{itemController.timeZone}"/>
+                                               locale="#{itemAddController.locale}"
+                                               timeZone="#{itemAddController.timeZone}"/>
                         </h:outputText>
-                        <h:outputText value="#{itemController.item.amount}"/>
+                        <h:outputText value="#{itemAddController.item.amount}"/>
                     </p:panelGrid>
                 <p:commandButton value="Remove" 
-                                 actionListener="#{itemController.onRemoveItem()}"
+                                 actionListener="#{itemAddController.onRemoveItem()}"
                                  update=":itemProductForm,:notification"
                                  onsuccess="removeItemProductWidget.hide()"/>
             </h:form>

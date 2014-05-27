@@ -26,7 +26,7 @@ import th.co.geniustree.inventory.util.JSFSpringUtils;
  */
 @ManagedBean
 @SessionScoped
-public class BarcodeController implements Serializable {
+public class BarcodeAddController implements Serializable {
 
     private final ProductService productService = JSFSpringUtils.getBean(ProductService.class);
     private final PackageService packageService = JSFSpringUtils.getBean(PackageService.class);
@@ -39,10 +39,11 @@ public class BarcodeController implements Serializable {
     private List<Category> categories;
 
     private String selectedBarcode;
+    private String selectedProductId;
     private String selectedLabel;
     private List<String> selectedLabels;
     private Boolean redirect;
-    private Boolean requestNewBarcode;
+    private String requestNewBarcode;
 
     @PostConstruct
     public void postConstruct() {
@@ -63,13 +64,13 @@ public class BarcodeController implements Serializable {
         product.getPackages().add(pack);
         productService.save(product);
 
-        redirect=true;
+        redirect = true;
     }
 
     public String onredirect() {
-        if (isRedirect()){
-            redirect=false;
-            return "/product-item/add-product-item.xhtml?selectedBarcode=" + pack.getBarcode() + "faces-redirect=true";
+        if (isRedirect()) {
+            redirect = false;
+            return "/product-item/add-product-item.xhtml?faces-redirect=true";
         }
         return "";
     }
@@ -79,10 +80,11 @@ public class BarcodeController implements Serializable {
     }
 
     public void reset() {
-        if (isRequestNewBarcode()){
+        if (requestNewBarcode.equals("true")) {
             onCreate();
             pack.setBarcode(selectedBarcode);
-            requestNewBarcode=false;
+            System.out.println(pack.getBarcode());
+            requestNewBarcode = "false";
         }
         getSelectedLabels();
         categories = categoryService.searchByNameList(selectedLabels);
@@ -225,8 +227,8 @@ public class BarcodeController implements Serializable {
     }
 
     public Boolean isRedirect() {
-        if (redirect==null){
-            redirect=false;
+        if (redirect == null) {
+            redirect = false;
         }
         return redirect;
     }
@@ -235,17 +237,26 @@ public class BarcodeController implements Serializable {
         this.redirect = redirect;
     }
 
-    public Boolean isRequestNewBarcode() {
-        if (requestNewBarcode==null){
-            requestNewBarcode=false;
+    public String getRequestNewBarcode() {
+        if (requestNewBarcode == null) {
+            requestNewBarcode = "false";
         }
         return requestNewBarcode;
     }
 
-    public void setRequestNewBarcode(Boolean requestNewBarcode) {
+    public void setRequestNewBarcode(String requestNewBarcode) {
         this.requestNewBarcode = requestNewBarcode;
     }
 
+    public String getSelectedProductId() {
+        if (selectedProductId == null) {
+            selectedProductId = "";
+        }
+        return selectedProductId;
+    }
 
+    public void setSelectedProductId(String selectedProductId) {
+        this.selectedProductId = selectedProductId;
+    }
 
 }
