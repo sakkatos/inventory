@@ -1,6 +1,6 @@
 <!--<?xml version='1.0' encoding='UTF-8' ?>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/_template_/index.xhtml"
+<ui:composition template="/_template_/maintemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -35,15 +35,13 @@
                 <p:column headerText="Name">#{item.firstName}</p:column>
                 <p:column headerText="Lastname">#{item.lastName}</p:column>
                 <p:column headerText="action" >
-                    <p:commandButton value="edit"
-                                     icon="ui-icon-pencil"
+                    <p:commandButton icon="ui-icon-pencil"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editStaffDialogForm"
                                      actionListener="#{staffController.onSelect()}">
                         <f:param name="staffId" value="#{item.id}"/>
                     </p:commandButton>
-                    <p:commandButton value="delete"
-                                     icon="ui-icon-trash"
+                    <p:commandButton icon="ui-icon-trash"
                                      onsuccess="deleteWidgetDialog.show();"
                                      update=":deleteStaffDialogForm"
                                      actionListener="#{staffController.onSelect()}">
