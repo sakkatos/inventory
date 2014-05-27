@@ -8,13 +8,10 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="centerReplace">
-        
+        <h:form id="customerForm">
             <f:metadata>
                 <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
             </f:metadata>
-        
-        <h:form id="customerForm">
-           
             #{customerController.loadLazy()}
             <p:commandButton value="เพิ่มข้อมูลลูกค้า"
                              actionListener="#{customerController.onCreate()}"
