@@ -101,15 +101,12 @@ public class ProductController implements Serializable {
     }
 
     public void onSelect() {
-        Product p = new Product();
-        p.setId(selectedProductId);
-        product = getProducts().get(getProducts().indexOf(p));
+        product = productLazy.getRowData();
     }
 
     public void onSelectLazyLoad() {
         onSelect();
-        getItemLazy();
-        itemLazy.setProduct(product);
+        getItemLazy().setProduct(product);
     }
 
     public void reset() {
@@ -129,21 +126,6 @@ public class ProductController implements Serializable {
             selectedLabels = tmp;
         }
         getProductLazy().setCategoryLabels(selectedLabels);
-    }
-
-    public void dataTableFiltering() {
-        translateFilterMassage(costFilter);
-    }
-
-    public void translateFilterMassage(String massage) {
-        String regexNumber = "[0-9]+(.{1}[0-9]+)?";
-        String spaces = "(\\p{Space})*";
-        String lessThanEqual = "((=<)|(<=))" + spaces + regexNumber;
-        String greatThanEqual = "((>=)|(=>))" + spaces + regexNumber;
-        String lessThan = "(<)" + spaces + regexNumber;
-        String greatThan = "(>)" + spaces + regexNumber;
-        String between = regexNumber + spaces + "(-)" + spaces + regexNumber;
-        System.out.println(massage.matches(between));
     }
 
     public void filterProductCategories() {

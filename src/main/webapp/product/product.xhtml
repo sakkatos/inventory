@@ -45,26 +45,7 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="vertical-gap"/>
-            <ui:remove>
-                <p:panelGrid columns="4" style="font-size: 14px">
-                    <f:ajax event="keyup" 
-                            listener="#{productController.dataTableFiltering()}">
-                        <h:outputText value="cost"/>
-                        <p:inputText value="#{productController.costFilter}" 
-                                     style="width: 100px"/>
-                        <h:outputText value="base cost"/>
-                        <p:inputText value="#{productController.baseCostFilter}"
-                                     style="width: 100px"/>
-                        <h:outputText value="expect cost"/>
-                        <p:inputText value="#{productController.expectCostFilter}"
-                                     style="width: 100px"/>
-                        <h:outputText value="category"/>
-                        <p:inputText value="#{productController.categoryFilter}"
-                                     style="width: 100px"/>
-                    </f:ajax>
-                </p:panelGrid>
-                <div style="height: 10px"/>
-            </ui:remove>
+            
             <p:dataTable id="productTable" 
                          value="#{productController.productLazy}"
                          lazy="true"

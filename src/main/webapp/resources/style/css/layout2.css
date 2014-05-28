@@ -23,6 +23,7 @@ and open the template in the editor.
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix {
   border-color: #2e322e;
   background-color: #2e322e;
+  width: 170px;
 }
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li {
   border-color: #2e322e;
@@ -30,11 +31,11 @@ and open the template in the editor.
   border-width: 0.15em;
 }
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li:hover {
-  background-color: #2e322e;
+  background-color: #828482;
   border-color: #2e322e;
   border-style: inset;
   border-width: 0.15em;
 }
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li a.ui-menuitem-link.ui-corner-all.ui-state-hover {
-  background-color: #2e322e;
+  background-color: #828482;
 }
