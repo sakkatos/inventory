@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import th.co.geniustree.inventory.lazyload.PurchaseOrderLazyLoad;
 import th.co.geniustree.inventory.model.PurchaseOrder;
 import th.co.geniustree.inventory.service.PurchaseOrderService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
@@ -29,6 +30,7 @@ public class PurchaseOrderController implements Serializable {
 
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
+    private PurchaseOrderLazyLoad purchaseOrderLazyLoad;
     private String keyword;
     private String purchaseOrderId;
     private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
@@ -41,6 +43,10 @@ public class PurchaseOrderController implements Serializable {
 
     public void reset() {
         purchaseOrders = purchaseOrderService.findAll();
+    }
+    
+    public void lazyLoad(){
+        purchaseOrderLazyLoad = new PurchaseOrderLazyLoad();              
     }
 
     public void onCreate() {
@@ -83,6 +89,14 @@ public class PurchaseOrderController implements Serializable {
 
     //------------------------------------------------------------------------------------------------------
     
+    public PurchaseOrderLazyLoad getPurchaseOrderLazyLoad() {
+        return purchaseOrderLazyLoad;
+    }
+
+    public void setPurchaseOrderLazyLoad(PurchaseOrderLazyLoad purchaseOrderLazyLoad) {
+        this.purchaseOrderLazyLoad = purchaseOrderLazyLoad;
+    }
+
     public PurchaseOrder getPurchaseOrder() {
         return purchaseOrder;
     }

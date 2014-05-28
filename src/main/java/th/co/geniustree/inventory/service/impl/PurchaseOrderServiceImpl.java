@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,19 +44,24 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
         return purchaseOrderRepo.findAll();
     }
 
-    @Override
-    public Page findAll(PageRequest pageRequest) {
-        return purchaseOrderRepo.findAll(pageRequest);
-    }
-
-    @Override
-    public Page findAllPage(PageRequest pageRequest) {
-        return null;
-    }
+//    @Override
+//    public Page findAll(PageRequest pageRequest) {
+//        return purchaseOrderRepo.findAll(pageRequest);
+//    }
+//
+//    @Override
+//    public Page findAllPage(PageRequest pageRequest) {
+//        return null;
+//    }
 
 //    @Override
 //    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder) {
 //        return purchaseOrderRepo.findByFirstNameLike(purchaseOrder);
 //    }
+
+    @Override
+    public Page<PurchaseOrder> findAll(Pageable page) {
+        return purchaseOrderRepo.findAll(page);
+    }
     
 }

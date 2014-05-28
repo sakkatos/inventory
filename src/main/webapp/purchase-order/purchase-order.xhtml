@@ -6,30 +6,37 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+    <f:metadata>
+        <f:viewParam name="purchaseOrderId" value="#{purchaseOrderController.purchaseOrderId}"></f:viewParam>
+    </f:metadata>
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="purchaseOrderId" value="#{purchaseOrderController.purchaseOrderId}"></f:viewParam>
-        </f:metadata>
         <h:form id="purchaseForm">
-            #{purchaseOrderController.reset()}
+            #{purchaseOrderController.lazyLoad()}
             <p:commandButton value="+ เพิ่มรายการสั่งซื้อ"
                              actionListener="#{purchaseOrderController.onCreate()}"
                              update=":addPurchaseDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
             <br/>
             <br/>
-            <p:dataTable value="#{purchaseOrderController.purchaseOrders}" var="item">                
+            <p:dataTable value="#{purchaseOrderController.purchaseOrderLazyLoad}" 
+                         var="item"
+                         rows="5"
+                         lazy="true"
+                         sortBy="id"
+                         sortOrder="ASCENDING"
+                         rowIndexVar="counter"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25">               
                 <p:column headerText="เลขที่ใบสั่งซื้อ" width="50">#{item.id}</p:column>
                 <p:column headerText="วันที่สั่งซื้อ">
                     <h:outputText value="#{item.saleDate}">
                         <f:convertDateTime pattern="dd MMMM yyyy"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="รายการสั่งซื้อ">#{item.orderItems}</p:column>
                 <p:column headerText="ชื่อลูกค้า">#{item.customer.firstName}</p:column>
                 <p:column headerText="ชื่อผู้ขาย">#{item.staff.firstName}</p:column>
-                <p:column headerText="ยอดรายการสั่งซื้อ">#{item.orderItems}</p:column>
 
                 <p:column headerText="action" >
                     <p:commandButton title="แก้ไขข้อมูล"

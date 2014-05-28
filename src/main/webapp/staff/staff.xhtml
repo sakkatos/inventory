@@ -6,11 +6,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+    <f:metadata>
+        <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
+    </f:metadata>
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="staffId" value="#{staffController.staffId}"></f:viewParam>
-        </f:metadata>
         <h:form id="staffForm">
             <ui:remove>
                 #{staffController.reset()}

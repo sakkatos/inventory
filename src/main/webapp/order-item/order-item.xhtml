@@ -29,6 +29,9 @@
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,20,25">
                 <p:column headerText="ID">#{item.id}</p:column>
+                <p:column headerText="Cost">#{item.cost}</p:column>
+                <p:column headerText="Sale Price">#{item.salePrice}</p:column>
+                <p:column headerText="Amount">#{item.amount}</p:column>
                 <p:column headerText="Action">
                     <p:commandButton icon="ui-icon-pencil"
                                      onsuccess="editWidgetDialog.show()"

@@ -9,6 +9,7 @@ package th.co.geniustree.inventory.service;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import th.co.geniustree.inventory.model.PurchaseOrder;
 
 /**
@@ -24,7 +25,9 @@ public interface PurchaseOrderService {
     
 //    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder);
 
-    public Page findAll(PageRequest pageRequest);
-    public Page findAllPage(PageRequest pageRequest);
+//    public Page findAll(PageRequest pageRequest);
+//    public Page findAllPage(PageRequest pageRequest);
+    
+    public Page<PurchaseOrder> findAll(Pageable page);
     
 }
