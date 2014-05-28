@@ -7,6 +7,7 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class PurchaseOrderController implements Serializable {
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
     private PurchaseOrderLazyLoad purchaseOrderLazyLoad;
+    private Long saleDate;
     private String keyword;
     private String purchaseOrderId;
     private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
@@ -44,9 +46,9 @@ public class PurchaseOrderController implements Serializable {
     public void reset() {
         purchaseOrders = purchaseOrderService.findAll();
     }
-    
-    public void lazyLoad(){
-        purchaseOrderLazyLoad = new PurchaseOrderLazyLoad();              
+
+    public void lazyLoad() {
+        purchaseOrderLazyLoad = new PurchaseOrderLazyLoad();
     }
 
     public void onCreate() {
@@ -55,7 +57,10 @@ public class PurchaseOrderController implements Serializable {
 
     public void onSave() {
         try {
+            purchaseOrder.setSaleDate(Calendar.getInstance().getTime());
             purchaseOrder = purchaseOrderService.save(purchaseOrder);
+            
+            
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
             LOG.log(Level.INFO, ex.getMessage(), ex);
@@ -63,6 +68,17 @@ public class PurchaseOrderController implements Serializable {
         }
 
     }
+
+//    public void onSave() {
+//        try {
+//            purchaseOrder = purchaseOrderService.save(purchaseOrder);
+//            showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
+//        } catch (Exception ex) {
+//            LOG.log(Level.INFO, ex.getMessage(), ex);
+//            showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
+//        }
+//
+//    }
 
     public void onDelete() {
         purchaseOrderService.deleteByName(purchaseOrder);
@@ -88,7 +104,14 @@ public class PurchaseOrderController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------------------
-    
+    public Long getSaleDate() {
+        return saleDate;
+    }
+
+    public void setSaleDate(Long saleDate) {
+        this.saleDate = saleDate;
+    }
+
     public PurchaseOrderLazyLoad getPurchaseOrderLazyLoad() {
         return purchaseOrderLazyLoad;
     }
