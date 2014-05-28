@@ -6,13 +6,16 @@ and open the template in the editor.
 /* 
     Author     : Toy
 */ 
-@layoutLeftTop: 100px;
+
 @left: 0px;
 @margin: 25px;
 @bottom: 0px;
 @border: #d5d5d5 solid 1px;
 @minWidth: 800px;
+@layoutTopHeight: 70px;
+@layoutLeftAndCenterTop: @layoutTopHeight;
 @layoutLeftWidth: 200px;
+@layoutCenterLeft: @layoutLeftWidth + @margin;
 
 body{
     padding: 0px;
@@ -23,7 +26,7 @@ body{
     color: #444;
 }
 #layoutLeft{
-    top: @layoutLeftTop + @margin;
+    top: @layoutLeftAndCenterTop + @margin;
     left: @left + @margin;
     width: @layoutLeftWidth;
     height: 100%;
@@ -31,12 +34,12 @@ body{
     background-color: #f9f9fc;
     position: fixed;  
 }
-@layoutCenterLeft: @layoutLeftWidth + @margin;
+
 #layoutTop{
     top:@margin;
     left: @left + @margin;
     right: @margin;
-    height: 100px;
+    height: @layoutTopHeight;
     background-color: #fff;
     position: fixed;
     border: @border;
@@ -46,7 +49,7 @@ body{
 /*@top2: @top + 100px;*/
 
 #layoutCenter{
-    top: @layoutLeftTop + @margin;
+    top: @layoutLeftAndCenterTop + @margin;
     left: @layoutCenterLeft;
     right: @margin;
     bottom: @bottom;
