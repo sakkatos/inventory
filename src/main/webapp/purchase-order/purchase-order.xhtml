@@ -30,11 +30,7 @@
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,20,25">               
                 <p:column headerText="เลขที่ใบสั่งซื้อ" width="50">#{item.id}</p:column>
-                <p:column headerText="วันที่สั่งซื้อ">
-                    <h:outputText value="#{session.lastAccessedTime}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" timeZone="TH"/>
-                    </h:outputText>
-                </p:column>
+                <p:column headerText="วันที่สั่งซื้อ">#{item.saleDate}</p:column>
                 <p:column headerText="ชื่อลูกค้า">#{item.customer.firstName}</p:column>
                 <p:column headerText="ชื่อผู้ขาย">#{item.staff.firstName}</p:column>
 
@@ -70,8 +66,11 @@
                     <p:inputText value="#{purchaseOrderController.purchaseOrder.id}"/>
 
                     <h:outputText value="Sale Date"/>
-                    <p:calendar value="#{purchaseOrderController.purchaseOrder.saleDate}"/>
-
+                    <h:outputText value="#{currentDate}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" type="date" locale="th_TH"/>
+                        <f:param name="curruntDate" value="#{currentDate}"/>
+                    </h:outputText>
+                    <p:inputText value="#{purchaseOrderController.purchaseOrder.saleDate}" />
                 </p:panelGrid>
                 <p:commandButton value="บันทึก" 
                                  actionListener="#{purchaseOrderController.onSave()}"
