@@ -31,24 +31,25 @@ and open the template in the editor.
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix {
   border-color: #2e322e;
   background-color: #2e322e;
+  width: 170px;
 }
-/* line 37, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000337}}
+/* line 38, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000338}}
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li {
   border-color: #2e322e;
   border-style: outset;
   border-width: 0.15em;
 }
-/* line 45, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000345}}
+/* line 46, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000346}}
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li:hover {
-  background-color: #2e322e;
+  background-color: #828482;
   border-color: #2e322e;
   border-style: inset;
   border-width: 0.15em;
 }
-/* line 54, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000354}}
+/* line 55, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout2.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout2\.less}line{font-family:\0000355}}
 #layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix li a.ui-menuitem-link.ui-corner-all.ui-state-hover {
-  background-color: #2e322e;
+  background-color: #828482;
 }
