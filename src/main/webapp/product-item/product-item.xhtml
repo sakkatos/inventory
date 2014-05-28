@@ -7,12 +7,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
+        <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
+    </f:metadata>
 
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
-            <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
-        </f:metadata>
+
         #{itemManageController.reset()}
         <h:form id="itemDateForm">
             <div class="vertical-gap"/>
@@ -83,7 +84,7 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-        
+
         <p:dialog widgetVar="removeItemWidget">
             <h:form id="removeItemForm">
                 <h:outputText value="Remove this item?"/>

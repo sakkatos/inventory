@@ -44,9 +44,6 @@ public class BarcodeManageController implements Serializable {
 
     //business logic------------------------------------------------------------
     public void onCreate(){
-        System.out.println("=================================================");
-        System.out.println("onCreate!!");
-        System.out.println("=================================================");
         pack = new ProductPackage();
     }
     

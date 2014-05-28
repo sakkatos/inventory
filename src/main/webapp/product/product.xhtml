@@ -12,12 +12,14 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <f:metadata>
+        <f:viewParam name="selectedProductId" value="#{productController.selectedProductId}" />
+        <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
+        <f:viewParam name="selectedProductId" value="#{barcodeManageController.selectedProductId}"/>
+    </f:metadata>
+
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="selectedProductId" value="#{productController.selectedProductId}" />
-            <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
-            <f:viewParam name="selectedProductId" value="#{barcodeManageController.selectedProductId}"/>
-        </f:metadata>
+
         #{productController.reset()}
         <h:form id="productTableForm" >
             <div class="vertical-gap"/>
@@ -238,7 +240,7 @@ and open the template in the editor.
                     </p:tab>
                     <p:tab title="Entry List">
                         <p:commandButton value="Edit item" ajax="false"
-                                       action="/product-item/product-item.xhtml" >
+                                         action="/product-item/product-item.xhtml" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>
                         </p:commandButton>

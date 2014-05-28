@@ -11,11 +11,12 @@ and open the template in the editor.
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:viewParam name="itemId" value="#{itemAddController.selectedItemId}"/>
+    </f:metadata>
 
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam name="itemId" value="#{itemAddController.selectedItemId}"/>
-        </f:metadata>
+
         <div class="vertical-gap"/>
         #{itemAddController.reset()}
         <h:form id="itemProductForm">
@@ -89,23 +90,23 @@ and open the template in the editor.
             <h:form id="removeItemProductForm">
                 <h:outputText value="Remove this item?"/>
                 <br/>
-                    <p:panelGrid columns="3" styleClass="horizon-panel">
-                        <h:outputText value="Date"/>
-                        <h:outputText value="Time"/>
-                        <h:outputText value="Amount"/>
+                <p:panelGrid columns="3" styleClass="horizon-panel">
+                    <h:outputText value="Date"/>
+                    <h:outputText value="Time"/>
+                    <h:outputText value="Amount"/>
 
-                        <h:outputText value="#{itemAddController.item.dateIn}">
-                            <f:convertDateTime pattern="dd MMMM yyyy" 
-                                               locale="#{itemAddController.locale}"
-                                               timeZone="#{itemAddController.timeZone}"/>
-                        </h:outputText>
-                        <h:outputText value="#{itemAddController.item.timeIn}">
-                            <f:convertDateTime pattern="HH:mm:ss" 
-                                               locale="#{itemAddController.locale}"
-                                               timeZone="#{itemAddController.timeZone}"/>
-                        </h:outputText>
-                        <h:outputText value="#{itemAddController.item.amount}"/>
-                    </p:panelGrid>
+                    <h:outputText value="#{itemAddController.item.dateIn}">
+                        <f:convertDateTime pattern="dd MMMM yyyy" 
+                                           locale="#{itemAddController.locale}"
+                                           timeZone="#{itemAddController.timeZone}"/>
+                    </h:outputText>
+                    <h:outputText value="#{itemAddController.item.timeIn}">
+                        <f:convertDateTime pattern="HH:mm:ss" 
+                                           locale="#{itemAddController.locale}"
+                                           timeZone="#{itemAddController.timeZone}"/>
+                    </h:outputText>
+                    <h:outputText value="#{itemAddController.item.amount}"/>
+                </p:panelGrid>
                 <p:commandButton value="Remove" 
                                  actionListener="#{itemAddController.onRemoveItem()}"
                                  update=":itemProductForm,:notification"

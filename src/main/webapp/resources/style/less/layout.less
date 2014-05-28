@@ -6,12 +6,13 @@ and open the template in the editor.
 /* 
     Author     : Toy
 */ 
-@top: 100px;
+@layoutLeftTop: 100px;
 @left: 0px;
 @margin: 25px;
 @bottom: 0px;
 @border: #d5d5d5 solid 1px;
 @minWidth: 800px;
+@layoutLeftWidth: 200px;
 
 body{
     padding: 0px;
@@ -22,20 +23,20 @@ body{
     color: #444;
 }
 #layoutLeft{
-    top: @top + @margin;
+    top: @layoutLeftTop + @margin;
     left: @left + @margin;
-    width: @left + 200px;
+    width: @layoutLeftWidth;
     height: 100%;
     border: @border;
     background-color: #f9f9fc;
     position: fixed;  
 }
-@left2: @left + 200px + @margin;
+@layoutCenterLeft: @layoutLeftWidth + @margin;
 #layoutTop{
     top:@margin;
     left: @left + @margin;
-    right: 0px + @margin;
-    height: @top + 100px;
+    right: @margin;
+    height: 100px;
     background-color: #fff;
     position: fixed;
     border: @border;
@@ -45,8 +46,8 @@ body{
 /*@top2: @top + 100px;*/
 
 #layoutCenter{
-    top: @top + @margin;
-    left: @left2;
+    top: @layoutLeftTop + @margin;
+    left: @layoutCenterLeft;
     right: @margin;
     bottom: @bottom;
     background-color: #ffffff;
@@ -59,7 +60,7 @@ body{
 }
 #layoutButtom{
     bottom: @bottom;
-    left: @left2;
+    left: @layoutCenterLeft;
     right: @margin;
     height: @bottom + 50px;
     background-color: #fff;
@@ -71,6 +72,7 @@ body{
     font : normal 10pt Roboto,arial,sans-serif;
     color: red;
 }
+/* side bar menu*/
 .ui-menu .ui-menuitem-link:hover .ui-menuitem-text{
     color: #fff;
 }
