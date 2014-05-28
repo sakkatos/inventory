@@ -59,8 +59,6 @@ public class PurchaseOrderController implements Serializable {
         try {
             purchaseOrder.setSaleDate(Calendar.getInstance().getTime());
             purchaseOrder = purchaseOrderService.save(purchaseOrder);
-            
-            
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
             LOG.log(Level.INFO, ex.getMessage(), ex);
@@ -79,7 +77,6 @@ public class PurchaseOrderController implements Serializable {
 //        }
 //
 //    }
-
     public void onDelete() {
         purchaseOrderService.deleteByName(purchaseOrder);
 
