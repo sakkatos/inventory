@@ -80,20 +80,17 @@ public class BarcodeAddController implements Serializable {
     }
 
     public void reset() {
-
-        if (requestNewBarcode.equals("true")) {
-            onCreate();
-            pack.setBarcode(selectedBarcode);
-            System.out.println(pack.getBarcode());
-            requestNewBarcode = "false";
-        }
+        onCreate();
+        pack.setBarcode(selectedBarcode);
+        System.out.println(pack.getBarcode());
+        requestNewBarcode = "false";
         selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
         renameRoot();
         categories = categoryService.searchByNameList(selectedLabels);
         products = productService.findAll();
     }
-    
-    public void renameRoot(){
+
+    public void renameRoot() {
         if (selectedLabels.contains("root")) {
             selectedLabels.remove("root");
             List<String> tmp = new ArrayList<>();
