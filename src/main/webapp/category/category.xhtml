@@ -12,10 +12,12 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <f:metadata>
+        <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
+    </f:metadata>
     <ui:define name="centerReplace">
-        <f:metadata>
-            <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
-        </f:metadata>
+
+        <h:outputText value="Category" styleClass="pageHeader"/>
         <h:form id="categoryForm"> 
             <div class="vertical-gap"/>
             <div class="toolBar">

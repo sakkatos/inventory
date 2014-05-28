@@ -11,10 +11,9 @@
         <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
         <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
     </f:metadata>
-
     <ui:define name="centerReplace">
-
         #{itemManageController.reset()}
+        <h:outputText value="Prodtuct Item" styleClass="pageHeader"/>
         <h:form id="itemDateForm">
             <div class="vertical-gap"/>
             <p:commandButton value="Back"  ajax="false"

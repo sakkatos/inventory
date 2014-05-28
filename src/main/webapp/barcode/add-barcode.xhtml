@@ -14,10 +14,10 @@
                      value="#{barcodeAddController.requestNewBarcode}"/>
     </f:metadata>
     <ui:define name="centerReplace">
-        <div/>
+        #{barcodeAddController.reset()}
+        <h:outputText value="Barcode" styleClass="pageHeader"/>
         <h:link outcome="/product-item/add-product-item" value="back"/>
         <h:form id = "barcodeForm" >
-            #{barcodeAddController.reset()}
             <div>
                 <div class="vertical-gap"/>
                 <h:outputLabel value="Add New Barcode"/>
