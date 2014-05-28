@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 28, 2014, 11:19:46 AM
+    Author     : Nook
+*/
+@backgroundColor:#2E322E;
+
+
+#layoutTop
+{
+    background-color: @backgroundColor;
+    border-bottom-style: solid;
+    border-bottom-color: #33CC33;
+    border-bottom-width: 4px;
+}
+
+#layoutLeft, #layoutCenter
+{
+    top: 74px+25px;
+}
+
+#layoutLeft
+{
+    background-color: @backgroundColor;
+}
+//side-bar menu
+#layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
+{
+    border-color: @backgroundColor;
+    background-color: @backgroundColor;
+}
+//item in side-bar menu
+#layoutLeft 
+.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
+li
+{
+    border-color: @backgroundColor;
+    border-style: outset;
+    border-width: 0.15em;
+}
+#layoutLeft 
+.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
+li:hover
+{
+    background-color: @backgroundColor;
+    border-color: @backgroundColor;
+    border-style: inset;
+    border-width: 0.15em;
+}
+#layoutLeft 
+.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
+li a.ui-menuitem-link.ui-corner-all.ui-state-hover
+{
+    background-color: @backgroundColor;
+}

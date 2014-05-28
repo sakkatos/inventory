@@ -80,15 +80,29 @@ public class BarcodeAddController implements Serializable {
     }
 
     public void reset() {
+
         if (requestNewBarcode.equals("true")) {
             onCreate();
             pack.setBarcode(selectedBarcode);
             System.out.println(pack.getBarcode());
             requestNewBarcode = "false";
         }
-        getSelectedLabels();
+        selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
+        renameRoot();
         categories = categoryService.searchByNameList(selectedLabels);
         products = productService.findAll();
+    }
+    
+    public void renameRoot(){
+        if (selectedLabels.contains("root")) {
+            selectedLabels.remove("root");
+            List<String> tmp = new ArrayList<>();
+            tmp.add("All");
+            for (String s : selectedLabels) {
+                tmp.add(s);
+            }
+            selectedLabels = tmp;
+        }
     }
 
     public void filterCategories() {
@@ -209,15 +223,7 @@ public class BarcodeAddController implements Serializable {
     public List<String> getSelectedLabels() {
         if (selectedLabels == null) {
             selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
-            if (selectedLabels.contains("root")) {
-                selectedLabels.remove("root");
-                List<String> tmp = new ArrayList<>();
-                tmp.add("All");
-                for (String s : selectedLabels) {
-                    tmp.add(s);
-                }
-                selectedLabels = tmp;
-            }
+            renameRoot();
         }
         return selectedLabels;
     }
