@@ -3,10 +3,10 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-<!--    <application>
+    <application>
         <locale-config>
             <default-locale>th_TH</default-locale>
             <supported-locale>th_TH</supported-locale>
         </locale-config>
-    </application>-->
+    </application>
 </faces-config>
