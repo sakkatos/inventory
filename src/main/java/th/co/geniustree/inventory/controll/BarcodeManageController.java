@@ -7,10 +7,11 @@ package th.co.geniustree.inventory.controll;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import th.co.geniustree.inventory.model.Category;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductPackage;
@@ -40,22 +41,21 @@ public class BarcodeManageController implements Serializable {
 
     private String selectedProductId;
     private String selectedBarcode;
-
-
+    private static final Logger LOG = LoggerFactory.getLogger(BarcodeManageController.class);
     //business logic------------------------------------------------------------
-    public void onCreate(){
+    public void onCreate() {
         pack = new ProductPackage();
     }
-    
-    public void onSave(){
+
+    public void onSave() {
         pack.setProduct(product);
         packageService.savePackage(pack);
-        
+
         product.getPackages().add(pack);
         productService.save(product);
         reset();
     }
-    
+
     public void onEdit() {
         packageService.savePackage(pack);
         reset();
@@ -67,16 +67,19 @@ public class BarcodeManageController implements Serializable {
     }
 
     public void reset() {
-        selectedBarcode="";
-        product = productService.findOne(selectedProductId);
+        selectedBarcode = "";
+        product = productService.findOne(getSelectedProductId());
+        LOG.info("------------------------------------------" + product);
+//        System.out.println("#####################################################################" + product.getId() + product.getName());
         packs = product.getPackages();
+
     }
-    
-    public void onSelect(){
+
+    public void onSelect() {
         pack = packageService.findOne(selectedBarcode);
     }
 
-     //getter and setter---------------------------------------------------------
+    //getter and setter---------------------------------------------------------
     public ProductPackage getPack() {
         return pack;
     }
@@ -131,12 +134,13 @@ public class BarcodeManageController implements Serializable {
     }
 
     public void setSelectedProductId(String selectedProductId) {
+        LOG.info("====================================================================================================================================SET" + selectedProductId);
         this.selectedProductId = selectedProductId;
     }
 
     public List<ProductPackage> getPacks() {
-        if (packs==null){
-            packs= new ArrayList<>();
+        if (packs == null) {
+            packs = new ArrayList<>();
         }
         return packs;
     }
@@ -146,8 +150,8 @@ public class BarcodeManageController implements Serializable {
     }
 
     public String getSelectedBarcode() {
-        if (selectedBarcode==null){
-            selectedBarcode="";
+        if (selectedBarcode == null) {
+            selectedBarcode = "0";
         }
         return selectedBarcode;
     }
