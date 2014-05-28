@@ -107,6 +107,7 @@ public class ProductController implements Serializable {
     public void onSelectLazyLoad() {
         onSelect();
         getItemLazy().setProduct(product);
+        selectedProductId = product.getId();
     }
 
     public void reset() {
