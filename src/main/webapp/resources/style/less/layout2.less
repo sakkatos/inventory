@@ -9,7 +9,6 @@ and open the template in the editor.
 */
 @backgroundColor:#2E322E;
 
-
 #layoutTop
 {
     background-color: @backgroundColor;
@@ -28,20 +27,28 @@ and open the template in the editor.
     background-color: @backgroundColor;
 }
 //side-bar menu
-#layoutLeft .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
+#layoutLeft  
+.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
 {
     border-color: @backgroundColor;
     background-color: @backgroundColor;
+    position: absolute;
+    top: 10px;
+    left: 5px;
     width: 170px;
 }
 //item in side-bar menu
-#layoutLeft 
+#layoutLeft  
 .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
 li
 {
     border-color: @backgroundColor;
     border-style: outset;
     border-width: 0.15em;
+/*    border-top-style: outset;
+    border-bottom-style: outset;
+    border-top-width: 0.15em;
+    border-bottom-width: 0.15em;*/
 }
 #layoutLeft 
 .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
@@ -51,10 +58,51 @@ li:hover
     border-color: @backgroundColor;
     border-style: inset;
     border-width: 0.15em;
+/*    border-top-style: inset;
+    border-bottom-style: inset;
+    border-top-width: 0.15em;
+    border-bottom-width: 0.15em;*/
 }
-#layoutLeft 
+#layoutLeft  
 .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
 li a.ui-menuitem-link.ui-corner-all.ui-state-hover
 {
     background-color: #828482;
+}
+
+//Page Header
+.pageHeader
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+//panel tab
+div.ui-tabs.ui-widget.ui-widget-content.ui-corner-all.ui-hidden-container.ui-tabs-top
+{
+
+}
+//panel tab navigator bar
+.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+{
+    background-color: #ffffff;
+}
+//panel tab navigator bar (tab button)
+li.ui-state-default.ui-corner-top
+{
+    background-color: #f5f5f5;
+}
+
+//panel tab navigator bar (tab button)
+li.ui-tabs-selected.ui-state-active.ui-corner-top
+{
+    background-color: #ffffff !important;
+    color: #66FF33 !important;
+}
+//panel tab content aria
+div.ui-tabs-panel.ui-widget-content.ui-corner-bottom
+{
+    background-color: #ffffff;
+    padding: 5px !important;
 }

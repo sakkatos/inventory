@@ -28,24 +28,26 @@
         </div>
 
         <div id="layoutLeft">
-            <center>
-                <h:form>
-                    <p:menu style="top: 20px;" >
-                        <p:menuitem value="customer" url="/customer/customer.xhtml"/>
-                        <p:menuitem value="staff" url="/staff/staff.xhtml"/>
-                        <p:menuitem value="purchase order" url="/purchase-order/purchase-order.xhtml"/>
-                        <p:menuitem value="order item" url="/order-item/order-item.xhtml"/>
-                        <p:menuitem value="product item" url="/product-item/add-product-item.xhtml"/>
-                        <p:menuitem value="product" url="/product/product.xhtml"/>
-                        <p:menuitem value="category" url="/category/category.xhtml"/>
-                    </p:menu>
-                </h:form>
-            </center>
+            <h:form >
+                <p:menu styleClass="sidebarMenusidebarMenu" >
+                    <p:menuitem value="customer" url="/customer/customer.xhtml"/>
+                    <p:menuitem value="staff" url="/staff/staff.xhtml"/>
+                    <p:menuitem value="purchase order" url="/purchase-order/purchase-order.xhtml"/>
+                    <p:menuitem value="order item" url="/order-item/order-item.xhtml"/>
+                    <p:menuitem value="product item" url="/product-item/add-product-item.xhtml"/>
+                    <p:menuitem value="product" url="/product/product.xhtml"/>
+                    <p:menuitem value="category" url="/category/category.xhtml"/>
+                </p:menu>
+            </h:form>
         </div>
 
-        <div id="layoutCenter">
+        <div id="layoutCenter" 
+             style="padding-top: 12px;
+             padding-left: 12px;
+             padding-right: 12px">
             <ui:insert name="centerReplace"/>
         </div>
+
         <ui:remove>
             <div id="layoutButtom">
                 Footer

@@ -19,8 +19,10 @@ and open the template in the editor.
     </f:metadata>
 
     <ui:define name="centerReplace">
-
         #{productController.reset()}
+        
+        <h:outputText value="Product Management" styleClass="pageHeader"/>
+        <div class="vertical-gap"/>
         <h:form id="productTableForm" >
             <div class="vertical-gap"/>
             <div class="toolBar">

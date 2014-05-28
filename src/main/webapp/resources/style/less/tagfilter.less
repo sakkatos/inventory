@@ -1,3 +1,5 @@
+@backgroundColor:#2E322E;
+@panelHeaderColor:#f5f5f5;
 
 div.ui-button.ui-widget.ui-state-default
 span.ui-button.ui-widget.ui-state-default .ui-button-text
@@ -16,6 +18,11 @@ span.ui-button.ui-widget.ui-state-default .ui-button-text
 
 }
 /* Table */
+[id$="_paginator_top"].ui-paginator.ui-paginator-top.ui-widget-header.ui-corner-top
+{
+    font-size: 14px;
+}
+
 .ui-datatable-data tr.ui-widget-content.ui-datatable-odd
 {
     background-color: #eaeaea;
@@ -26,13 +33,13 @@ span.ui-button.ui-widget.ui-state-default .ui-button-text
     border-color: #ffffff;
     height: 14px
 }
-/* Table font*/
+/* Table head row font*/
 .ui-datatable thead th
 {
     font-size: 14px;
 }
 
-/* toolbar */
+/* toolbar fontsize */
 .toolBar
 {
     font-size: 12px;
@@ -60,7 +67,7 @@ div.horizon-gap
 .vertical-panel td:nth-child(3),
 .vertical-panel td:nth-child(5)
 {
-    background-color: #f5f5f5;
+    background-color: @panelHeaderColor;
 }
 .productDetailPanel table[id^=productDetail] 
 {
@@ -76,34 +83,22 @@ div.horizon-gap
 }
 .horizon-panel tr.ui-widget-content:nth-child(1) td
 {
-    background-color: #f5f5f5;
+    background-color: @panelHeaderColor;
     text-align: center;
 }
 
 /*navigative tab*/
-ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all,
+/*ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all,
 li.ui-state-default.ui-corner-top
 {
-    background-color: #f0f0f0;
-}
+    background-color: @panelHeaderColor;
+}*/
 
 /* navigator button */
 .ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.pageNavi
 {
     height: 1.5em;
     width: 1.5em;
-}
-
-/* side menu */
-div.ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix 
-ul li.ui-menuitem.ui-widget.ui-corner-all 
-a.ui-menuitem-link.ui-corner-all.ui-state-hover
-{
-/*    background-color: darkslateblue;
-    color: #ffffff;
-    border-right-color: #ffaaaa;
-    border-right-style: solid;
-    border-right-width: 4px;*/
 }
 
 /* button */

@@ -11,7 +11,7 @@ and open the template in the editor.
 @margin: 25px;
 @bottom: 0px;
 @border: #d5d5d5 solid 1px;
-@minWidth: 800px;
+@pageWidth: 800px;
 @layoutTopHeight: 70px;
 @layoutLeftAndCenterTop: @layoutTopHeight;
 @layoutLeftWidth: 200px;
@@ -43,7 +43,7 @@ body{
     background-color: #fff;
     position: fixed;
     border: @border;
-    min-width: @minWidth;
+    min-width: @pageWidth;
 }
 
 /*@top2: @top + 100px;*/
@@ -58,9 +58,15 @@ body{
     overflow: auto;
     font-size: medium;
     color: #5E5E5E;
-    min-width: @minWidth;
+    min-width: @pageWidth-@layoutLeftWidth;
     border: @border;
 }
+
+#layoutCenter 
+{
+    padding: 30px;
+}
+
 #layoutButtom{
     bottom: @bottom;
     left: @layoutCenterLeft;
@@ -69,7 +75,7 @@ body{
     background-color: #fff;
     position: fixed;
     border: @border;
-    min-width: @minWidth;
+    min-width: @pageWidth;
 }
 .ui-menuitem-text{
     font : normal 10pt Roboto,arial,sans-serif;
