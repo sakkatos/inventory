@@ -31,8 +31,8 @@
                          rowsPerPageTemplate="5,10,15,20,25">               
                 <p:column headerText="เลขที่ใบสั่งซื้อ" width="50">#{item.id}</p:column>
                 <p:column headerText="วันที่สั่งซื้อ">
-                    <h:outputText value="#{item.saleDate}">
-                        <f:convertDateTime pattern="dd MMMM yyyy"/>
+                    <h:outputText value="#{session.lastAccessedTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" type="date" timeZone="TH"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="ชื่อลูกค้า">#{item.customer.firstName}</p:column>
