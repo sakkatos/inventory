@@ -32,7 +32,6 @@ public class PurchaseOrderController implements Serializable {
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
     private PurchaseOrderLazyLoad purchaseOrderLazyLoad;
-    private Long saleDate;
     private String keyword;
     private String purchaseOrderId;
     private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
@@ -58,6 +57,7 @@ public class PurchaseOrderController implements Serializable {
     public void onSave() {
         try {
             purchaseOrder.setSaleDate(Calendar.getInstance().getTime());
+            purchaseOrder.setSaleTime(Calendar.getInstance().getTime());
             purchaseOrder = purchaseOrderService.save(purchaseOrder);
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
@@ -101,13 +101,6 @@ public class PurchaseOrderController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------------------
-    public Long getSaleDate() {
-        return saleDate;
-    }
-
-    public void setSaleDate(Long saleDate) {
-        this.saleDate = saleDate;
-    }
 
     public PurchaseOrderLazyLoad getPurchaseOrderLazyLoad() {
         return purchaseOrderLazyLoad;

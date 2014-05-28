@@ -31,6 +31,9 @@ public class PurchaseOrder implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "sale_date")
     private Date saleDate;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(name = "sale_time")
+    private Date saleTime;
 
     @OneToMany(mappedBy = "purchaseOrder")
     private List<OrderItem> orderItems;
@@ -66,6 +69,14 @@ public class PurchaseOrder implements Serializable {
 
     public PurchaseOrder(Integer id) {
         this.id = id;
+    }
+
+    public Date getSaleTime() {
+        return saleTime;
+    }
+
+    public void setSaleTime(Date saleTime) {
+        this.saleTime = saleTime;
     }
 
     public Integer getId() {

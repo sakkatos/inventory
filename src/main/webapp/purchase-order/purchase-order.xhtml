@@ -36,8 +36,8 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="เวลา">
-                    <h:outputText value="#{item.saleDate}">
-                        <f:convertDateTime pattern="HH:mm" timeZone="GMT+7" locale="th_TH"/>
+                    <h:outputText value="#{item.saleTime}">
+                        <f:convertDateTime pattern="HH:mm" type="time" timeZone="GMT+7"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="ชื่อลูกค้า">#{item.customer.firstName}</p:column>
