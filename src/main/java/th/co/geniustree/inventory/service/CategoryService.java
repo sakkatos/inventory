@@ -50,6 +50,11 @@ public class CategoryService {
 
     public Category findRoot() {
         Category root = categoryRepo.findByName("root");
+        if (root == null) {
+            root = new Category();
+            root.setName("root");
+            categoryRepo.save(root);
+        }
         return root;
     }
     

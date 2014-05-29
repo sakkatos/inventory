@@ -31,6 +31,19 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
     private long totalElements;
 
     public Page<Product> load(Pageable page) {
+        if (!getCategoryLabels().isEmpty()) {
+            for (String s : getCategoryLabels()) {
+                System.out.println(s);
+            }
+        }
+
+        if (getCategoryLabels().contains("root")) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Find All!!");
+            }
+            return productService.findAll(page);
+        }
+
         return productService.searchProductByCategoryName(getCategoryLabels(), page);
     }
 
@@ -81,7 +94,7 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
 
     //getter and setter---------------------------------------------------------
     public Product getProduct() {
-        if(product==null){
+        if (product == null) {
             product = new Product();
         }
         return product;
@@ -92,7 +105,7 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
     }
 
     public List<Product> getProducts() {
-        if (products==null){
+        if (products == null) {
             products = new ArrayList<>();
         }
         return products;
@@ -103,7 +116,7 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
     }
 
     public List<String> getCategoryLabels() {
-        if (categoryLabels==null){
+        if (categoryLabels == null) {
             categoryLabels = new ArrayList<>();
         }
         return categoryLabels;
@@ -120,5 +133,5 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
     public void setTotalElements(long totalElements) {
         this.totalElements = totalElements;
     }
-    
+
 }

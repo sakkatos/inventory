@@ -132,11 +132,6 @@ public class CategoryController implements Serializable {
 
     public Category findRoot() {
         Category root = categoryService.findRoot();
-        if (root == null) {
-            root = new Category();
-            root.setName("root");
-            categoryService.save(root);
-        }
         return root;
     }
 

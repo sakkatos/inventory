@@ -9,9 +9,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import th.co.geniustree.inventory.lazyload.ItemLazyLoad;
 import th.co.geniustree.inventory.lazyload.ProductLazyLoad;
 import th.co.geniustree.inventory.model.Category;
@@ -56,44 +59,47 @@ public class ProductController implements Serializable {
         Category root = categoryService.findRoot();
         product = new Product();
         product.setCategory(root);
-
     }
 
     public void onSave() {
-        category = categoryService.findOne(product.getCategory().getId());
-
-        product.setCategory(category);
-        productService.save(product);
-
-        category.getProducts().add(product);
-        categoryService.save(category);
-
-        products = findAllProducts();
+        try {
+            category = categoryService.findOne(product.getCategory().getId());
+            product.setCategory(category);
+            productService.save(product);
+            category.getProducts().add(product);
+            categoryService.save(category);
+            showMessage(FacesMessage.SEVERITY_INFO, "save product", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "save product", "fail");
+        }
     }
 
     public void onEdit() {
-        Category newCategory = categoryService.findOne(product.getCategory().getId());
-        Category oldCategory = categoryService.findByName(product.getCategory().getName());
-
-        product.setCategory(category);
-        productService.save(product);
-
-        newCategory.getProducts().add(product);
-        categoryService.save(newCategory);
-
-        oldCategory.getProducts().remove(product);
-        categoryService.save(oldCategory);
-
-        products = findAllProducts();
-    }
-
-    public List<Product> findAllProducts() {
-        return productService.findAll();
+        try {
+            Category newCategory = categoryService.findOne(product.getCategory().getId());
+            Category oldCategory = categoryService.findByName(product.getCategory().getName());
+            product.setCategory(category);
+            productService.save(product);
+            newCategory.getProducts().add(product);
+            categoryService.save(newCategory);
+            oldCategory.getProducts().remove(product);
+            categoryService.save(oldCategory);
+            showMessage(FacesMessage.SEVERITY_INFO, "edit product", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "edit product", "fail");
+        }
     }
 
     public void onRemove() {
-        productService.remove(product);
-        products = findAllProducts();
+        try {
+            productService.remove(product);
+            showMessage(FacesMessage.SEVERITY_INFO, "remove user", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "remove user", "fail");
+        }
     }
 
     public Integer finditemProductAmount(Product product) {
@@ -111,12 +117,13 @@ public class ProductController implements Serializable {
     }
 
     public void reset() {
-        //reset products
-        products = productService.findAll();
-        //reset categories
         categories = categoryService.findAllOrderByName();
-        //reset labels
-        selectedLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
+        selectedLabel="All";
+        filterProductCategories();
+        selectedLabels = new ArrayList<>();
+        for(String s :getProductLazy().getCategoryLabels()){
+            selectedLabels.add(s);
+        }
         if (selectedLabels.contains("root")) {
             selectedLabels.remove("root");
             List<String> tmp = new ArrayList<>();
@@ -126,11 +133,9 @@ public class ProductController implements Serializable {
             }
             selectedLabels = tmp;
         }
-        getProductLazy().setCategoryLabels(selectedLabels);
     }
 
     public void filterProductCategories() {
-        System.out.println(selectedLabel);
         List<String> collectedLabels = new ArrayList<>();
         if (selectedLabel.equals("All")) {
             collectedLabels = collectCategoryLabelsDepthFirstSearch(
@@ -171,14 +176,6 @@ public class ProductController implements Serializable {
         return labelList;
     }
 
-    public void buildUrl() {
-        setProductItemUrl("/product-item/product-item.xhtml");
-    }
-
-    public String fetchURL() {
-        return getProductItemUrl();
-    }
-
     //getter and setter---------------------------------------------------------
     public Product getProduct() {
         if (product == null) {
@@ -193,7 +190,7 @@ public class ProductController implements Serializable {
 
     public List<Product> getProducts() {
         if (products == null) {
-            products = findAllProducts();
+            products = new ArrayList<>();
         }
         return products;
     }
@@ -333,7 +330,7 @@ public class ProductController implements Serializable {
     }
 
     public String getProductItemUrl() {
-        if (productItemUrl==null) {
+        if (productItemUrl == null) {
             productItemUrl = "/product-item/product-item.xhtml";
         }
         return productItemUrl;
@@ -354,4 +351,8 @@ public class ProductController implements Serializable {
         this.productLazy = productLazy;
     }
 
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, title, body));
+    }
 }
