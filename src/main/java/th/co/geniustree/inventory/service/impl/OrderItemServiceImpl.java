@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import th.co.geniustree.inventory.model.OrderItem;
+import th.co.geniustree.inventory.model.PurchaseOrder;
 import th.co.geniustree.inventory.repo.OrderItemRepo;
 import th.co.geniustree.inventory.service.OrderItemService;
 
@@ -61,6 +62,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public Page<OrderItem> findAll(Pageable page) {
         return orderItemRepo.findAll(page);
+    }
+
+    @Override
+    public List<OrderItem> findOrderItemByPurchaseOrder(PurchaseOrder purchaseOrder) {
+        return orderItemRepo.findOrderItemByPurchaseOrder(purchaseOrder);
     }
 
 }
