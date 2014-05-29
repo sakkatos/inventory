@@ -14,6 +14,8 @@ and open the template in the editor.
     <ui:define name="metaData">
         <f:metadata>
             <f:viewParam name="itemId" value="#{itemAddController.selectedItemId}"/>
+            <f:viewParam name="itemId" value="#{barcodeManageController.selectedProductId}"/>
+            <f:viewParam name="itemId" value="#{itemManageController.selectedProductId}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="centerReplace">

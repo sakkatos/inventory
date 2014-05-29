@@ -90,7 +90,6 @@ and open the template in the editor.
                                      onsuccess="editProductDialog.show()">
                         <f:param name="selectedProductId" value="#{item.id}"/>
                     </p:commandButton> 
-                    <h:outputText value="  "/>
                     <p:commandButton icon="ui-icon-trash"
                                      actionListener="#{productController.onSelect()}"
                                      update=":removeProductForm"
@@ -220,7 +219,7 @@ and open the template in the editor.
                         </div>
                     </p:tab>
                     <p:tab title="Entry List">
-                        <p:commandButton value="Manage item" ajax="false"
+                        <p:commandButton value="Manage item" ajax="false" 
                                          action="/product-item/product-item.xhtml?faces-redirect=true" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>

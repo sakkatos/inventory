@@ -67,7 +67,7 @@ public class ProductController implements Serializable {
             productService.save(product);
             category.getProducts().add(product);
             categoryService.save(category);
-            showMessage(FacesMessage.SEVERITY_INFO, "save product", "success");
+            showMessage(FacesMessage.SEVERITY_INFO, "save "+product.getName(), "success");
         } catch (Exception ex) {
             System.out.println("LOG ==> " + ex.getMessage());
             showMessage(FacesMessage.SEVERITY_ERROR, "save product", "fail");
@@ -84,7 +84,7 @@ public class ProductController implements Serializable {
             categoryService.save(newCategory);
             oldCategory.getProducts().remove(product);
             categoryService.save(oldCategory);
-            showMessage(FacesMessage.SEVERITY_INFO, "edit product", "success");
+            showMessage(FacesMessage.SEVERITY_INFO, "edit "+product.getName(), "success");
         } catch (Exception ex) {
             System.out.println("LOG ==> " + ex.getMessage());
             showMessage(FacesMessage.SEVERITY_ERROR, "edit product", "fail");
@@ -94,10 +94,10 @@ public class ProductController implements Serializable {
     public void onRemove() {
         try {
             productService.remove(product);
-            showMessage(FacesMessage.SEVERITY_INFO, "remove user", "success");
+            showMessage(FacesMessage.SEVERITY_INFO, "remove "+product.getName(), "success");
         } catch (Exception ex) {
             System.out.println("LOG ==> " + ex.getMessage());
-            showMessage(FacesMessage.SEVERITY_ERROR, "remove user", "fail");
+            showMessage(FacesMessage.SEVERITY_ERROR, "remove product", "fail");
         }
     }
 
@@ -118,9 +118,10 @@ public class ProductController implements Serializable {
     public void reset() {
         categories = categoryService.findAllOrderByName();
         selectedLabel = "All";
-        filterProductCategories();
+        List<String> collectCategoryLabels = collectCategoryLabelsDepthFirstSearch(categoryService.findRoot());
+        getProductLazy().setCategoryLabels(collectCategoryLabels);
         selectedLabels = new ArrayList<>();
-        for (String s : getProductLazy().getCategoryLabels()) {
+        for (String s : collectCategoryLabels) {
             selectedLabels.add(s);
         }
         if (selectedLabels.contains("root")) {

@@ -11,8 +11,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import th.co.geniustree.inventory.model.Product;
 import th.co.geniustree.inventory.model.ProductItem;
 import th.co.geniustree.inventory.service.CategoryService;
@@ -48,9 +50,16 @@ public class ItemManageController implements Serializable {
     }
 
     public void onRemove() {
-        product.getProductItems().remove(item);
-        productService.save(product);
-        itemService.removeItem(item);
+        try {
+            product.getProductItems().remove(item);
+            productService.save(product);
+            itemService.removeItem(item);
+            showMessage(FacesMessage.SEVERITY_INFO, "remove item", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "remove item", "fail");
+        }
+
     }
 
     public void onSelect() {
@@ -61,14 +70,7 @@ public class ItemManageController implements Serializable {
     }
 
     public void reset() {
-        if (selectedProductId == null) {
-            selectedProductId = "";
-        }
-        if (selectedProductId.isEmpty()) {
-            product = productService.findOne("T001");
-        }else {
-            product = productService.findOne(selectedProductId);
-        }
+        product = productService.findOne(getSelectedProductId());
         getItemLazy().setProduct(product);
     }
 
@@ -162,6 +164,11 @@ public class ItemManageController implements Serializable {
 
     public void setTimeZone(TimeZone timeZone) {
         this.timeZone = timeZone;
+    }
+
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, title, body));
     }
 
 }

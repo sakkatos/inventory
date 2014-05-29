@@ -34,12 +34,12 @@ public class BarcodeManageController implements Serializable {
     private final PackageService packageService = JSFSpringUtils.getBean(PackageService.class);
     private final CategoryService categoryService = JSFSpringUtils.getBean(CategoryService.class);
 
-    private ProductPackage pack;
-    private List<ProductPackage> packs;
-    private Product product;
-    private List<Product> products;
-    private Category category;
-    private List<Category> categories;
+    private ProductPackage pack = new ProductPackage();
+    private List<ProductPackage> packs = new ArrayList<>();
+    private Product product = new Product();
+    private List<Product> products = new ArrayList<>();
+    private Category category = new Category();
+    private List<Category> categories = new ArrayList<>();
 
     private String selectedProductId;
     private String selectedBarcode;
@@ -99,9 +99,8 @@ public class BarcodeManageController implements Serializable {
 
     public void reset() {
         selectedBarcode = "";
-        String selectedProductId1 = getSelectedProductId();
-        product = productService.findOne(selectedProductId1);
-        packs = product.getPackages();
+        product = productService.findOne(getSelectedProductId());
+        packs = getProduct().getPackages();
     }
 
     public void onSelect() {
@@ -110,6 +109,9 @@ public class BarcodeManageController implements Serializable {
 
     //getter and setter---------------------------------------------------------
     public ProductPackage getPack() {
+        if (pack == null) {
+            pack = new ProductPackage();
+        }
         return pack;
     }
 
@@ -118,6 +120,9 @@ public class BarcodeManageController implements Serializable {
     }
 
     public Product getProduct() {
+        if (product == null) {
+            product = new Product();
+        }
         return product;
     }
 

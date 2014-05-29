@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -51,17 +52,16 @@ public class ItemAddController implements Serializable {
     private List<ProductItem> items;
     private Integer amountOfPack;
 
-    private ItemLazyLoad itemLazy;
-
     private String barcode;
     private Integer selectedItemId;
     private String selectedBarcode;
+    private String selectedProductId;
     private String massage = "";
     private Boolean redirect;
-    private String requestNewBarcode;
     private Locale locale = Locale.getDefault();
     private TimeZone timeZone = Calendar.getInstance().getTimeZone();
     private SimpleDateFormat smpDateFormat;
+    private ItemLazyLoad itemLazy;
 
     @PostConstruct
     public void postConstruct() {
@@ -81,6 +81,7 @@ public class ItemAddController implements Serializable {
         if (isBarcodeExist() && isBarcodeBelongTo()) {
             pack = packageService.findBarcode(barcode);
             product = pack.getProduct();
+            selectedProductId = product.getId();
             item = new ProductItem();
             insertItemByBarcode();
             updateItemLog();
@@ -91,9 +92,8 @@ public class ItemAddController implements Serializable {
     public String onRedirect() {
         if (isRedirect()) {
             redirect = false;
-            requestNewBarcode="true";
-            return "/barcode/add-barcode.xhtml?selectedBarcode=" + barcode 
-                    +"&requestNewBarcode="+requestNewBarcode
+            return "/barcode/barcode.xhtml?selectedBarcode=" + barcode
+                    + "&selectedProductId=" + getSelectedProductId()
                     + "faces-redirect=true";
         }
         return "";
@@ -111,25 +111,21 @@ public class ItemAddController implements Serializable {
 
     public void insertItemByBarcode() {
         Calendar cal = Calendar.getInstance();
-        item.setAmount(pack.getAmountPerPack() * 1);
-        item.setDateIn(cal.getTime());
-        item.setTimeIn(cal.getTime());
-        item.setProduct(product);
-        itemService.saveItem(item);
-
-        product.getProductItems().add(item);
-        productService.save(product);
+        try {
+            item.setAmount(pack.getAmountPerPack() * 1);
+            item.setDateIn(cal.getTime());
+            item.setTimeIn(cal.getTime());
+            item.setProduct(product);
+            itemService.saveItem(item);
+            product.getProductItems().add(item);
+            productService.save(product);
+            showMessage(FacesMessage.SEVERITY_INFO, "save " + product.getName(), "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "save product", "fail");
+        }
         getItemLazy().setProduct(product);
         barcode = "";
-    }
-
-    public void insertItemByHand() {
-        item.setAmount(pack.getAmountPerPack() * amountOfPack);
-
-        item.setDateIn(Calendar.getInstance().getTime());
-        item.setTimeIn(Calendar.getInstance().getTime());
-        item.setProduct(product);
-        itemService.saveItem(item);
     }
 
     public void updateItemLog() {
@@ -140,8 +136,11 @@ public class ItemAddController implements Serializable {
         barcode = "";
         pack = new ProductPackage();
         items = new ArrayList<>();
-        getItemLazy().setProduct(productService.findByBarcode(barcode));
-        requestNewBarcode="false";
+        Product p = productService.findOne(getSelectedProductId());
+        if (p==null){
+            p = new Product();
+        }
+        getItemLazy().setProduct(p);
     }
 
     public Integer sumItemByProduct() {
@@ -152,8 +151,13 @@ public class ItemAddController implements Serializable {
     }
 
     public void onRemoveItem() {
-        itemService.removeItem(item);
-        items = itemService.itemOrderByDateDescend(pack.getProduct());
+        try {
+            itemService.removeItem(item);
+            showMessage(FacesMessage.SEVERITY_INFO, "save " + product.getName(), "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "save product", "fail");
+        }
     }
 
     public void onSelectItem() {
@@ -335,17 +339,16 @@ public class ItemAddController implements Serializable {
         this.itemLazy = itemLazy;
     }
 
-    public String getRequestNewBarcode() {
-        if(requestNewBarcode==null){
-            requestNewBarcode="false";
+    public String getSelectedProductId() {
+        if (selectedProductId == null) {
+            selectedProductId = "";
         }
-        return requestNewBarcode;
+        return selectedProductId;
     }
 
-    public void setRequestNewBarcode(String requestNewBarcode) {
-        this.requestNewBarcode = requestNewBarcode;
+    public void setSelectedProductId(String selectedProductId) {
+        this.selectedProductId = selectedProductId;
     }
-
 
     //--------------------------------------------------------------------------
     public ProductService getProductManagedBean() {
@@ -366,5 +369,10 @@ public class ItemAddController implements Serializable {
     public ProductItemService getItemManagedBean() {
         ServletContext servletContext = FacesContextUtils.getRequiredWebApplicationContext(FacesContext.getCurrentInstance()).getServletContext();
         return WebApplicationContextUtils.getWebApplicationContext(servletContext).getBean(ProductItemService.class);
+    }
+
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, title, body));
     }
 }
