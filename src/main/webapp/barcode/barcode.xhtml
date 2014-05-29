@@ -11,8 +11,10 @@
         <f:metadata>
             <f:viewParam name="selectedBarcode" 
                          value="#{barcodeManageController.selectedBarcode}"/>
-            <f:viewParam name="selectedProductId" 
-                         value="#{barcodeManageController.selectedProductId}"/>
+            <ui:remove>
+                <f:viewParam name="selectedProductId" 
+                             value="#{barcodeManageController.selectedProductId}"/>
+            </ui:remove>
         </f:metadata>
         #{barcodeManageController.reset()}
         <h:outputText value="Barcode" styleClass="pageHeader"/>
@@ -122,7 +124,7 @@
                                  onsuccess="addBarcodeWidget.hide()"/>
             </h:form>
         </p:dialog>
-        
+
     </ui:define>
 </ui:composition>
 
