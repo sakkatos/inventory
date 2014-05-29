@@ -8,8 +8,10 @@ package th.co.geniustree.inventory.controll;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import th.co.geniustree.inventory.model.Category;
@@ -42,28 +44,57 @@ public class BarcodeManageController implements Serializable {
     private String selectedProductId;
     private String selectedBarcode;
     private static final Logger LOG = LoggerFactory.getLogger(BarcodeManageController.class);
+
     //business logic------------------------------------------------------------
     public void onCreate() {
-        pack = new ProductPackage();
+        try {
+            LOG.info("Create!!!!");
+            pack = new ProductPackage();
+            showMessage(FacesMessage.SEVERITY_INFO, "create Barcode", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "create Barcode", "fail");
+        }
+
     }
 
     public void onSave() {
-        pack.setProduct(product);
-        packageService.savePackage(pack);
+        try {
+            pack.setProduct(product);
+            packageService.savePackage(pack);
+            product.getPackages().add(pack);
+            productService.save(product);
+            reset();
+            showMessage(FacesMessage.SEVERITY_INFO, "save Barcode", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "save Barcode", "fail");
+        }
 
-        product.getPackages().add(pack);
-        productService.save(product);
-        reset();
     }
 
     public void onEdit() {
-        packageService.savePackage(pack);
-        reset();
+        try {
+            packageService.savePackage(pack);
+            reset();
+            showMessage(FacesMessage.SEVERITY_INFO, "edit Barcode", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "edit Barcode", "fail");
+        }
     }
 
     public void onRemove() {
-        product.getPackages().remove(pack);
-        reset();
+        try {
+            packageService.remove(pack);
+            product.getPackages().remove(pack);
+            productService.save(product);
+            reset();
+            showMessage(FacesMessage.SEVERITY_INFO, "remove Barcode", "success");
+        } catch (Exception ex) {
+            System.out.println("LOG ==> " + ex.getMessage());
+            showMessage(FacesMessage.SEVERITY_ERROR, "remove Barcode", "fail");
+        }
     }
 
     public void reset() {
@@ -132,7 +163,6 @@ public class BarcodeManageController implements Serializable {
     }
 
     public void setSelectedProductId(String selectedProductId) {
-        LOG.info("====================================================================================================================================SET" + selectedProductId);
         this.selectedProductId = selectedProductId;
     }
 
@@ -156,5 +186,10 @@ public class BarcodeManageController implements Serializable {
 
     public void setSelectedBarcode(String selectedBarcode) {
         this.selectedBarcode = selectedBarcode;
+    }
+
+    private void showMessage(FacesMessage.Severity severity, String title, String body) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, title, body));
     }
 }

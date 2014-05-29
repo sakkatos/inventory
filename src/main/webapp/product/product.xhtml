@@ -221,7 +221,7 @@ and open the template in the editor.
                     </p:tab>
                     <p:tab title="Entry List">
                         <p:commandButton value="Manage item" ajax="false"
-                                         action="/product-item/product-item.xhtml" >
+                                         action="/product-item/product-item.xhtml?faces-redirect=true" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>
                         </p:commandButton>
@@ -262,7 +262,7 @@ and open the template in the editor.
                     </p:tab>
                     <p:tab title="Barcode info">
                         <p:commandButton value="Manage barcode" ajax="false"
-                                         action="/barcode/barcode.xhtml" >
+                                         action="/barcode/barcode.xhtml?faces-redirect=true" >
                             <f:param name="selectedProductId" 
                                      value="#{productController.selectedProductId}"/>
                         </p:commandButton>

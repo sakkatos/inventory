@@ -44,4 +44,8 @@ public class PackageService {
     public Product findProductBarcodeBelongTo(String barcode) {
         return packageRepo.findProductBarcodeBelongTo(barcode);
     }
+    
+    public void remove (ProductPackage package1){
+        packageRepo.delete(package1);
+    }
 }

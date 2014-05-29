@@ -21,6 +21,10 @@
         <h:link outcome="/product-item/add-product-item" value="back"/>
         <h:form id = "barcodeForm" >
             <div>
+                <p:commandButton value="Manage barcode" ajax="false"
+                    action="/barcode/barcode.xhtml?faces-redirect=true" >
+                                     
+                </p:commandButton>
                 <div class="vertical-gap"/>
                 <h:outputLabel value="Add New Barcode"/>
                 <div class="vertical-gap"/>
