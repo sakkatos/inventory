@@ -6,16 +6,17 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-
-    <ui:define name="centerReplace">
+    <ui:define name="layoutHead">
         <f:metadata>
             <f:viewParam name="selectedBarcode" 
                          value="#{barcodeManageController.selectedBarcode}"/>
-            <ui:remove>
+ 
                 <f:viewParam name="selectedProductId" 
                              value="#{barcodeManageController.selectedProductId}"/>
-            </ui:remove>
         </f:metadata>
+    </ui:define>
+
+    <ui:define name="centerReplace">
         #{barcodeManageController.reset()}
         <h:outputText value="Barcode" styleClass="pageHeader"/>
         <h:form id="barcodeTableForm">

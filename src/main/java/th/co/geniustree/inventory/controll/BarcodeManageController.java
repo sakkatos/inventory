@@ -69,9 +69,9 @@ public class BarcodeManageController implements Serializable {
     public void reset() {
         selectedBarcode = "";
         String selectedProductId1 = getSelectedProductId();
-        if(selectedProductId1.isEmpty()){
-            selectedProductId1 = "1234";
-        }
+//        if(selectedProductId1.isEmpty()){
+//            selectedProductId1 = "1234";
+//        }
         product = productService.findOne(selectedProductId1);
         LOG.info("------------------------------------------" + product);
 //        System.out.println("#####################################################################" + product.getId() + product.getName());
