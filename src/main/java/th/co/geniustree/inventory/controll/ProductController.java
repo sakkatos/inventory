@@ -49,7 +49,6 @@ public class ProductController implements Serializable {
     private String baseCostFilter;
     private String expectCostFilter;
     private String categoryFilter;
-    private String productItemUrl;
 
     private ItemLazyLoad itemLazy;
     private ProductLazyLoad productLazy;
@@ -118,10 +117,10 @@ public class ProductController implements Serializable {
 
     public void reset() {
         categories = categoryService.findAllOrderByName();
-        selectedLabel="All";
+        selectedLabel = "All";
         filterProductCategories();
         selectedLabels = new ArrayList<>();
-        for(String s :getProductLazy().getCategoryLabels()){
+        for (String s : getProductLazy().getCategoryLabels()) {
             selectedLabels.add(s);
         }
         if (selectedLabels.contains("root")) {
@@ -327,17 +326,6 @@ public class ProductController implements Serializable {
 
     public void setItemLazy(ItemLazyLoad itemLazy) {
         this.itemLazy = itemLazy;
-    }
-
-    public String getProductItemUrl() {
-        if (productItemUrl == null) {
-            productItemUrl = "/product-item/product-item.xhtml";
-        }
-        return productItemUrl;
-    }
-
-    public void setProductItemUrl(String productItemUrl) {
-        this.productItemUrl = productItemUrl;
     }
 
     public ProductLazyLoad getProductLazy() {

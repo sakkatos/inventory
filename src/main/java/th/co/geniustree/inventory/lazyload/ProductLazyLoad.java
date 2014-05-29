@@ -36,14 +36,9 @@ public class ProductLazyLoad extends LazyDataModel<Product> {
                 System.out.println(s);
             }
         }
-
         if (getCategoryLabels().contains("root")) {
-            for (int i = 0; i < 5; i++) {
-                System.out.println("Find All!!");
-            }
             return productService.findAll(page);
         }
-
         return productService.searchProductByCategoryName(getCategoryLabels(), page);
     }
 
