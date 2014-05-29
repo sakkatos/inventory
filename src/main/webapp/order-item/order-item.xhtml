@@ -60,6 +60,9 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="ID"/>
                     <p:inputText value="#{orderItemController.orderItem.id}"/>
+                    
+                    <h:outputText value="Purchase ID"/>
+                    <p:inputText value="#{orderItemController.orderItem.purchaseOrder.id}"/>
                 </p:panelGrid>
                 <p:commandButton value="Add"
                                  actionListener="#{orderItemController.onSave()}"
@@ -69,6 +72,7 @@
                                  onsuccess="addWidgetDialog.hide()"/>
             </h:form>
         </p:dialog>
+        
         <p:dialog id="editOrderItemDialog"
                   header="Edit Order Item"
                   width="500"
