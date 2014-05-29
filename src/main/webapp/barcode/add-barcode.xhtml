@@ -7,12 +7,14 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <f:metadata>
-        <f:viewParam name="selectedBarcode" 
-                     value="#{barcodeAddController.selectedBarcode}"/>
-        <f:viewParam name="requestNewBarcode" 
-                     value="#{barcodeAddController.requestNewBarcode}"/>
-    </f:metadata>
+    <ui:define name="metaData">
+        <f:metadata>
+            <f:viewParam name="selectedBarcode" 
+                         value="#{barcodeAddController.selectedBarcode}"/>
+            <f:viewParam name="requestNewBarcode" 
+                         value="#{barcodeAddController.requestNewBarcode}"/>
+        </f:metadata>
+    </ui:define>
     <ui:define name="centerReplace">
         #{barcodeAddController.reset()}
         <h:outputText value="Barcode" styleClass="pageHeader"/>

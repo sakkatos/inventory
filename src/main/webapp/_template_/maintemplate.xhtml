@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <ui:insert name="layoutHead"/>
+
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style/css/layout.css" />
         <title>Genius-Inventory</title>
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/_template_/PrimefacesDialog.js">
@@ -18,7 +18,7 @@
         </script>
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style/css/tagfilter.css" />
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style/css/layout2.css" />
-        
+
     </h:head>
     <h:body>
         <p:growl id="notification" showDetail="true" showSummary="true"/> 
@@ -46,7 +46,10 @@
         </div>
 
         <div id="layoutCenter">
-            <ui:insert name="centerReplace"/>
+            <f:view>
+                <ui:insert name="metaData"/>
+                <ui:insert name="centerReplace"/>
+            </f:view>
         </div>
 
         <ui:remove>

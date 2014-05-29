@@ -7,10 +7,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <f:metadata>
-        <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
-        <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
-    </f:metadata>
+    <ui:define name="metaData">
+        <f:metadata>
+            <f:viewParam name="selectedItemId" value="#{itemManageController.selectedItemId}"/>
+            <f:viewParam name="selectedProductId" value="#{itemManageController.selectedProductId}"/>
+        </f:metadata>
+    </ui:define>
     <ui:define name="centerReplace">
         #{itemManageController.reset()}
         <h:outputText value="Prodtuct Item" styleClass="pageHeader"/>
