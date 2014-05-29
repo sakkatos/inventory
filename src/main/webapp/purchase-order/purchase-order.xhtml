@@ -44,6 +44,13 @@
                 <p:column headerText="ชื่อผู้ขาย">#{item.staff.firstName}</p:column>
 
                 <p:column headerText="action">
+                    <p:commandButton title="เรียกดูข้อมูล"
+                                     onsuccess="showWidgetDialog.show();"
+                                     update=":showPurchaseDialogForm"
+                                     actionListener="#{purchaseOrderController.onSelect()}"
+                                     icon="ui-icon-search">
+                        <f:param name="purchaseOrderId" value="#{item.id}"/>
+                    </p:commandButton>
                     <p:commandButton title="แก้ไขข้อมูล"
                                      onsuccess="editWidgetDialog.show();"
                                      update=":editPurchaseDialogForm"
@@ -57,11 +64,12 @@
                                      actionListener="#{purchaseOrderController.onSelect()}"
                                      icon="ui-icon-trash">
                         <f:param name="purchaseOrderId" value="#{item.id}"/>
-                    </p:commandButton>
+                    </p:commandButton>                  
                 </p:column>
             </p:dataTable>
         </h:form>
 
+        <!-- ######################################### Add Dialog ######################################### -->
         <p:dialog id="addPurchaseDialog"
                   header="เพิ่ม purchase order"
                   resizable="false"
@@ -87,6 +95,7 @@
             </h:form>
         </p:dialog>
 
+        <!-- ######################################### Edit Dialog ######################################### -->
         <p:dialog id="editPurchaseDialog"
                   header="แก้ไข purchase order"
                   width="500"
@@ -113,6 +122,7 @@
             </h:form>
         </p:dialog>
 
+        <!-- ######################################### Delete Dialog ######################################### -->
         <p:dialog id="deletePurchaseDialog"
                   header="ลบ purchase order"
                   width="500"
@@ -135,5 +145,18 @@
                                  onclick="deleteWidgetDialog.hide();"/>
             </h:form>
         </p:dialog>
+        <!-- ######################################### Show Dialog ######################################### -->
+        <p:dialog id="showPurchaseDialog"
+                  appendTo="@(body)"
+                  modal="true"
+                  draggable="true"
+                  resizable="true"
+                  widgetVar="showWidgetDialog">
+            <h:form id="showPurchaseDialogForm">
+                <h:outputText value="#{purchaseOrderController.purchaseOrder.customer}"/>
+            </h:form>
+            
+        </p:dialog>
+
     </ui:define>
 </ui:composition>

@@ -59,10 +59,10 @@ public class PurchaseOrderController implements Serializable {
             purchaseOrder.setSaleDate(Calendar.getInstance().getTime());
             purchaseOrder.setSaleTime(Calendar.getInstance().getTime());
             purchaseOrder = purchaseOrderService.save(purchaseOrder);
-            showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
+            showMessage(FacesMessage.SEVERITY_INFO, "เพิ่มข้อมูล", "สำเร็จ");
         } catch (Exception ex) {
             LOG.log(Level.INFO, ex.getMessage(), ex);
-            showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
+            showMessage(FacesMessage.SEVERITY_ERROR, "เพิ่มข้อมูล", "ไม่สำเร็จ");
         }
 
     }
@@ -79,29 +79,29 @@ public class PurchaseOrderController implements Serializable {
 //    }
     public void onDelete() {
         purchaseOrderService.deleteByName(purchaseOrder);
-
-        showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
+        showMessage(FacesMessage.SEVERITY_INFO, "ลบข้อมูล", "สำเร็จ");
     }
 
+    public void onSelect() {
+        purchaseOrder = getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
+    }
 //    public void onSelect() {
 //        String p = requestParam("purchaseOrderId");
 //        int indexOf = this.getPurchaseOrders().indexOf(new PurchaseOrder(p));
 //        purchaseOrder = this.getPurchaseOrders().get(indexOf);
 //    }
-    public void onSelect() {
-        String p = requestParam("purchaseOrderId");
-
-        Integer id = Integer.valueOf(p);
-        int indexOf = this.getPurchaseOrders().indexOf(new PurchaseOrder(id));
-        purchaseOrder = this.getPurchaseOrders().get(indexOf);
-    }
+//    public void onSelect() {
+//        String p = purchaseOrderId;
+//        Integer id = Integer.valueOf(p);
+//        int indexOf = this.getPurchaseOrders().indexOf(new PurchaseOrder(id));
+//        purchaseOrder = this.getPurchaseOrders().get(indexOf);
+//    }
 
     public List<PurchaseOrder> findAllPurchaseOrder() {
         return purchaseOrderService.findAll();
     }
 
     //------------------------------------------------------------------------------------------------------
-
     public PurchaseOrderLazyLoad getPurchaseOrderLazyLoad() {
         return purchaseOrderLazyLoad;
     }
