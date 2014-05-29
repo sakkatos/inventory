@@ -6,24 +6,33 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-            <f:metadata>
-                <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
-            </f:metadata>
+    <f:metadata>
+        <f:viewParam name="customerId" value="#{customerController.customerId}"></f:viewParam>
+    </f:metadata>
     <ui:define name="centerReplace">
         <h:form id="customerForm">
             #{customerController.loadLazy()}
-            <p:commandButton value="เพิ่มข้อมูลลูกค้า"
-                             actionListener="#{customerController.onCreate()}"
-                             update=":addCustomerDialogForm"
-                             onsuccess="addWidgetDialog.show()"/>
-            <p:inputText value="#{customerController.keyword}"/>
-            <p:commandButton value="ค้นหา"
-                             icon="ui-icon-search"
-                             update=":searchCustomerDialogForm"
-                             actionListener="#{customerController.onSearch()}"
-                             onsuccess="searchWidgetDialog.show();"/>
-            <br/>
-            <br/>
+            <div class="pageHeader">
+                <h:outputText value="Customer" />
+            </div>
+            <div class="toolBar">
+                <div style="display: inline-block">
+                    <p:commandButton value="เพิ่มข้อมูลลูกค้า"
+                                     actionListener="#{customerController.onCreate()}"
+                                     update=":addCustomerDialogForm"
+                                     onsuccess="addWidgetDialog.show()"/>
+                </div>
+                <div style="display: inline-block;float: right">
+                    <p:inputText value="#{customerController.keyword}"
+                                 style="margin-right: 5px"/>
+                    <p:commandButton value="ค้นหา"
+                                     icon="ui-icon-search"
+                                     update=":searchCustomerDialogForm"
+                                     actionListener="#{customerController.onSearch()}"
+                                     onsuccess="searchWidgetDialog.show();"/>
+                </div>
+            </div>
+            <div class="vertical-gap"/>
             <p:dataTable value="#{customerController.customerLazyLoad}" 
                          var="item"
                          rows="5"
@@ -62,10 +71,11 @@
                   appendTo="@(body)"
                   modal="true"
                   resizable="false"
-                  width="600"
                   widgetVar="addWidgetDialog">
             <h:form id="addCustomerDialogForm">
-                <p:panelGrid columns="2">
+                <h:outputText value="ลูกค้าใหม่"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
                     <h:outputText value="รหัสลูกค้า"/>
                     <p:inputText value="#{customerController.customer.id}"/>
 
@@ -78,7 +88,7 @@
                     <h:outputText value="เบอร์โทรศัพท์"/>
                     <p:inputText value="#{customerController.customer.phoneNumber}"/>
                 </p:panelGrid>
-                <br/>
+                <div class="vertical-gap"/>
                 <p:commandButton value="บันทึกข้อมูล" 
                                  actionListener="#{customerController.onSave()}"
                                  update=":customerForm, :notification"
@@ -90,19 +100,19 @@
 
         <p:dialog id="editCustomerDialog"
                   header="edit user"
-                  width="500"
                   appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   resizable="false"
                   widgetVar="editWidgetDialog"> 
             <h:form id="editCustomerDialogForm">
-                <h:panelGrid columns="2">
+                <h:outputText value="แก้ไขข้อมูลลูกค้า"/>
+                <div class="vertical-gap"/>
+                <h:panelGrid columns="2" styleClass="vertical-panel">
                     <h:outputText value="name"/>
                     <p:inputText value="#{customerController.customer.firstName}"/>
                 </h:panelGrid>
-                <br/>
-                <br/>
+                <div class="vertical-gap"/>
                 <p:commandButton value="save"
                                  update=":customerForm, :notification"
                                  actionListener="#{customerController.onSave()}"
@@ -124,8 +134,7 @@
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteCustomerDialogForm">
                 <h:outputText value="คุณต้องการลบผู้ใช้ใช่หรือไม่?"/>
-                <br/>
-                <br/>
+                <div class="vertical-gap"/>
                 <p:commandButton value="ลบผู้ใช้"
                                  update=":customerForm, :notification"
                                  actionListener="#{customerController.onDelete()}"
