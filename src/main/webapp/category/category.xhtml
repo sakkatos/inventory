@@ -16,7 +16,7 @@ and open the template in the editor.
             <f:viewParam  name="selectedCategoryId" value="#{categoryController.selectedCategoryId}" />
         </f:metadata>
     </ui:define>
-    
+
     <ui:define name="centerReplace">
         <h:outputText value="Category" styleClass="pageHeader"/>
         <h:form id="categoryForm"> 
@@ -82,8 +82,10 @@ and open the template in the editor.
 
         <p:dialog widgetVar="addCategoryWidget">
             <h:form id="addCategoryForm">
-                <p:panelGrid columns="4">
-                    <h:outputText value="name"/>
+                <h:outputText value="New Category"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
+                    <h:outputText value="Name"/>
                     <p:inputText value="#{categoryController.category.name}"/>
 
                     <h:outputText value="Parent"/>
@@ -94,18 +96,22 @@ and open the template in the editor.
                                        itemValue="#{addItem.id}">
                         </f:selectItems>
                     </p:selectOneMenu>
-                    <p:commandButton value="save"
-                                     update=":categoryForm,:notification"
-                                     actionListener="#{categoryController.onSave()}"
-                                     onsuccess="addCategoryWidget.hide()"/>
                 </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="save"
+                                 update=":categoryForm,:notification"
+                                 actionListener="#{categoryController.onSave()}"
+                                 onsuccess="addCategoryWidget.hide()"/>
             </h:form>
         </p:dialog>
 
         <p:dialog widgetVar="editCategoryWidget">
+
             <h:form id="editCategoryForm">
-                <p:panelGrid columns="4">
-                    <h:outputText value="name"/>
+                <h:outputText value="Edit Category"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="4" styleClass="vertical-panel">
+                    <h:outputText value="Name"/>
                     <p:inputText value="#{categoryController.category.name}"/>
 
                     <h:outputText value="Parent"/>
@@ -117,6 +123,7 @@ and open the template in the editor.
                         </f:selectItems>
                     </p:selectOneMenu>
                 </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="save"
                                  update=":categoryForm,:notification"
                                  actionListener="#{categoryController.onEdit()}"
@@ -127,7 +134,12 @@ and open the template in the editor.
         <p:dialog widgetVar="removeCategoryWidget">
             <h:form id="removeCategoryForm">
                 <h:outputText value="Remove this category?"/>
-                <p:inputText value="#{categoryController.category.name}"/><br/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
+                    <h:outputText value="Name"/>
+                    <h:outputText value="#{categoryController.category.name}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="remove"
                                  actionListener="#{categoryController.onremove()}"
                                  update=":categoryForm,:notification"
