@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Nook
 */
 @backgroundColor:#2E322E;
-
+@borderBottomWidth:4px;
 #layoutTop
 {
     background-color: @backgroundColor;
@@ -17,10 +17,6 @@ and open the template in the editor.
     border-bottom-width: 4px;
 }
 
-#layoutLeft, #layoutCenter
-{
-    top: 74px+25px;
-}
 #layoutCenter
 {
     padding-top: 12px;
@@ -51,10 +47,6 @@ li
     border-color: @backgroundColor;
     border-style: outset;
     border-width: 0.15em;
-    /*    border-top-style: outset;
-        border-bottom-style: outset;
-        border-top-width: 0.15em;
-        border-bottom-width: 0.15em;*/
 }
 #layoutLeft 
 .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
@@ -64,10 +56,6 @@ li:hover
     border-color: @backgroundColor;
     border-style: inset;
     border-width: 0.15em;
-    /*    border-top-style: inset;
-        border-bottom-style: inset;
-        border-top-width: 0.15em;
-        border-bottom-width: 0.15em;*/
 }
 #layoutLeft  
 .ui-menu.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix
@@ -127,7 +115,7 @@ div.ui-tabs-panel.ui-widget-content.ui-corner-bottom
 {
 
 }
-
+// logo : top layout
 #logo
 {
     height: 70px;
