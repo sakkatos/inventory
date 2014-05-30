@@ -16,7 +16,7 @@ and open the template in the editor.
 @layoutLeftAndCenterTop: @layoutTopHeight;
 @layoutLeftWidth: 200px;
 @layoutCenterLeft: @layoutLeftWidth + @margin;
-@backgroundTopLayoutColor:#2E322E;
+@backgroundColor:#2E322E;
 @borderBottomWidth:4px;
 
 body{
@@ -36,13 +36,17 @@ body{
     position: fixed;
     border: @border;
     min-width: @pageWidth;
-    background-color: @backgroundTopLayoutColor;
-    border-bottom-style: solid !important;
-    border-bottom-color: #33CC33 !important;
-    border-bottom-width: @borderBottomWidth !important;
+     background-color: @backgroundColor;
+    border-bottom-style: solid;
+    border-bottom-color: #33CC33;
+    border-bottom-width: 4px;
 }
 
 /*@top2: @top + 100px;*/
+#layoutCenter,#layoutLeft
+{
+    top: @layoutLeftAndCenterTop + @margin + @borderBottomWidth ;
+}
 
 
 #layoutLeft{
@@ -50,7 +54,7 @@ body{
     width: @layoutLeftWidth;
     height: 100%;
     border: @border;
-    background-color: #f9f9fc;
+    background-color: @backgroundColor;
     position: fixed;  
 }
 
@@ -66,11 +70,6 @@ body{
     min-width: @pageWidth - @layoutLeftWidth;
     border: @border;
 }
-#layoutCenter,#layoutLeft
-{
-    top: @layoutLeftAndCenterTop + @margin + @borderBottomWidth +30px;
-}
-
 
 #layoutCenter 
 {

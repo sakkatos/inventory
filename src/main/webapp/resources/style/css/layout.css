@@ -28,23 +28,29 @@ body {
   border: #d5d5d5 solid 1px;
   min-width: 800px;
   background-color: #2e322e;
-  border-bottom-style: solid !important;
-  border-bottom-color: #33CC33 !important;
-  border-bottom-width: 4px !important;
+  border-bottom-style: solid;
+  border-bottom-color: #33CC33;
+  border-bottom-width: 4px;
 }
 /*@top2: @top + 100px;*/
-/* line 48, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000348}}
+/* line 46, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000346}}
+#layoutCenter,
+#layoutLeft {
+  top: 99px;
+}
+/* line 52, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000352}}
 #layoutLeft {
   left: 25px;
   width: 200px;
   height: 100%;
   border: #d5d5d5 solid 1px;
-  background-color: #f9f9fc;
+  background-color: #2e322e;
   position: fixed;
 }
-/* line 57, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000357}}
+/* line 61, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000361}}
 #layoutCenter {
   left: 225px;
   right: 25px;
@@ -57,19 +63,13 @@ body {
   min-width: 600px;
   border: #d5d5d5 solid 1px;
 }
-/* line 69, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000369}}
-#layoutCenter,
-#layoutLeft {
-  top: 99px 30px;
-}
-/* line 75, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000375}}
+/* line 74, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000374}}
 #layoutCenter {
   padding: 30px;
 }
-/* line 80, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000380}}
+/* line 79, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000379}}
 #layoutButtom {
   bottom: 0px;
   left: 225px;
@@ -80,15 +80,15 @@ body {
   border: #d5d5d5 solid 1px;
   min-width: 800px;
 }
-/* line 90, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000390}}
+/* line 89, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000389}}
 .ui-menuitem-text {
   font: normal 10pt Roboto, arial, sans-serif;
   color: #ffffff;
 }
 /* side bar menu*/
-/* line 95, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000395}}
+/* line 94, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000394}}
 .ui-menu .ui-menuitem-link:hover .ui-menuitem-text {
   color: #fff;
 }
