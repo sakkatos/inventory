@@ -88,11 +88,10 @@ public class PurchaseOrderController implements Serializable {
 
     public void onSelect() {
         purchaseOrder = this.getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
-        LOG.info("#################################------->" + purchaseOrder.getId());
     }
 
     public List<OrderItem> onSelectOrderItem(){
-        LOG.info("#################################------->" + purchaseOrder.getId());
+        purchaseOrder = this.getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
         orderItems = orderItemService.findOrderItemByPurchaseOrder(purchaseOrder);
         return orderItems;
     }

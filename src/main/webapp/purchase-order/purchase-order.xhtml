@@ -152,17 +152,18 @@
                   resizable="true"
                   widgetVar="showWidgetDialog">
             <h:form id="showPurchaseDialogForm">
-                <h:outputText value="#{orderItemController.orderItem.id}"/>
+                <p:dataTable value="#{purchaseOrderController.orderItems}"
+                             var="orderItems">
+                    <p:column headerText="Order Item ID" style="width : 5%">
+                        <h:outputText value="#{orderItems.id}"></h:outputText>
+                    </p:column>
+                </p:dataTable>
                 <br/>
                 <br/>
-                <p:commandButton value="ลบข้อมูล"
-                                 update=":purchaseForm, :notification"
-                                 actionListener="#{purchaseOrderController.onDelete()}"
-                                 oncomplete="deleteWidgetDialog.hide();"/>
                 <p:spacer width="10"/>
                 <p:commandButton value="ยกเลิก"
                                  type="button"
-                                 onclick="deleteWidgetDialog.hide();"/>
+                                 onclick="showWidgetDialog.hide();"/>
             </h:form>
 
         </p:dialog>
