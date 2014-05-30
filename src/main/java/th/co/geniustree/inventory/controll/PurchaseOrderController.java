@@ -17,7 +17,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import th.co.geniustree.inventory.lazyload.PurchaseOrderLazyLoad;
+import th.co.geniustree.inventory.model.OrderItem;
 import th.co.geniustree.inventory.model.PurchaseOrder;
+import th.co.geniustree.inventory.service.OrderItemService;
 import th.co.geniustree.inventory.service.PurchaseOrderService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
@@ -32,10 +34,12 @@ public class PurchaseOrderController implements Serializable {
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
     private PurchaseOrderLazyLoad purchaseOrderLazyLoad;
+    private List<OrderItem> orderItems;
     private String keyword;
     private String purchaseOrderId;
     private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
     private final PurchaseOrderService purchaseOrderService = JSFSpringUtils.getBean(PurchaseOrderService.class);
+    private final OrderItemService orderItemService = JSFSpringUtils.getBean(OrderItemService.class);
 
     @PostConstruct
     public void PurchaseOderController() {
@@ -88,7 +92,7 @@ public class PurchaseOrderController implements Serializable {
 
     public List<OrderItem> onSelectOrderItem(){
         purchaseOrder = this.getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
-        orderItems = orderItemService.findOrderItemByPurchaseOrder(purchaseOrder);
+        orderItems = orderItemService.findByPurchaseOrderLike(purchaseOrder);
         return orderItems;
     }
 //    public void onSelect() {
