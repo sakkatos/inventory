@@ -40,11 +40,14 @@
                         <f:convertDateTime pattern="HH:mm" type="time" timeZone="GMT+7"/>
                     </h:outputText>
                 </p:column>
+                <p:column headerText="ชื่อลูกค้า">#{item.customer.firstName}</p:column>
+                <p:column headerText="ชื่อผู้ขาย">#{item.staff.firstName}</p:column>
+
                 <p:column headerText="action">
                     <p:commandButton title="เรียกดูข้อมูล"
                                      onsuccess="showWidgetDialog.show();"
                                      update=":showPurchaseDialogForm"
-                                     actionListener="#{purchaseOrderController.onSelectOrderItem()}"
+                                     actionListener="#{purchaseOrderController.onSelect()}"
                                      icon="ui-icon-search">
                         <f:param name="purchaseOrderId" value="#{item.id}"/>
                     </p:commandButton>
@@ -165,7 +168,7 @@
                                  type="button"
                                  onclick="showWidgetDialog.hide();"/>
             </h:form>
-
+            
         </p:dialog>
 
     </ui:define>
