@@ -15,12 +15,12 @@
                 #{staffController.reset()}
             </ui:remove>
             #{staffController.loadLazy()}
+            <h:outputText value="Staff" styleClass="pageHeader"/>
             <p:commandButton value="Add Staff"
                              actionListener="#{staffController.onCreate()}"
                              update=":addStaffDialogForm"
                              onsuccess="addWidgetDialog.show()"/>
-            <br/>
-            <br/>
+            <div class="vertical-gap"/>
             <p:dataTable value="#{staffController.staffLazyLoad}" 
                          var="item"
                          rows="5"
@@ -53,14 +53,15 @@
         </h:form>
 
         <p:dialog id="addStaffDialog"
-                  header="เพิ่ม staff"
                   resizable="false"
                   appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   widgetVar="addWidgetDialog">
             <h:form id="addStaffDialogForm">
-                <p:panelGrid columns="2">
+                <h:outputText value="New staff"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
                     <h:outputText value="ID"/>
                     <p:inputText value="#{staffController.staff.id}"/>
 
@@ -69,8 +70,8 @@
 
                     <h:outputText value="Lastname"/>
                     <p:inputText value="#{staffController.staff.lastName}"/>
-
                 </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="บันทึก" 
                                  actionListener="#{staffController.onSave()}"
                                  update=":staffForm, :notification"
@@ -81,21 +82,20 @@
         </p:dialog>
 
         <p:dialog id="editStaffDialog"
-                  header="แก้ไข staff"
-                  width="500"
                   appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   resizable="false"
                   widgetVar="editWidgetDialog"> 
             <h:form id="editStaffDialogForm">
-                <h:panelGrid columns="2">
+                <h:outputText value="Edit staff info"/>
+                <div class="vertical-gap"/>
+                <h:panelGrid columns="2" styleClass="vertical-panel">
                     <h:outputText value="name"/>
                     <p:inputText value="#{staffController.staff.firstName}"/>
                 </h:panelGrid>
-                <br/>
-                <br/>
-                <p:commandButton value="บันทึกการแก้ไข"
+                <div class="vertical-gap"/>
+                <p:commandButton value="บันทึก"
                                  update=":staffForm, :notification"
                                  actionListener="#{staffController.onSave()}"
                                  oncomplete="editWidgetDialog.hide();"/>
@@ -107,17 +107,19 @@
         </p:dialog>
 
         <p:dialog id="deleteStaffDialog"
-                  header="ลบ staff"
-                  width="500"
                   appendTo="@(body)"
                   modal="true"
                   draggable="false"
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteStaffDialogForm">
-                <h:outputText value="ต้องการลบ #{staffController.staff.firstName} ใช่หรือไม่"/>
-                <br/>
-                <br/>
+                <h:outputText value="ลบพนักงาน"/>
+                <div class="vertical-gap"/>
+                <p:panelGrid columns="2" styleClass="vertical-panel">
+                    <h:outputText value="ชื่อ"/>
+                    <h:outputText value="คุณ #{staffController.staff.firstName} #{staffController.staff.lastName}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
                 <p:commandButton value="ลบข้อมูล"
                                  update=":staffForm, :notification"
                                  actionListener="#{staffController.onDelete()}"
