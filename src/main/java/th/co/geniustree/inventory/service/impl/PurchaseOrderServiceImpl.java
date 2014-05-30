@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package th.co.geniustree.inventory.service.impl;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import th.co.geniustree.inventory.model.OrderItem;
 import th.co.geniustree.inventory.model.PurchaseOrder;
 import th.co.geniustree.inventory.repo.PurchaseOrderRepo;
 import th.co.geniustree.inventory.service.PurchaseOrderService;
@@ -24,8 +24,8 @@ import th.co.geniustree.inventory.service.PurchaseOrderService;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class PurchaseOrderServiceImpl implements PurchaseOrderService{
-    
+public class PurchaseOrderServiceImpl implements PurchaseOrderService {
+
     @Autowired
     private PurchaseOrderRepo purchaseOrderRepo;
 
@@ -53,15 +53,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 //    public Page findAllPage(PageRequest pageRequest) {
 //        return null;
 //    }
-
 //    @Override
 //    public List<PurchaseOrder> findByFirstNameLike(PurchaseOrder purchaseOrder) {
 //        return purchaseOrderRepo.findByFirstNameLike(purchaseOrder);
 //    }
-
     @Override
     public Page<PurchaseOrder> findAll(Pageable page) {
         return purchaseOrderRepo.findAll(page);
     }
-    
 }

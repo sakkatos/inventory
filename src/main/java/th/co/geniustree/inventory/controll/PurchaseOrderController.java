@@ -9,15 +9,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import th.co.geniustree.inventory.lazyload.PurchaseOrderLazyLoad;
+import th.co.geniustree.inventory.model.OrderItem;
 import th.co.geniustree.inventory.model.PurchaseOrder;
+import th.co.geniustree.inventory.service.OrderItemService;
 import th.co.geniustree.inventory.service.PurchaseOrderService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
@@ -32,10 +34,12 @@ public class PurchaseOrderController implements Serializable {
     private PurchaseOrder purchaseOrder;
     private List<PurchaseOrder> purchaseOrders;
     private PurchaseOrderLazyLoad purchaseOrderLazyLoad;
+    private List<OrderItem> orderItems;
     private String keyword;
     private String purchaseOrderId;
-    private static final Logger LOG = Logger.getLogger(PurchaseOrderController.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(PurchaseOrderController.class);
     private final PurchaseOrderService purchaseOrderService = JSFSpringUtils.getBean(PurchaseOrderService.class);
+    private final OrderItemService orderItemService = JSFSpringUtils.getBean(OrderItemService.class);
 
     @PostConstruct
     public void PurchaseOderController() {
@@ -61,7 +65,7 @@ public class PurchaseOrderController implements Serializable {
             purchaseOrder = purchaseOrderService.save(purchaseOrder);
             showMessage(FacesMessage.SEVERITY_INFO, "เพิ่มข้อมูล", "สำเร็จ");
         } catch (Exception ex) {
-            LOG.log(Level.INFO, ex.getMessage(), ex);
+            LOG.info("ERROR!!----->" + ex);
             showMessage(FacesMessage.SEVERITY_ERROR, "เพิ่มข้อมูล", "ไม่สำเร็จ");
         }
 
@@ -83,7 +87,14 @@ public class PurchaseOrderController implements Serializable {
     }
 
     public void onSelect() {
-        purchaseOrder = getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
+        purchaseOrder = this.getPurchaseOrderLazyLoad().getRowData(purchaseOrderId);
+        LOG.info("#################################------->" + purchaseOrder.getId());
+    }
+
+    public List<OrderItem> onSelectOrderItem(){
+        LOG.info("#################################------->" + purchaseOrder.getId());
+        orderItems = orderItemService.findOrderItemByPurchaseOrder(purchaseOrder);
+        return orderItems;
     }
 //    public void onSelect() {
 //        String p = requestParam("purchaseOrderId");
@@ -102,6 +113,17 @@ public class PurchaseOrderController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------------------
+    public List<OrderItem> getOrderItems() {
+        if (orderItems == null) {
+            orderItems = new ArrayList<>();
+        }
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     public PurchaseOrderLazyLoad getPurchaseOrderLazyLoad() {
         return purchaseOrderLazyLoad;
     }

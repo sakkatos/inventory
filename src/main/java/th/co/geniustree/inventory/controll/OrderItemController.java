@@ -9,15 +9,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import th.co.geniustree.inventory.lazyload.OrderItemLazyLoad;
 import th.co.geniustree.inventory.model.OrderItem;
+import th.co.geniustree.inventory.model.PurchaseOrder;
 import th.co.geniustree.inventory.service.OrderItemService;
+import th.co.geniustree.inventory.service.PurchaseOrderService;
 import th.co.geniustree.inventory.util.JSFSpringUtils;
 
 /**
@@ -33,7 +36,8 @@ public class OrderItemController implements Serializable {
     private OrderItemLazyLoad orderItemLazyLoad;
     private Integer keyword;
     private String orderItemId;
-    private static final Logger LOG = Logger.getLogger(CustomerController.class.getName());
+    private PurchaseOrder purchaseOrder;
+    private static final Logger LOG = LoggerFactory.getLogger(OrderItemController.class);
     private final OrderItemService orderItemService = JSFSpringUtils.getBean(OrderItemService.class);
 
     @PostConstruct
@@ -50,27 +54,31 @@ public class OrderItemController implements Serializable {
     }
 
     public void onCreate() {
-        orderItem = new OrderItem();
+        orderItem = new OrderItem();  
+        purchaseOrder = new PurchaseOrder();
     }
 
     public void onSave() {
         try {
-            orderItem = orderItemService.save(orderItem);
+            orderItem.setPurchaseOrder(purchaseOrder);
+            orderItem = orderItemService.save(orderItem);         
+            LOG.info("################################################"+orderItem.getId());            
+            LOG.info("################################################"+purchaseOrder.getId());
             showMessage(FacesMessage.SEVERITY_INFO, "save user", "success");
         } catch (Exception ex) {
-            LOG.log(Level.INFO, ex.getMessage(), ex);
+            LOG.info("########################### ERROR -->"+ex);
             showMessage(FacesMessage.SEVERITY_ERROR, "save user", "fail");
         }
     }
 
     public void onDelete() {
         orderItemService.deleteByName(orderItem);
-
         showMessage(FacesMessage.SEVERITY_INFO, "delete user", "success");
     }
 
     public void onSelect() {
         orderItem = this.getOrderItemLazyLoad().getRowData(orderItemId);
+        LOG.info("----------------------------------------------------->"+orderItem.getId());
     }
 //    public void onSelect() {
 //        String o = requestParam("orderItemId");
@@ -94,6 +102,15 @@ public class OrderItemController implements Serializable {
     }
 
     //------------------------------------------------------------------------------------------
+    
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+
     public OrderItemLazyLoad getOrderItemLazyLoad() {
         return orderItemLazyLoad;
     }
