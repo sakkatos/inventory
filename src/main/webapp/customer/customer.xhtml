@@ -99,7 +99,6 @@
         </p:dialog>
 
         <p:dialog id="editCustomerDialog"
-                  header="edit user"
                   appendTo="@(body)"
                   modal="true"
                   draggable="false"
@@ -109,8 +108,17 @@
                 <h:outputText value="แก้ไขข้อมูลลูกค้า"/>
                 <div class="vertical-gap"/>
                 <h:panelGrid columns="2" styleClass="vertical-panel">
-                    <h:outputText value="name"/>
+                    <h:outputText value="First name"/>
                     <p:inputText value="#{customerController.customer.firstName}"/>
+                    
+                    <h:outputText value="Last name"/>
+                    <p:inputText value="#{customerController.customer.lastName}"/>
+                    
+                    <h:outputText value="Phone number"/>
+                    <p:inputText value="#{customerController.customer.phoneNumber}"/>
+                    
+                    <h:outputText value="Mobile phone number"/>
+                    <p:inputText value="#{customerController.customer.mobilePhoneNumber}"/>
                 </h:panelGrid>
                 <div class="vertical-gap"/>
                 <p:commandButton value="save"
@@ -125,7 +133,6 @@
         </p:dialog>
 
         <p:dialog id="deleteCustomerDialog"
-                  header="ลบผู้ใช้"
                   width="500"
                   appendTo="@(body)"
                   modal="true"
@@ -133,9 +140,14 @@
                   resizable="false"
                   widgetVar="deleteWidgetDialog"> 
             <h:form id="deleteCustomerDialogForm">
-                <h:outputText value="คุณต้องการลบผู้ใช้ใช่หรือไม่?"/>
+                <h:outputText value="ลบข้อมูลลูกค้า"/>
                 <div class="vertical-gap"/>
-                <p:commandButton value="ลบผู้ใช้"
+                <p:panelGrid columns="2" styleClass="vertical-panel">
+                    <h:outputText value="ชื่อ"/>
+                    <h:outputText value="คุณ #{customerController.customer.firstName} #{customerController.customer.lastName}"/>
+                </p:panelGrid>
+                <div class="vertical-gap"/>
+                <p:commandButton value="ลบ"
                                  update=":customerForm, :notification"
                                  actionListener="#{customerController.onDelete()}"
                                  oncomplete="deleteWidgetDialog.hide();"/>

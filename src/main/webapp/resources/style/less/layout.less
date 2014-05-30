@@ -16,6 +16,8 @@ and open the template in the editor.
 @layoutLeftAndCenterTop: @layoutTopHeight;
 @layoutLeftWidth: 200px;
 @layoutCenterLeft: @layoutLeftWidth + @margin;
+@backgroundColor:#2E322E;
+@borderBottomWidth:4px;
 
 body{
     padding: 0px;
@@ -25,16 +27,6 @@ body{
     min-width: 1000px;
     color: #444;
 }
-#layoutLeft{
-    top: @layoutLeftAndCenterTop + @margin;
-    left: @left + @margin;
-    width: @layoutLeftWidth;
-    height: 100%;
-    border: @border;
-    background-color: #f9f9fc;
-    position: fixed;  
-}
-
 #layoutTop{
     top:@margin;
     left: @left + @margin;
@@ -44,12 +36,29 @@ body{
     position: fixed;
     border: @border;
     min-width: @pageWidth;
+     background-color: @backgroundColor;
+    border-bottom-style: solid;
+    border-bottom-color: #33CC33;
+    border-bottom-width: 4px;
 }
 
 /*@top2: @top + 100px;*/
+#layoutCenter,#layoutLeft
+{
+    top: @layoutLeftAndCenterTop + @margin + @borderBottomWidth ;
+}
+
+
+#layoutLeft{
+    left: @left + @margin;
+    width: @layoutLeftWidth;
+    height: 100%;
+    border: @border;
+    background-color: @backgroundColor;
+    position: fixed;  
+}
 
 #layoutCenter{
-    top: @layoutLeftAndCenterTop + @margin;
     left: @layoutCenterLeft;
     right: @margin;
     bottom: @bottom;
@@ -58,7 +67,7 @@ body{
     overflow: auto;
     font-size: medium;
     color: #5E5E5E;
-    min-width: @pageWidth-@layoutLeftWidth;
+    min-width: @pageWidth - @layoutLeftWidth;
     border: @border;
 }
 

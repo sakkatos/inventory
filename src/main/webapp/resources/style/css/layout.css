@@ -6,6 +6,8 @@ and open the template in the editor.
 /* 
     Author     : Toy
 */
+/* line 22, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000322}}
 body {
   padding: 0px;
   margin: 0px;
@@ -14,15 +16,8 @@ body {
   min-width: 1000px;
   color: #444;
 }
-#layoutLeft {
-  top: 95px;
-  left: 25px;
-  width: 200px;
-  height: 100%;
-  border: #d5d5d5 solid 1px;
-  background-color: #f9f9fc;
-  position: fixed;
-}
+/* line 30, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000330}}
 #layoutTop {
   top: 25px;
   left: 25px;
@@ -32,10 +27,31 @@ body {
   position: fixed;
   border: #d5d5d5 solid 1px;
   min-width: 800px;
+  background-color: #2e322e;
+  border-bottom-style: solid;
+  border-bottom-color: #33CC33;
+  border-bottom-width: 4px;
 }
 /*@top2: @top + 100px;*/
+/* line 46, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000346}}
+#layoutCenter,
+#layoutLeft {
+  top: 99px;
+}
+/* line 52, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000352}}
+#layoutLeft {
+  left: 25px;
+  width: 200px;
+  height: 100%;
+  border: #d5d5d5 solid 1px;
+  background-color: #2e322e;
+  position: fixed;
+}
+/* line 61, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000361}}
 #layoutCenter {
-  top: 95px;
   left: 225px;
   right: 25px;
   bottom: 0px;
@@ -44,9 +60,16 @@ body {
   overflow: auto;
   font-size: medium;
   color: #5E5E5E;
-  min-width: 800px;
+  min-width: 600px;
   border: #d5d5d5 solid 1px;
 }
+/* line 74, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000374}}
+#layoutCenter {
+  padding: 30px;
+}
+/* line 79, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000379}}
 #layoutButtom {
   bottom: 0px;
   left: 225px;
@@ -57,11 +80,15 @@ body {
   border: #d5d5d5 solid 1px;
   min-width: 800px;
 }
+/* line 89, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000389}}
 .ui-menuitem-text {
   font: normal 10pt Roboto, arial, sans-serif;
   color: #ffffff;
 }
 /* side bar menu*/
+/* line 94, D:\Nook\Internship\genius-inventory\src\main\webapp\resources\style\less\layout.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\/Nook\/Internship\/genius-inventory\/src\/main\/webapp\/resources\/style\/less\/layout\.less}line{font-family:\0000394}}
 .ui-menu .ui-menuitem-link:hover .ui-menuitem-text {
   color: #fff;
 }

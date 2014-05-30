@@ -6,10 +6,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <f:metadata>
-        <f:viewParam name="orderItemId" value="#{orderItemController.orderItemId}"></f:viewParam>
-    </f:metadata>
+
     <ui:define name="centerReplace">
+        <f:metadata>
+            <f:viewParam name="orderItemId" value="#{orderItemController.orderItemId}"></f:viewParam>
+        </f:metadata>
         <h:form id="orderItemForm">
             #{orderItemController.loadLazy()}
             <p:commandButton value="เพิ่ม order item"
@@ -59,9 +60,9 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="ID"/>
                     <p:inputText value="#{orderItemController.orderItem.id}"/>
-
+                    
                     <h:outputText value="Purchase ID"/>
-                    <p:inputText value="#{orderItemController.purchaseOrder.id}"/>
+                    <p:inputText value="#{orderItemController.orderItem.purchaseOrder.id}"/>
                 </p:panelGrid>
                 <p:commandButton value="Add"
                                  actionListener="#{orderItemController.onSave()}"
@@ -71,7 +72,7 @@
                                  onsuccess="addWidgetDialog.hide()"/>
             </h:form>
         </p:dialog>
-
+        
         <p:dialog id="editOrderItemDialog"
                   header="Edit Order Item"
                   width="500"
